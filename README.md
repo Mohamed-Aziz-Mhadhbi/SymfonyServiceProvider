@@ -1,2 +1,2 @@
 # Symfony-Service-Provider
-Projet PiDev Symfony
+Symfony PiDev 
