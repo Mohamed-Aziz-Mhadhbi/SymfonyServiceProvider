@@ -504,6 +504,9 @@
     "symfony/yaml": {
         "version": "v4.4.19"
     },
+    "twbs/bootstrap": {
+        "version": "v5.0.0-beta2"
+    },
     "twig/extra-bundle": {
         "version": "v3.3.0"
     },
