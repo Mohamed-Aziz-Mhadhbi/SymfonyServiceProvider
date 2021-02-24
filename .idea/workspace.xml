@@ -26,8 +26,6 @@
   <component name="ChangeListManager">
     <list default="true" id="abb3eddf-228c-45d4-ab4c-860525ccadce" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/navbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/navbar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,8 +42,8 @@
       <list>
         <option value="SCSS File" />
         <option value="Sass File" />
-        <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -190,7 +188,7 @@
       <workItem from="1614070862651" duration="843000" />
       <workItem from="1614072260234" duration="16980000" />
       <workItem from="1614120169554" duration="2731000" />
-      <workItem from="1614153440062" duration="11968000" />
+      <workItem from="1614153440062" duration="13978000" />
     </task>
     <servers />
   </component>
