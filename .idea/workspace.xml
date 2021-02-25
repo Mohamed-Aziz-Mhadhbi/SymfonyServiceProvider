@@ -26,12 +26,15 @@
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:origin/main" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="abb3eddf-228c-45d4-ab4c-860525ccadce" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Symfony-Service-Provider" beforeDir="false" afterPath="$PROJECT_DIR$/Symfony-Service-Provider" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Symfony-Service-Provider/README.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,6 +194,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\ServiceProvider" />
       <recent name="C:\wamp64\www\ServiceProvider\assets\styles" />
     </key>
   </component>
@@ -208,7 +212,7 @@
       <workItem from="1614120169554" duration="2731000" />
       <workItem from="1614153440062" duration="17565000" />
       <workItem from="1614250991973" duration="157000" />
-      <workItem from="1614251346493" duration="912000" />
+      <workItem from="1614251346493" duration="5519000" />
     </task>
     <servers />
   </component>
@@ -220,7 +224,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
