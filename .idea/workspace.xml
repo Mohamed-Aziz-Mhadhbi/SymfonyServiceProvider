@@ -33,8 +33,9 @@
   <component name="ChangeListManager">
     <list default="true" id="abb3eddf-228c-45d4-ab4c-860525ccadce" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Symfony-Service-Provider" beforeDir="false" afterPath="$PROJECT_DIR$/Symfony-Service-Provider" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Symfony-Service-Provider/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/styles/footer.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/footer.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/styles/navbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/navbar.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,6 +214,8 @@
       <workItem from="1614153440062" duration="17565000" />
       <workItem from="1614250991973" duration="157000" />
       <workItem from="1614251346493" duration="5519000" />
+      <workItem from="1614275787719" duration="3995000" />
+      <workItem from="1614328859469" duration="3666000" />
     </task>
     <servers />
   </component>

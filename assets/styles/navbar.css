@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap');
+
 *{
     margin: 0px;
     padding: 0px;
@@ -8,82 +10,55 @@ nav{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    min-height: 10vh;
+    height: 20%;
     background-color: #F2F2F2;
     font-family: 'Work Sans', sans-serif;
 }
 
 .logo{
+
     display: flex;
     color:#F27405 ;
-    text-transform: uppercase;
+    margin-top: 15px;
+    font-weight: bold;
     letter-spacing: 2px;
     font-size: 20px;
     cursor: pointer;
 }
 
-
-.nav-links{
-    display: flex;
-    justify-content: space-around;
-    width: 45%;
+.annonce {
+    border: 2px solid #F27405;
+    border-radius: 25px;
+    background-color: #F27405;
+    font-weight: bold;
+    color: #FFFFFF;
 }
+.annonce:hover{
+    border: 2px solid #F27405;
+    border-radius: 20px;
+    background-color: #FFFFFF;
+}
+.collapse ul.navbar-nav>li.nav-item>a {
+    color: #333B3D;
+
+}
+.collapse ul.navbar-nav>li.nav-item>a.annonce {
+    color: #FFFFFF;
+
+}
+.collapse ul.navbar-nav>li.nav-item>a.annonce:hover {
+    color: #F27405;
+}
+
 .nav-item {
     margin-left: 10px;
     margin-right: 20px;
-}
-.nav-links li{
-    list-style: none;
-}
-.nav-links a{
-    color: #F28705;
-    text-decoration: none;
-    letter-spacing: 3px;
-    font-weight: bold;
-    font-size: 14px;
-}
-.burger{
-    display: none;
-    cursor: pointer;
-}
-.burger div{
-    width: 25px;
-    height: 3px;
-    background-color: #F27405;
-    margin: 5px;
+    color: #F27405;
 }
 
-@media screen and (max-width: 1324px){
-    .nav-links{
-        width: 60%;
-    }
+
+#mainNav{
+    height: 80px;
+
 }
 
-@media screen and (max-width: 768px){
-    body{
-        overflow: hidden;
-    }
-    .nav-links{
-        position: absolute;
-        right: 0px;
-        height: 92vh;
-        top: 10vh;
-        background-color: #F2F2F2;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 50%;
-        transform: translateX(100%);
-        transition: transform 1s ease-in;
-    }
-    .nav-links li{
-        opacity: 0;
-    }
-    .burger {
-        display: block;
-    }
-}
-
-.nav-active{
-    transform: translateX(0%);
-}
