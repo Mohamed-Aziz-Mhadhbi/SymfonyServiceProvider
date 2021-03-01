@@ -33,10 +33,6 @@ class User implements UserInterface
      */
     private $email;
 
-    /**
-     * @ORM\Column (type="string", columnDefinition="ENUM('admin', 'client', 'prestataire', 'entreprise')")
-     */
-    private $role;
 
     /**
      * @ORM\Column (type="string")
@@ -103,6 +99,11 @@ class User implements UserInterface
      */
     private $montantHoraire;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $roles = [];
+
 
 
 
@@ -138,10 +139,6 @@ class User implements UserInterface
     /**
      * @return mixed
      */
-    public function getRole()
-    {
-        return $this->role;
-    }
 
     /**
      * @return mixed
@@ -274,10 +271,7 @@ class User implements UserInterface
     /**
      * @param mixed $role
      */
-    public function setRole($role): void
-    {
-        $this->role = $role;
-    }
+
 
     /**
      * @param mixed $adresse
@@ -405,6 +399,13 @@ class User implements UserInterface
     public function getRoles()
     {
         return ['ROLE_USER'];
+    }
+
+    public function setRoles(?array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 
 }
