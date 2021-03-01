@@ -18,6 +18,8 @@ class User implements UserInterface
      */
     private $id;
 
+
+
     /**
      * @ORM\Column(type="string", length=25)
      */
@@ -107,10 +109,13 @@ class User implements UserInterface
 
 
 
+
+
     public function getId(): ?int
     {
         return $this->id;
     }
+
 
     /**
      * @return mixed
@@ -243,6 +248,8 @@ class User implements UserInterface
     {
         $this->id = $id;
     }
+
+
 
     /**
      * @param mixed $nom
@@ -401,9 +408,15 @@ class User implements UserInterface
         return ['ROLE_USER'];
     }
 
+<<<<<<< HEAD
     public function setRoles(?array $roles): self
     {
         $this->roles = $roles;
+=======
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+>>>>>>> 7efb0bad5d5e87b49e3d04fd3a1122c408bc43c8
 
         return $this;
     }
