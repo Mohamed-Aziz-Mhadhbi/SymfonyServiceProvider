@@ -42,7 +42,7 @@
         <div class="container">
             <div class="header-data">
                 <div class="logo">
-                    <a href={{ path('home')}} title=""><img src="images/logo.png" alt=""></a>
+                    <a href={{ path('home')}} title=""><img src="{{ asset('images/logo.png') }}" alt=""></a>
                 </div><!--logo end-->
                 <div class="search-bar">
                     <form>
@@ -63,38 +63,38 @@
                         </li>
                         <li>
                             <a href="{{ path('annonces') }}" title="">
-                                <span><img src="images/icon3.png" alt=""></span>
+                                <span><img src="{{ asset('images/icon3.png') }}" alt=""></span>
                                 offerts
                             </a>
                         </li>
                         <li>
                             <a href="#" title="">
-                                <span><img src="images/icon3.png" alt=""></span>
+                                <span><img src="{{ asset('images/icon3.png') }}" alt=""></span>
                                 Projects
                             </a>
                         </li>
                         <li>
                             <a href="{{ path('services') }}" title="">
-                                <span><img src="images/icon3.png" alt=""></span>
+                                <span><img src="{{ asset('images/icon3.png') }}" alt=""></span>
                                 Services
                             </a>
                         </li>
                         <li>
                             <a href="#" title="">
-                                <span><img src="images/icon4.png" alt=""></span>
+                                <span><img src="{{ asset('images/icon4.png') }}" alt=""></span>
                                 Profiles
                             </a>
                         </li>
                         <li>
                             <a href="{{ path('forum') }}" title="">
-                                <span><img src="images/icon5.png" alt=""></span>
+                                <span><img src="{{ asset('images/icon5.png') }}" alt=""></span>
                                 Forum
                             </a>
                         </li>
 
                         <li>
                             <a href="#" title="" class="not-box-open">
-                                <span><img src="images/icon7.png" alt=""></span>
+                                <span><img src="{{ asset('images/icon7.png') }}" alt=""></span>
                                 Notification
                             </a>
                             <div class="notification-box">
@@ -105,7 +105,7 @@
                                 <div class="nott-list">
                                     <div class="notfication-details">
                                         <div class="noty-user-img">
-                                            <img src="images/resources/ny-img1.png" alt="">
+                                            <img src="{{ asset('images/resources/ny-img1.png') }}" alt="">
                                         </div>
                                         <div class="notification-info">
                                             <h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
@@ -114,7 +114,7 @@
                                     </div>
                                     <div class="notfication-details">
                                         <div class="noty-user-img">
-                                            <img src="images/resources/ny-img2.png" alt="">
+                                            <img src="{{ asset('images/resources/ny-img2.png') }}" alt="">
                                         </div>
                                         <div class="notification-info">
                                             <h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
@@ -123,7 +123,7 @@
                                     </div>
                                     <div class="notfication-details">
                                         <div class="noty-user-img">
-                                            <img src="images/resources/ny-img3.png" alt="">
+                                            <img src="{{ asset('images/resources/ny-img3.png') }}" alt="">
                                         </div>
                                         <div class="notification-info">
                                             <h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
@@ -132,7 +132,7 @@
                                     </div>
                                     <div class="notfication-details">
                                         <div class="noty-user-img">
-                                            <img src="images/resources/ny-img2.png" alt="">
+                                            <img src="{{ asset('images/resources/ny-img2.png') }}" alt="">
                                         </div>
                                         <div class="notification-info">
                                             <h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
@@ -224,22 +224,22 @@
                     <li><a href="#" title="">Language</a></li>
                     <li><a href="#" title="">Copyright Policy</a></li>
                 </ul>
-                <p><img src="images/copy-icon2.png" alt="">Copyright 2021 <a href="https://github.com/CoffeeTim">Coffee Tim</a></p>
-                <img class="fl-rgt" src="images/logo2.png" alt="">
+                <p><img src="{{ asset('images/copy-icon2.png') }}" alt="">Copyright 2021 <a href="https://github.com/CoffeeTim">Coffee Tim</a></p>
+                <img class="fl-rgt" src="{{ asset('images/logo2.png') }}" alt="">
             </div>
         </div>
     </footer><!--footer end-->
 {% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/popper.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/jquery.mCustomScrollbar.js"></script>
-    <script type="text/javascript" src="lib/slick/slick.min.js"></script>
-    <script type="text/javascript" src="js/scrollbar.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
-    <script type="text/javascript" src="js/particles.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/popper.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.mCustomScrollbar.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('lib/slick/slick.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/scrollbar.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/particles.min.js') }}"></script>
 {% endblock %}
 </div>
 </body>
