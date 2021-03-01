@@ -64,12 +64,12 @@ class QuestionController extends AbstractController
     /**
      * @Route("/question/{id}", name="question", method="delete")
      */
-    public function delete(int $id, QuestionRepository $qr, EntityManagerInterface $em){
+   /* public function delete(int $id, QuestionRepository $qr, EntityManagerInterface $em){
         $question = $qr->findOneQuestionById($id);
         $em->remove($question);
         $em->flush();
     }
     protected function forward(string $controller, array $path = [], array $query = []): Response
     {
-    }
+    }*/
 }
