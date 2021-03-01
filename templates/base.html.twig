@@ -2,27 +2,26 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Service Provider{% endblock %}</title>
+        <title>service provider {% block title %}{% endblock %}</title>
 
         {% block stylesheets %}
-
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-            <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="description" content="" />
+            <meta name="keywords" content="" />
             <link href="{{ asset('css/app.css') }}" type="text/css" rel="stylesheet">
-            <link href="{{ asset('css/navbar.css') }}" type="text/css" rel="stylesheet">
-            <link href="{{ asset('css/footer.css') }}" type="text/css" rel="stylesheet">
-            <link href="{{ asset('css/home.css') }}" type="text/css" rel="stylesheet">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/animate.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/line-awesome.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/line-awesome-font-awesome.min.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.mCustomScrollbar.min.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('lib/slick/slick.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('lib/slick/slick-theme.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/responsive.css') }}">
             <link rel="preconnect" href="https://fonts.gstatic.com">
             <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet">
-            <link rel="icon" type="image/png" href="{{ asset('img/serviceProvider.png') }}" />
-
-            <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
-
-
+            <link rel="icon" type="image/png" href="{{ asset('images/2.png') }}" >
         {% endblock %}
 
         {% block javascripts %}
@@ -31,124 +30,253 @@
     </head>
 
     <body>
-    <header>
+    {% block header %}
 
+        <header>
+            <div class="container">
+                <div class="header-data">
+                    <div class="logo">
+                        <a href={{ path('home')}} title=""><img src="images/logo.png" alt=""></a>
+                    </div><!--logo end-->
+                    <div class="search-bar">
+                        <form>
+                            <input type="text" name="search" placeholder="Search...">
+                            <button type="submit"><i class="la la-search"></i></button>
+                        </form>
+                    </div><!--search-bar end-->
+                    <nav>
+                        <ul>
 
+                            <li>
+                                <a href="#" title="">
+                                    <span><img src="images/icon2.png" alt=""></span>
+                                    Companies
+                                </a>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" id="mainNav">
-            <a href="{{ path('home') }}" ><img src="../public/img/serviceProviderIcon.png"></a>
-            <a class="navbar-brand logo" href="{{ path('home') }}"><h2>Service Provider</h2></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link annonce" href="#">Poster Annonce</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Forum</a>
-                    </li>
-
-                    <li class="nav-item dropdown search">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-search"></i>
-                            Rechercher
-                        </a>
-                        <!-- bloc menu déroulant -->
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Rechercher annonces</a>
-                            <a class="dropdown-item" href="#">Rechercher prestataire</a>
-                            <a class="dropdown-item" href="#">Rechercher services</a>
+                            </li>
+                            <li>
+                                <a href="#" title="">
+                                    <span><img src="images/icon3.png" alt=""></span>
+                                    offerts
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" title="">
+                                    <span><img src="images/icon3.png" alt=""></span>
+                                    Projects
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" title="">
+                                    <span><img src="images/icon3.png" alt=""></span>
+                                    Services
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" title="">
+                                    <span><img src="images/icon4.png" alt=""></span>
+                                    Profiles
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" title="">
+                                    <span><img src="images/icon5.png" alt=""></span>
+                                    Forum
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" title="" class="not-box-open">
+                                    <span><img src="images/icon6.png" alt=""></span>
+                                    Messages
+                                </a>
+                                <div class="notification-box msg">
+                                    <div class="nt-title">
+                                        <h4>Setting</h4>
+                                        <a href="#" title="">Clear all</a>
+                                    </div>
+                                    <div class="nott-list">
+                                        <div class="notfication-details">
+                                            <div class="noty-user-img">
+                                                <img src="images/resources/ny-img1.png" alt="">
+                                            </div>
+                                            <div class="notification-info">
+                                                <h3><a href="messages.html" title="">Jassica William</a> </h3>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do.</p>
+                                                <span>2 min ago</span>
+                                            </div><!--notification-info -->
+                                        </div>
+                                        <div class="notfication-details">
+                                            <div class="noty-user-img">
+                                                <img src="images/resources/ny-img2.png" alt="">
+                                            </div>
+                                            <div class="notification-info">
+                                                <h3><a href="messages.html" title="">Jassica William</a></h3>
+                                                <p>Lorem ipsum dolor sit amet.</p>
+                                                <span>2 min ago</span>
+                                            </div><!--notification-info -->
+                                        </div>
+                                        <div class="notfication-details">
+                                            <div class="noty-user-img">
+                                                <img src="images/resources/ny-img3.png" alt="">
+                                            </div>
+                                            <div class="notification-info">
+                                                <h3><a href="messages.html" title="">Jassica William</a></h3>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempo incididunt ut labore et dolore magna aliqua.</p>
+                                                <span>2 min ago</span>
+                                            </div><!--notification-info -->
+                                        </div>
+                                        <div class="view-all-nots">
+                                            <a href="messages.html" title="">View All Messsages</a>
+                                        </div>
+                                    </div><!--nott-list end-->
+                                </div><!--notification-box end-->
+                            </li>
+                            <li>
+                                <a href="#" title="" class="not-box-open">
+                                    <span><img src="images/icon7.png" alt=""></span>
+                                    Notification
+                                </a>
+                                <div class="notification-box">
+                                    <div class="nt-title">
+                                        <h4>Setting</h4>
+                                        <a href="#" title="">Clear all</a>
+                                    </div>
+                                    <div class="nott-list">
+                                        <div class="notfication-details">
+                                            <div class="noty-user-img">
+                                                <img src="images/resources/ny-img1.png" alt="">
+                                            </div>
+                                            <div class="notification-info">
+                                                <h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
+                                                <span>2 min ago</span>
+                                            </div><!--notification-info -->
+                                        </div>
+                                        <div class="notfication-details">
+                                            <div class="noty-user-img">
+                                                <img src="images/resources/ny-img2.png" alt="">
+                                            </div>
+                                            <div class="notification-info">
+                                                <h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
+                                                <span>2 min ago</span>
+                                            </div><!--notification-info -->
+                                        </div>
+                                        <div class="notfication-details">
+                                            <div class="noty-user-img">
+                                                <img src="images/resources/ny-img3.png" alt="">
+                                            </div>
+                                            <div class="notification-info">
+                                                <h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
+                                                <span>2 min ago</span>
+                                            </div><!--notification-info -->
+                                        </div>
+                                        <div class="notfication-details">
+                                            <div class="noty-user-img">
+                                                <img src="images/resources/ny-img2.png" alt="">
+                                            </div>
+                                            <div class="notification-info">
+                                                <h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
+                                                <span>2 min ago</span>
+                                            </div><!--notification-info -->
+                                        </div>
+                                        <div class="view-all-nots">
+                                            <a href="#" title="">View All Notification</a>
+                                        </div>
+                                    </div><!--nott-list end-->
+                                </div><!--notification-box end-->
+                            </li>
+                        </ul>
+                    </nav><!--nav end-->
+                    <div class="menu-btn">
+                        <a href="#" title=""><i class="fa fa-bars"></i></a>
+                    </div><!--menu-btn end-->
+                    <div class="user-account">
+                        <div class="user-info">
+                            <img src="http://via.placeholder.com/30x30" alt="">
+                            <a href="#" title="">John</a>
+                            <i class="la la-sort-down"></i>
                         </div>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link " href="#">Connexion</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('inscription') }}">Inscription</a>
-                    </li>
-                </ul>
+                        <div class="user-account-settingss">
+                            <h3>Online Status</h3>
+                            <ul class="on-off-status">
+                                <li>
+                                    <div class="fgt-sec">
+                                        <input type="radio" name="cc" id="c5">
+                                        <label for="c5">
+                                            <span></span>
+                                        </label>
+                                        <small>Online</small>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="fgt-sec">
+                                        <input type="radio" name="cc" id="c6">
+                                        <label for="c6">
+                                            <span></span>
+                                        </label>
+                                        <small>Offline</small>
+                                    </div>
+                                </li>
+                            </ul>
+                            <h3>Custom Status</h3>
+                            <div class="search_form">
+                                <form>
+                                    <input type="text" name="search">
+                                    <button type="submit">Ok</button>
+                                </form>
+                            </div><!--search_form end-->
+                            <h3>Setting</h3>
+                            <ul class="us-links">
+                                <li><a href="profile-account-setting.html" title="">Account Setting</a></li>
+                                <li><a href="#" title="">Privacy</a></li>
+                                <li><a href="#" title="">Faqs</a></li>
+                                <li><a href="#" title="">Terms & Conditions</a></li>
+                            </ul>
+                            <h3 class="tc"><a href="sign-in.html" title="">Logout</a></h3>
+                        </div><!--user-account-settingss end-->
+                    </div>
+                </div><!--header-data end-->
             </div>
-        </nav>
+        </header><!--header end-->
 
-    </header>
+    {% endblock %}
+
+
+
 
         {% block body %}
 
 
         {% endblock %}
 
-    <footer class="footer-section">
-        <div class="container">
-
-            <div class="footer-content pt-5 pb-5">
-                <div class="row">
-                    <div class="col-xl-4 col-lg-4 mb-50">
-                        <div class="footer-widget">
-                            <div class="footer-logo">
-                                <a href="/public"><img src="../public/img/serviceProviderIcon.png"> Service Provider</a>
-                            </div>
-                            <div class="footer-text">
-                                <p>
-                                    Nous donnons aux gens du monde entier les moyens de vivre leur rêve professionnel en construisant leur entreprise à partir de zéro et en devenant indépendants financièrement et professionnellement.</p>
-                            </div>
-                            <div class="footer-social-icon">
-                                <span>Follow us</span>
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fab bi bi-github"></i></a>
-                                <a href="#"><i class="fab fa-google-plus-g google-bg"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
-                        <div class="footer-widget">
-                            <div class="footer-widget-heading">
-                                <h3>Navigation</h3>
-                            </div>
-                            <ul>
-                                <li><a href="#">Accueil</a></li>
-                                <li><a href="#">A propos</a></li>
-                                <li><a href="#">Nos services</a></li>
-                                <li><a href="#">Notre equipe</a></li>
-                                <li><a href="#">Nos prestataire</a></li>
-                                <li><a href="#">Forum</a></li>
-                                <li><a href="#">Nos Annonces</a></li>
-                                <li><a href="#">Contact</a></li>
-
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
-                        <div class="footer-widget">
-                            <div class="footer-widget-heading">
-                                <h3>S'abonner</h3>
-                            </div>
-                            <div class="footer-text mb-25">
-                                <p>Ne manquez pas de vous abonner à nos nouveaux flux, veuillez remplir le formulaire ci-dessous</p>
-                            </div>
-                            <div class="subscribe-form">
-                                <form action="#">
-                                    <input type="email" placeholder="Adresse Email">
-                                    <button><i class="fab fa-telegram-plane"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+    {% block footer %}
+        <footer>
+            <div class="footy-sec mn no-margin">
+                <div class="container">
+                    <ul>
+                        <li><a href="#" title="">Help Center</a></li>
+                        <li><a href="#" title="">Privacy Policy</a></li>
+                        <li><a href="#" title="">Community Guidelines</a></li>
+                        <li><a href="#" title="">Cookies Policy</a></li>
+                        <li><a href="#" title="">Career</a></li>
+                        <li><a href="#" title="">Forum</a></li>
+                        <li><a href="#" title="">Language</a></li>
+                        <li><a href="#" title="">Copyright Policy</a></li>
+                    </ul>
+                    <p><img src="images/copy-icon2.png" alt="">Copyright 2021 <a href="https://github.com/CoffeeTim">Coffee Tim</a></p>
+                    <img class="fl-rgt" src="images/logo2.png" alt="">
                 </div>
             </div>
-        </div>
-        <div class="copyright-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col text-center text-lg-center align-self-center">
-                        <div class="copyright-text">
-                            <p>Copyright &copy; 2021, All Right Reserved <a href="https://github.com/CoffeeTim">Coffee time</a></p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </footer>
+        </footer><!--footer end-->
+    {% endblock %}
+    {% block js %}
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/popper.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mCustomScrollbar.js"></script>
+        <script type="text/javascript" src="lib/slick/slick.min.js"></script>
+        <script type="text/javascript" src="js/scrollbar.js"></script>
+        <script type="text/javascript" src="js/script.js"></script>
+        <script type="text/javascript" src="js/particles.min.js"></script>
+    {% endblock %}
     </body>
 </html>
