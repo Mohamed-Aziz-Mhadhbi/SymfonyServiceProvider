@@ -1,8 +1,13 @@
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
+<<<<<<< HEAD
     <title>service provider {% block title %}{% endblock %}</title>
+=======
+    <title>service provider -{% block title %}welcome!{% endblock %}</title>
+>>>>>>> ff7e7ab0aeb9e14cd009bc3f7f227e37883fc79f
 
     {% block stylesheets %}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,6 +29,7 @@
         <link rel="icon" type="image/png" href="{{ asset('images/2.png') }}" >
     {% endblock %}
 
+<<<<<<< HEAD
     {% block javascripts %}
 
     {% endblock %}
@@ -31,6 +37,14 @@
 
 <body>
 {% block header %}
+=======
+
+</head>
+
+<body>
+<div class="wrapper">
+    {% block header %}
+>>>>>>> ff7e7ab0aeb9e14cd009bc3f7f227e37883fc79f
 
     <header>
         <div class="container">
@@ -53,6 +67,7 @@
                                 Companies
                             </a>
 
+<<<<<<< HEAD
                         </li>
                         <li>
                             <a href="#" title="">
@@ -114,6 +129,55 @@
                                             <p>Lorem ipsum dolor sit amet.</p>
                                             <span>2 min ago</span>
                                         </div><!--notification-info -->
+=======
+                            </li>
+                            <li>
+                                <a href="#" title="">
+                                    <span><img src="images/icon3.png" alt=""></span>
+                                    offerts
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" title="">
+                                    <span><img src="images/icon3.png" alt=""></span>
+                                    Projects
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('services') }}" title="">
+                                    <span><img src="images/icon3.png" alt=""></span>
+                                    Services
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" title="">
+                                    <span><img src="images/icon4.png" alt=""></span>
+                                    Profiles
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('annonces') }}" title="">
+                                    <span><img src="images/icon3.png" alt=""></span>
+                                    Annonces
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" title="">
+                                    <span><img src="images/icon5.png" alt=""></span>
+                                    Forum
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" title="" class="not-box-open">
+                                    <span><img src="images/icon7.png" alt=""></span>
+                                    Notification
+                                </a>
+                                <div class="notification-box">
+                                    <div class="nt-title">
+                                        <h4>Setting</h4>
+                                        <a href="#" title="">Clear all</a>
+>>>>>>> ff7e7ab0aeb9e14cd009bc3f7f227e37883fc79f
                                     </div>
                                     <div class="notfication-details">
                                         <div class="noty-user-img">
@@ -238,6 +302,7 @@
         </div>
     </header><!--header end-->
 
+<<<<<<< HEAD
 {% endblock %}
 
 
@@ -268,6 +333,34 @@
         </div>
     </footer><!--footer end-->
 {% endblock %}
+=======
+    {% endblock %}
+    {% block content %}
+
+    {% endblock %}
+    {% block footer %}
+        <footer>
+            <div class="footy-sec mn no-margin">
+                <div class="container">
+                    <ul>
+                        <li><a href="#" title="">Help Center</a></li>
+                        <li><a href="#" title="">Privacy Policy</a></li>
+                        <li><a href="#" title="">Community Guidelines</a></li>
+                        <li><a href="#" title="">Cookies Policy</a></li>
+                        <li><a href="#" title="">Career</a></li>
+                        <li><a href="#" title="">Forum</a></li>
+                        <li><a href="#" title="">Language</a></li>
+                        <li><a href="#" title="">Copyright Policy</a></li>
+                    </ul>
+                    <p><img src="images/copy-icon2.png" alt="">Copyright 2018</p>
+                    <img class="fl-rgt" src="images/logo2.png" alt="">
+                </div>
+            </div>
+        </footer><!--footer end-->
+    {% endblock %}
+</div>
+</body>
+>>>>>>> ff7e7ab0aeb9e14cd009bc3f7f227e37883fc79f
 {% block js %}
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/popper.js"></script>
@@ -278,5 +371,10 @@
     <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="js/particles.min.js"></script>
 {% endblock %}
+<<<<<<< HEAD
 </body>
 </html>
+=======
+</html>
+
+>>>>>>> ff7e7ab0aeb9e14cd009bc3f7f227e37883fc79f

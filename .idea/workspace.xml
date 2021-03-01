@@ -13,11 +13,6 @@
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:master" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
@@ -32,7 +27,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="abb3eddf-228c-45d4-ab4c-860525ccadce" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
       <change beforePath="$PROJECT_DIR$/assets/controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/controllers.json" afterDir="false" />
@@ -41,6 +38,9 @@
       <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
 >>>>>>> 7efb0bad5d5e87b49e3d04fd3a1122c408bc43c8
+=======
+      <change beforePath="$PROJECT_DIR$/templates/ons.html.twig" beforeDir="false" />
+>>>>>>> ff7e7ab0aeb9e14cd009bc3f7f227e37883fc79f
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,8 +194,17 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="watcher.settings" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -230,7 +239,11 @@
 =======
       <workItem from="1614588354246" duration="11509000" />
       <workItem from="1614610814219" duration="3249000" />
+<<<<<<< HEAD
 >>>>>>> 7efb0bad5d5e87b49e3d04fd3a1122c408bc43c8
+=======
+      <workItem from="1614618952891" duration="2826000" />
+>>>>>>> ff7e7ab0aeb9e14cd009bc3f7f227e37883fc79f
     </task>
     <servers />
   </component>
@@ -269,9 +282,10 @@
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state x="2560" y="261" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1536.834/1920.0.1920.1050@1920.0.1920.1050" timestamp="1614251010352" />
-    <state x="2381" y="170" key="SettingsEditor" timestamp="1614110688220">
-      <screen x="1920" y="0" width="1920" height="1050" />
+    <state x="301" y="17" key="SettingsEditor" timestamp="1614621860505">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="301" y="17" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1614621860505" />
     <state x="2381" y="170" key="SettingsEditor/0.0.1536.834/1920.0.1920.1050@1920.0.1920.1050" timestamp="1614110688220" />
     <state x="2472" y="258" key="Vcs.Push.Dialog.v2" timestamp="1614252241476">
       <screen x="1920" y="0" width="1920" height="1050" />
