@@ -33,6 +33,14 @@
   <component name="ChangeListManager">
     <list default="true" id="abb3eddf-228c-45d4-ab4c-860525ccadce" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+=======
+      <change beforePath="$PROJECT_DIR$/assets/controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/controllers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+>>>>>>> 7efb0bad5d5e87b49e3d04fd3a1122c408bc43c8
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +225,12 @@
       <workItem from="1614328859469" duration="23620000" />
       <workItem from="1614429872170" duration="7904000" />
       <workItem from="1614452752849" duration="5300000" />
+<<<<<<< HEAD
       <workItem from="1614588354246" duration="17017000" />
+=======
+      <workItem from="1614588354246" duration="11509000" />
+      <workItem from="1614610814219" duration="3249000" />
+>>>>>>> 7efb0bad5d5e87b49e3d04fd3a1122c408bc43c8
     </task>
     <servers />
   </component>
