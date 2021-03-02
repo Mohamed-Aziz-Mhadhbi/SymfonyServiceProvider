@@ -14,31 +14,36 @@ use App\Entity\Question;
 class QuestionController extends AbstractController
 {
     /**
-     * @Route("/question", name="question")
+     * @Route("/admin/dashboard/question/", name="questions")
      */
-    public function index(): Response
+    public function index(QuestionRepository $qr): Response
     {
+        $questions = $qr->findAll();
         return $this->render('question/index.html.twig', [
-            'controller_name' => 'QuestionController',
+            'questions' => $questions,
         ]);
     }
 
     /**
-     * @Route("/question/new", name="question")
+     * @Route("/admin/dashboard/question/new", name="new_question")
      */
     function new(Request $request, EntityManagerInterface $em):Response{
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
-        $form = handleRequest($request);
+       
+      $form->handleRequest($request);
         if($form->isSubmitted()){
+
             $question = new Question();
-            $question.setEnonce($request->get("enonce"));
-            $question.setPropositionA($request->get("proposition_A"));
-            $question.setPropositionB($request->get("proposition_B"));
-            $question.setPropositionCorrecte($request->get("proposition_correcte"));
-            $em->persist();
+            /*$question->setEnonce($request->get("enonce"));
+            $question->setPropositionA($request->get("proposition_A"));
+            $question->setPropositionB($request->get("proposition_B"));
+            $question->setPropositionCorrecte($request->get("proposition_correcte"));*/
+            $question=$form->getData();
+            $em->persist($question);
             $em->flush();
-            // TODO :redirect to page administration
+            $this->addFlash('success', 'Question ajouté avec succés!');
+            return $this->redirectToRoute('admin_dashboard');
         }
         return $this->render('question/new.html.twig', [
             "form"=> $form->createView(),
@@ -46,12 +51,12 @@ class QuestionController extends AbstractController
 
     }
     /**
-     * @Route("/question/{id}", name="question")
+     * @Route("/admin/dashboard/question/{id}", name="edit_question")
      */
     public function edit(Request $request, QuestionRepository $repository,  EntityManagerInterface $em,int  $id):Response{
         $question = $repository->findOneQuestionById($id);
         $form = $this->createForm(QuestionType::class, $question);
-        $form = handleRequest($request);
+        $form-> handleRequest($request);
         if($form->isSubmitted()){
             $question = $form->getData();
             $em->flush();
