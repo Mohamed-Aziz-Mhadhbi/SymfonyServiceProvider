@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -18,7 +19,11 @@ class User implements UserInterface
      */
     private $id;
 
-
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    private $username;
 
     /**
      * @ORM\Column(type="string", length=25)
@@ -41,71 +46,94 @@ class User implements UserInterface
     private $role;
 
     /**
-     * @ORM\Column (type="string")
+     * @Assert\NotBlank()
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
     private $password;
 
     /**
-     * @ORM\Column (type="integer", length=8, unique=true)
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $enabled;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $token;
+
+    /**
+     * @ORM\Column (type="integer", length=8, unique=true, nullable=true)
      */
     private $phone;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $photo;
 
     /**
-     * @ORM\Column (type="string", length=300)
+     * @ORM\Column (type="string", length=300, nullable=true)
      */
     private $bio;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $nomEntreprise;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $adresse;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $secteur;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $type;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $specialisation;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $siteWeb;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $presentation;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $taille;
 
     /**
-     * @ORM\Column (type="integer")
+     * @ORM\Column (type="integer", nullable=true)
      */
     private $montantHoraire;
 
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->enabled = false;
+
+    }
 
 
 
@@ -281,9 +309,10 @@ class User implements UserInterface
     /**
      * @param mixed $role
      */
-    public function setRole($role): void
+    public function setRoles($role): void
     {
         $this->role = $role;
+
     }
 
     /**
@@ -402,7 +431,7 @@ class User implements UserInterface
     }
     public function getUsername()
     {
-        // TODO: Implement getUsername() method.
+        return $this->username;
     }
     public function getPassword()
     {
@@ -411,7 +440,7 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        return $this->role;
     }
 
     public function setUsername(string $username): self
@@ -421,4 +450,15 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
 }
