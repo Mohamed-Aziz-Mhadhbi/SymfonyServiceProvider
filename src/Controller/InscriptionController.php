@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ClientType;
 use App\Repository\UserRepository;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,11 +18,16 @@ class InscriptionController extends AbstractController
      */
     private $passwordEncoder;
 
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository)
     {
         $this->passwordEncoder = $passwordEncoder;
-
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -31,7 +35,7 @@ class InscriptionController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function register(Request $request): Response
+    public function register(Request $request,\Swift_Mailer $mailer): Response
     {
         $user = new User();
         $form = $this->createForm(ClientType::class, $user);
@@ -42,15 +46,55 @@ class InscriptionController extends AbstractController
                 $this->passwordEncoder->encodePassword($user, $form->get("password")->getData())
             );
             $user->setToken($this->generateToken());
+            $user->setRoles('client');
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            $mail = (new \Swift_Message('Thanks for signing up!'))
+                // On attribue l'expéditeur
+                ->setFrom('service.provider.time@gmail.com')
+                // On attribue le destinataire
+                ->setTo($user->getEmail())
+                // On crée le texte avec la vue
+                ->setBody(
+                    $this->renderView(
+                        'emails/registration.html.twig', ['token' => $user->getToken()]
+                    ),
+                    'text/html'
+                )
+            ;
+            $mailer->send($mail);
+
             /*$this->mailer->sendEmail($user->getEmail(), $user->getToken());*/
             $this->addFlash("success", "Inscription réussie !");
         }
         return $this->render('inscription/inscription.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+
+    /**
+     * @Route("/confirmer-mon-compte/{token}", name="confirm_account")
+     * @param string $token
+     */
+    public function confirmAccount(string $token)
+    {
+        $user = $this->userRepository->findOneBy(["token" => $token]);
+        if($user) {
+            $user->setToken(null);
+            $user->setEnabled(true);
+            $user->setIsVerified(true);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash("success", "Compte actif !");
+            return $this->redirectToRoute("home");
+        } else {
+            $this->addFlash("error", "Ce compte n'exsite pas !");
+            return $this->redirectToRoute('home');
+        }
     }
 
     /**

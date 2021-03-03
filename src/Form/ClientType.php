@@ -15,11 +15,26 @@ class ClientType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class)
-            ->add('nom',TextType::class)
-            ->add('prenom',TextType::class)
-            ->add('email',EmailType::class)
-            ->add('password',PasswordType::class)
+            ->add('username', TextType::class ,[
+                'attr' => [
+                    'class' => 'form-control'
+                ]])
+            ->add('nom',TextType::class,[
+                'attr' => [
+                    'class' => 'form-control'
+                ]])
+            ->add('prenom',TextType::class,[
+                'attr' => [
+                    'class' => 'form-control'
+                ]])
+            ->add('email',EmailType::class,[
+                'attr' => [
+                    'class' => 'form-control'
+                ]])
+            ->add('password',PasswordType::class,[
+                'attr' => [
+                    'class' => 'form-control'
+                ]])
         ;
     }
 
