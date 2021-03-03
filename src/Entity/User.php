@@ -506,4 +506,9 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function supportsClass($class)
+    {
+        return User::class === $class;
+    }
 }

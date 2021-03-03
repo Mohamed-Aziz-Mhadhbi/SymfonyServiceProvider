@@ -5,6 +5,10 @@ security:
             algorithm: auto
 
     providers:
+        users:
+          entity:
+            class: 'App\Entity\User'
+            property: 'GID'
         users_in_memory: { memory: null }
     firewalls:
         dev:
@@ -19,6 +23,7 @@ security:
             logout:
                 path: app_logout
                 # where to redirect after logout
+                target: app_login
                 # target: app_any_route
 
             # activate different ways to authenticate
