@@ -11,6 +11,8 @@ use App\Entity\Quiz;
 use App\Repository\QuizRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Form\QuizType;
+
 class QuizController extends AbstractController
 {
     /**
@@ -47,17 +49,17 @@ class QuizController extends AbstractController
                 
                 $errorsString = (string) $errors;
         
-                return $this->render('question/new.html.twig', [
+                return $this->render('quiz/new.html.twig', [
                     "form"=> $form->createView(),
                     "errors"=> $errors
                 ]);
             }
-            $em->persist($question);
+            $em->persist($quiz);
             $em->flush();
-            $this->addFlash('success', 'Question ajouté avec succés!');
-            return $this->redirectToRoute('questions');
+            $this->addFlash('success', 'Quiz ajouté avec succés!');
+            return $this->redirectToRoute('quiz');
         }
-        return $this->render('question/new.html.twig', [
+        return $this->render('quiz/new.html.twig', [
             "form"=> $form->createView(),
         ]);
     }

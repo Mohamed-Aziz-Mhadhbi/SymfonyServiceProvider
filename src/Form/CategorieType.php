@@ -14,6 +14,8 @@ class CategorieType extends AbstractType
     {
         $builder
             ->add('disgnation')
+            ->add('save', SubmitType::class)
+
         ;
     }
 

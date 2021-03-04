@@ -40,7 +40,7 @@ class Quiz
     private $quizQuestions;
 
     /**
-     * @ORM\OneToMany(targetEntity=NoteQuiz::class, mappedBy="quiz", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Notequiz::class, mappedBy="quiz", orphanRemoval=true)
      */
     private $quizNotes;
 
