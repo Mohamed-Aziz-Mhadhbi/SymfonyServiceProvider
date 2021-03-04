@@ -28,16 +28,19 @@ class User implements UserInterface
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=25)
+     * @Assert\Length(min="3",max="25")
+     * @ORM\Column(type="string", length=25, nullable=true)
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=25)
+     * @Assert\Length(min="3",max="25")
+     * @ORM\Column(type="string", length=25, nullable=true)
      */
     private $prenom;
 
     /**
+     * @Assert\Email()
      * @ORM\Column (type="string", length=180, unique=true)
      */
     private $email;
@@ -70,6 +73,7 @@ class User implements UserInterface
     private $token;
 
     /**
+     * @Assert\Length (min="8", max="8")
      * @ORM\Column (type="integer", length=8, unique=true, nullable=true)
      */
     private $phone;
@@ -80,36 +84,43 @@ class User implements UserInterface
     private $photo;
 
     /**
+     * @Assert\Length (min="10", max="300")
      * @ORM\Column (type="string", length=300, nullable=true)
      */
     private $bio;
 
     /**
+     * @Assert\Length(min="3",max="25")
      * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $nomEntreprise;
 
     /**
+     * @Assert\Length(min="3",max="200")
      * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $adresse;
 
     /**
+     * @Assert\Length(min="3",max="50")
      * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $secteur;
 
     /**
+     * @Assert\Length(min="3",max="50")
      * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $type;
 
     /**
+     * @Assert\Length(min="3",max="25")
      * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $specialisation;
 
     /**
+     * @Assert\Url()
      * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $siteWeb;

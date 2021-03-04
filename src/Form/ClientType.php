@@ -17,23 +17,29 @@ class ClientType extends AbstractType
         $builder
             ->add('username', TextType::class ,[
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'placeholder' => 'Username'
                 ]])
             ->add('nom',TextType::class,[
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'placeholder' => 'Last name',
+                    'required' => 'true'
                 ]])
             ->add('prenom',TextType::class,[
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'placeholder' => 'Frist name'
                 ]])
             ->add('email',EmailType::class,[
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'placeholder' => 'Email'
                 ]])
             ->add('password',PasswordType::class,[
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'placeholder' => 'Password'
                 ]])
         ;
     }
