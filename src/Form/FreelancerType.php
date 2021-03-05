@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -41,7 +42,7 @@ class FreelancerType extends AbstractType
                     'class' => 'form-control'
 
                 ]])
-            ->add('phone', TextType::class ,[
+            ->add('phone', NumberType::class ,[
                 'attr' => [
                     'class' => 'form-control'
 
@@ -61,7 +62,7 @@ class FreelancerType extends AbstractType
                     'class' => 'form-control'
 
                 ]])
-            ->add('montantHoraire', TextType::class ,[
+            ->add('montantHoraire', NumberType::class ,[
                 'attr' => [
                     'class' => 'form-control'
 

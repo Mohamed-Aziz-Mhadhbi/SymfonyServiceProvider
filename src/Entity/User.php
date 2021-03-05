@@ -126,11 +126,13 @@ class User implements UserInterface
     private $siteWeb;
 
     /**
+     * @Assert\Length(min="3",max="25")
      * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $presentation;
 
     /**
+     * @Assert\Length(min="3",max="25")
      * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $taille;

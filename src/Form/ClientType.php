@@ -25,22 +25,22 @@ class ClientType extends AbstractType
                     'class' => 'form-control',
                     'placeholder' => 'Last name',
                     'required' => 'true'
-                ]])
+                ]],['required'=>true])
             ->add('prenom',TextType::class,[
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Frist name'
-                ]])
+                ]],['required'=>true])
             ->add('email',EmailType::class,[
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Email'
-                ]])
+                ]],['required'=>true])
             ->add('password',PasswordType::class,[
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Password'
-                ]])
+                ]],['required'=>true])
         ;
     }
 

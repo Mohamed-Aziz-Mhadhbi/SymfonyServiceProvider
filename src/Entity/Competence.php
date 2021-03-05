@@ -19,12 +19,15 @@ class Competence
     private $id;
 
     /**
+     * @Assert\Length(min="3",max="50")
      * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
      */
     private $titre;
 
     /**
+     * @Assert\Length(min="3",max="50")
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
      */
     private $categorie;
