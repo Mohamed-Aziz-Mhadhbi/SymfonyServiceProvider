@@ -6,6 +6,8 @@ use App\Repository\CategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=CategorieRepository::class)
@@ -22,16 +24,27 @@ class Categorie
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $disgnation;
+    private $nom;
 
     /**
-     * @ORM\OneToMany(targetEntity=Quiz::class, mappedBy="categorie")
+     * @ORM\Column(type="text")
+     * @Assert\Length(
+     *min=20,
+     *max=10000,
+     *minMessage="doit comporter aum oins{{limit}}caractères",
+     *maxMessage="doit comporter au plus{{limit}}caractères"
+     *)
      */
-    private $quizzes;
+    private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity=SousCategorie::class, mappedBy="categorie", orphanRemoval=true)
+     */
+    private $sousCategories;
 
     public function __construct()
     {
-        $this->quizzes = new ArrayCollection();
+        $this->sousCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -39,42 +52,54 @@ class Categorie
         return $this->id;
     }
 
-    public function getDisgnation(): ?string
+    public function getNom(): ?string
     {
-        return $this->disgnation;
+        return $this->nom;
     }
 
-    public function setDisgnation(string $disgnation): self
+    public function setNom(string $nom): self
     {
-        $this->disgnation = $disgnation;
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * @return Collection|Quiz[]
+     * @return Collection|SousCategorie[]
      */
-    public function getQuizzes(): Collection
+    public function getSousCategories(): Collection
     {
-        return $this->quizzes;
+        return $this->sousCategories;
     }
 
-    public function addQuiz(Quiz $quiz): self
+    public function addSousCategory(SousCategorie $sousCategory): self
     {
-        if (!$this->quizzes->contains($quiz)) {
-            $this->quizzes[] = $quiz;
-            $quiz->setCategorie($this);
+        if (!$this->sousCategories->contains($sousCategory)) {
+            $this->sousCategories[] = $sousCategory;
+            $sousCategory->setCategorie($this);
         }
 
         return $this;
     }
 
-    public function removeQuiz(Quiz $quiz): self
+    public function removeSousCategory(SousCategorie $sousCategory): self
     {
-        if ($this->quizzes->removeElement($quiz)) {
+        if ($this->sousCategories->removeElement($sousCategory)) {
             // set the owning side to null (unless already changed)
-            if ($quiz->getCategorie() === $this) {
-                $quiz->setCategorie(null);
+            if ($sousCategory->getCategorie() === $this) {
+                $sousCategory->setCategorie(null);
             }
         }
 

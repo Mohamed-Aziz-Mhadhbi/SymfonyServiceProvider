@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Projet{% endblock %}
+
+{% block content %}
+<div class="content-wrapper" style="min-height: 522px;">
+    <h1>Edit Projet</h1>
+
+    {{ include('projet/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn" href="{{ path('projet_index') }}">back to list</a>
+
+    {{ include('projet/_delete_form.html.twig') }}
+</div>
+{% endblock %}

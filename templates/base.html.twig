@@ -5,7 +5,25 @@
     <meta charset="UTF-8">
 
     <title>service provider {% block title %}{% endblock %}</title>
+    <style>
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
 
+        .button2 {background-color: #008CBA;} /* Blue */
+        .button3 {background-color: #f44336;} /* Red */
+        .button4 {background-color: #e7e7e7; color: black;} /* Gray */
+        .button5 {background-color: #555555;} /* Black */
+    </style>
 
     {% block stylesheets %}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,7 +60,7 @@
             <div class="container">
                 <div class="header-data">
                     <div class="logo">
-                        <a href={{ path('home')}} title=""><img src="{{ asset('images/logo.png') }}" alt=""></a>
+                        <a href="#" title=""><img src="{{ asset('images/logo.png') }}" alt=""></a>
                     </div><!--logo end-->
                     <div class="search-bar">
                         <form>
@@ -62,19 +80,19 @@
 
                             </li>
                             <li>
-                                <a href="{{ path('annonces') }}" title="">
+                                <a href="{{ path('sous_categorie_index') }}" title="">
                                     <span><img src="{{ asset('images/icon3.png') }}" alt=""></span>
                                     offerts
                                 </a>
                             </li>
                             <li>
-                                <a href="#" title="">
+                                <a href="{{ path('categorie_index') }}" title="">
                                     <span><img src="{{ asset('images/icon3.png') }}" alt=""></span>
                                     Projects
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ path('services') }}" title="">
+                                <a href="{{ path('projet_index') }}" title="">
                                     <span><img src="{{ asset('images/icon3.png') }}" alt=""></span>
                                     Services
                                 </a>
@@ -86,7 +104,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ path('forum') }}" title="">
+                                <a href="#" title="">
                                     <span><img src="{{ asset('images/icon5.png') }}" alt=""></span>
                                     Forum
                                 </a>
@@ -153,7 +171,7 @@
                     <div class="user-account">
                         <div class="user-info">
                             <img src="http://via.placeholder.com/30x30" alt="">
-                            <a href="{{ path('profile') }}" title="">John</a>
+                            <a href="#" title="">John</a>
                             <i class="la la-sort-down"></i>
                         </div>
                         <div class="user-account-settingss">
