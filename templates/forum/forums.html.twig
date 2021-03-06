@@ -1,8 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Forum{% endblock %}
+{% block title %}Forums{% endblock %}
 
 {% block content %}
+
+    <section class="forum-sec">
+        <div class="container">
+            <div class="forum-links">
+                <ul>
+                    <li class="active"><a href="#" title="">Latest</a></li>
+                    <li><a href="#" title="">Unanswered</a></li>
+                    <li><a href="#" title="">Treading</a></li>
+                    <li><a href="#" title="">Popular This Week</a></li>
+                    <li><a href="#" title="">Popular of Month</a></li>
+                </ul>
+            </div>
+            <!--forum-links end-->
+            <div class="forum-links-btn">
+                <a href="#" title=""><i class="fa fa-bars"></i></a>
+            </div>
+        </div>
+    </section>
+
 
 
     <section class="forum-page">
@@ -15,39 +34,21 @@
                                 <div>
                                     <img src="images/cm-logo.png" alt="">
                                 </div>
-                                <div class="post-st">
-                                    <ul>
-                                        <li><a class="post_project" href="#" title="">Ask question</a></li>
-                                    </ul>
-                                </div><!--post-st end-->
+
                             </div><!--post-topbar end-->
 
 
 
-                            {% for post in posts %}
+                            {% for forum in forums %}
 
                                 <div class="usr-question">
                                     <div class="usr_img">
                                         <img src="http://via.placeholder.com/60x60" alt="">
                                     </div>
                                     <div class="usr_quest">
-                                        <a href="{{ path('post_show_front', {'id': post.id}) }}">{{ post.title }}</a>
-                                        <ul class="react-links">
-                                            <li><a href="#" title=""><i class="fa fa-heart"></i> Likes {{ post.likes }}</a></li>
-                                            <li><a href= "{{ path('post_show_front', {'id': post.id}) }}" title=""><i class="fa fa-comment"></i> Comments 2</a></li>
-                                            <li><a href="#" title=""><i class="fa fa-eye"></i> Views {{ post.views }}</a></li>
-                                        </ul>
-                                        <ul class="quest-tags">
-                                            {% for tag in tags %}
-
-
-                                            <li><a href="" title="{{ tag.description }}">{{ tag.title }}</a></li>
-                                                
-                                            {% endfor %}
-                                        </ul>
+                                        <a href="{{ path('forum', {'id': forum.id}) }}">{{ forum.title }}</a>
                                     </div>
                                     <!--usr_quest end-->
-                                    <span class="quest-posted-time"><i class="fa fa-clock-o"></i>3 min ago</span>
                                 </div>
                                 <!--usr-question end-->
                             {% else %}
@@ -145,51 +146,5 @@
         </div>
     </section>
     <!--forum-page end-->
-    <div class="post-popup pst-pj">
-        <div class="post-project">
-            <h3>Question ?</h3>
-            <div class="post-project-fields">
-                <form>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <input type="text" name="title" placeholder="Title">
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="inp-field">
-                                <select>
-                                    <option>Category</option>
-                                    <option>Category 1</option>
-                                    <option>Category 2</option>
-                                    <option>Category 3</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="inp-field">
-                                <select>
-                                    <option>sous categorie</option>
-                                    <option>Category 1</option>
-                                    <option>Category 2</option>
-                                    <option>Category 3</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <input type="text" name="skills" placeholder="Skills">
-                        </div>
-                        <div class="col-lg-12">
-                            <textarea name="description" placeholder="Description"></textarea>
-                        </div>
-                        <div class="col-lg-12">
-                            <ul>
-                                <li><button class="active" type="submit" value="post">Post</button></li>
-                                <li><a href="#" title="">Cancel</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </form>
-            </div><!--post-project-fields end-->
-            <a href="#" title=""><i class="la la-times-circle-o"></i></a>
-        </div><!--post-project end-->
-    </div><!--post-project-popup end-->
+
 {% endblock %}

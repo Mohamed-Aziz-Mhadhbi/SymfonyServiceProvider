@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -20,6 +22,11 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    public function __toString()
+    {
+        return $this->email;
+    }
 
     /**
      * @Assert\NotBlank()
@@ -147,11 +154,59 @@ class User implements UserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Offre::class, mappedBy="User")
+     */
+    private $offres;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Postulation::class, mappedBy="postulationUser")
+     */
+    private $postulations;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Service::class, mappedBy="serviceUser")
+     */
+    private $services;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="orderUser")
+     */
+    private $orders;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Project::class, mappedBy="projectUser")
+     */
+    private $projects;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Skill::class, mappedBy="skillUser")
+     */
+    private $skills;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Quiz::class, mappedBy="quizUser")
+     */
+    private $quizzes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Domain::class, mappedBy="domainUser")
+     */
+    private $domains;
+
 
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->enabled = false;
+        $this->offres = new ArrayCollection();
+        $this->postulations = new ArrayCollection();
+        $this->services = new ArrayCollection();
+        $this->orders = new ArrayCollection();
+        $this->projects = new ArrayCollection();
+        $this->skills = new ArrayCollection();
+        $this->quizzes = new ArrayCollection();
+        $this->domains = new ArrayCollection();
 
     }
 
@@ -523,5 +578,236 @@ class User implements UserInterface
     public function supportsClass($class)
     {
         return User::class === $class;
+    }
+
+    /**
+     * @return Collection|Offre[]
+     */
+    public function getOffres(): Collection
+    {
+        return $this->offres;
+    }
+
+    public function addOffre(Offre $offre): self
+    {
+        if (!$this->offres->contains($offre)) {
+            $this->offres[] = $offre;
+            $offre->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffre(Offre $offre): self
+    {
+        if ($this->offres->removeElement($offre)) {
+            // set the owning side to null (unless already changed)
+            if ($offre->getUser() === $this) {
+                $offre->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Postulation[]
+     */
+    public function getPostulations(): Collection
+    {
+        return $this->postulations;
+    }
+
+    public function addPostulation(Postulation $postulation): self
+    {
+        if (!$this->postulations->contains($postulation)) {
+            $this->postulations[] = $postulation;
+            $postulation->setPostulationUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostulation(Postulation $postulation): self
+    {
+        if ($this->postulations->removeElement($postulation)) {
+            // set the owning side to null (unless already changed)
+            if ($postulation->getPostulationUser() === $this) {
+                $postulation->setPostulationUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Service[]
+     */
+    public function getServices(): Collection
+    {
+        return $this->services;
+    }
+
+    public function addService(Service $service): self
+    {
+        if (!$this->services->contains($service)) {
+            $this->services[] = $service;
+            $service->addServiceUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeService(Service $service): self
+    {
+        if ($this->services->removeElement($service)) {
+            $service->removeServiceUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setOrderUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getOrderUser() === $this) {
+                $order->setOrderUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Project[]
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    public function addProject(Project $project): self
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects[] = $project;
+            $project->setProjectUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Project $project): self
+    {
+        if ($this->projects->removeElement($project)) {
+            // set the owning side to null (unless already changed)
+            if ($project->getProjectUser() === $this) {
+                $project->setProjectUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Skill[]
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): self
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills[] = $skill;
+            $skill->addSkillUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): self
+    {
+        if ($this->skills->removeElement($skill)) {
+            $skill->removeSkillUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Quiz[]
+     */
+    public function getQuizzes(): Collection
+    {
+        return $this->quizzes;
+    }
+
+    public function addQuiz(Quiz $quiz): self
+    {
+        if (!$this->quizzes->contains($quiz)) {
+            $this->quizzes[] = $quiz;
+            $quiz->setQuizUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuiz(Quiz $quiz): self
+    {
+        if ($this->quizzes->removeElement($quiz)) {
+            // set the owning side to null (unless already changed)
+            if ($quiz->getQuizUser() === $this) {
+                $quiz->setQuizUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Domain[]
+     */
+    public function getDomains(): Collection
+    {
+        return $this->domains;
+    }
+
+    public function addDomain(Domain $domain): self
+    {
+        if (!$this->domains->contains($domain)) {
+            $this->domains[] = $domain;
+            $domain->addDomainUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDomain(Domain $domain): self
+    {
+        if ($this->domains->removeElement($domain)) {
+            $domain->removeDomainUser($this);
+        }
+
+        return $this;
     }
 }

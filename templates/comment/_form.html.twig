@@ -1,0 +1,17 @@
+{{ form_start(form) }}
+
+
+{{form_row(form.content,{'attr': {'class': 'form-control w-100 mt-2 mb-2'}})}}
+<div style="color :red;" >
+    {{form_errors(form.content)}}
+</div>
+{{form_row(form.likes,{'attr': {'class':'form-control w-100 mt-2 mb-2'}})}}
+<div style="color :red;" >
+    {{form_errors(form.likes)}}
+</div>
+{{form_row(form.pst,{'attr': {'class': 'form-control w-100 mt-2 mb-2'}})}}
+{{form_row(form.usr,{'attr': {'class': 'form-control w-100 mt-2 mb-2'}})}}
+
+<button class="btn btn-success">{{ button_label|default('Save') }}</button>
+<a href="{{ path('comment_index') }}">Go Back</a>
+{{ form_end(form) }}
