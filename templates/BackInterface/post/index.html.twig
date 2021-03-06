@@ -82,9 +82,8 @@
                                                                 <td>{{ post.noc }}</td>
                                                                 <td>
                                                                     <div class="btn-group btn-group-sm">
-                                                                        <a href="{{ path('post_show', {'id': post.id}) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
-                                                                        <a class="btn btn-info btn-sm" href="{{ path('post_edit', {'id': post.id}) }}"><i class="fas fa-pencil-alt"></i></a>
-                                                                        {{ include('post/_delete_form.html.twig') }}
+                                                                        <a href="{{ path('post_show_back', {'id': post.id}) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                                                        {{ include('BackInterface/post/_delete_form.html.twig') }}
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -115,7 +114,7 @@
 
                             <div class="row no-print">
                                 <div class="col-12">
-                                    <a href="{{ path('post_new') }}" class="btn btn-success float-right"> Create new</a>
+                                    <a href="{{ path('post_new_back') }}" class="btn btn-success float-right"> Create new</a>
                                 </div>
                             </div>
 

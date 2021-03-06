@@ -14,19 +14,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class TagController extends AbstractController
 {
     /**
-     * @Route("/admin/dashboard/tag", name="tag_index", methods={"GET"})
+     * @Route("/admin/dashboard/tag", name="tag_index_back", methods={"GET"})
      */
-    public function index(TagRepository $tagRepository): Response
+    public function indexBack(TagRepository $tagRepository): Response
     {
-        return $this->render('tag/index.html.twig', [
+        return $this->render('BackInterface/tag/index.html.twig', [
             'tags' => $tagRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/admin/dashboard/tag/new", name="tag_new", methods={"GET","POST"})
+     * @Route("/admin/dashboard/tag/new", name="tag_new_back", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function newBack(Request $request): Response
     {
         $tag = new Tag();
         $form = $this->createForm(TagType::class, $tag);
@@ -37,29 +37,29 @@ class TagController extends AbstractController
             $entityManager->persist($tag);
             $entityManager->flush();
 
-            return $this->redirectToRoute('tag_index');
+            return $this->redirectToRoute('tag_index_back');
         }
 
-        return $this->render('tag/new.html.twig', [
+        return $this->render('BackInterface/tag/new.html.twig', [
             'tag' => $tag,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/admin/dashboard/tag/{id}", name="tag_show", methods={"GET"})
+     * @Route("/admin/dashboard/tag/{id}", name="tag_show_back", methods={"GET"})
      */
-    public function show(Tag $tag): Response
+    public function showBack(Tag $tag): Response
     {
-        return $this->render('tag/show.html.twig', [
+        return $this->render('BackInterface/tag/show.html.twig', [
             'tag' => $tag,
         ]);
     }
 
     /**
-     * @Route("/admin/dashboard/tag/{id}/edit", name="tag_edit", methods={"GET","POST"})
+     * @Route("/admin/dashboard/tag/{id}/edit", name="tag_edit_back", methods={"GET","POST"})
      */
-    public function edit(Request $request, Tag $tag): Response
+    public function editBack(Request $request, Tag $tag): Response
     {
         $form = $this->createForm(TagType::class, $tag);
         $form->handleRequest($request);
@@ -67,19 +67,19 @@ class TagController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('tag_index');
+            return $this->redirectToRoute('tag_index_back');
         }
 
-        return $this->render('tag/edit.html.twig', [
+        return $this->render('BackInterface/tag/edit.html.twig', [
             'tag' => $tag,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/admin/dashboard/tag/{id}", name="tag_delete", methods={"DELETE"})
+     * @Route("/admin/dashboard/tag/{id}", name="tag_delete_back", methods={"DELETE"})
      */
-    public function delete(Request $request, Tag $tag): Response
+    public function deleteBack(Request $request, Tag $tag): Response
     {
         if ($this->isCsrfTokenValid('delete'.$tag->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -87,6 +87,6 @@ class TagController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('tag_index');
+        return $this->redirectToRoute('tag_index_back');
     }
 }

@@ -61,9 +61,9 @@
 
 
                                                 <div class="timeline-footer">
-                                                    <a href="{{ path('comment_show', {'id': comment.id}) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
-                                                    {{ include('comment/_delete_form.html.twig') }}
-                                                    <a href="{{ path('comment_edit', {'id': comment.id}) }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                                    <a href="{{ path('comment_show_back', {'id': comment.id}) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                                    {{ include('BackInterface/comment/_delete_form.html.twig') }}
+
                                                 </div>
                                                 <span class="float-right">
                                                 <a href="#" class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i> Like({{ comment.likes }})</a>
@@ -83,11 +83,7 @@
 
                             </div>
                             <!-- /.tab-content -->
-                            <div class="row no-print">
-                                <div class="col-12">
-                                    <a href="{{ path('comment_new') }}" class="btn btn-success float-right"> Create new</a>
-                                </div>
-                        </div><!-- /.card-body -->
+
 
                         </div>
                     </div>

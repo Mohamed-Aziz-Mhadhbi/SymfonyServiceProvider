@@ -31,10 +31,10 @@
                                         <img src="http://via.placeholder.com/60x60" alt="">
                                     </div>
                                     <div class="usr_quest">
-                                        <a href="{{ path('post_show_front', {'id': post.id}) }}">{{ post.title }}</a>
+                                        <a href="{{ path('post_show_back', {'id': post.id}) }}">{{ post.title }}</a>
                                         <ul class="react-links">
                                             <li><a href="#" title=""><i class="fa fa-heart"></i> Likes {{ post.likes }}</a></li>
-                                            <li><a href= "{{ path('post_show_front', {'id': post.id}) }}" title=""><i class="fa fa-comment"></i> Comments 2</a></li>
+                                            <li><a href= "{{ path('post_show_back', {'id': post.id}) }}" title=""><i class="fa fa-comment"></i> Comments 2</a></li>
                                             <li><a href="#" title=""><i class="fa fa-eye"></i> Views {{ post.views }}</a></li>
                                         </ul>
                                         <ul class="quest-tags">

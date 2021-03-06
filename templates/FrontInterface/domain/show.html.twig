@@ -18,9 +18,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('domain_index') }}">back to list</a>
+    <a href="{{ path('domain_index_front') }}">back to list</a>
 
-    <a href="{{ path('domain_edit', {'id': domain.id}) }}">edit</a>
+    <a href="{{ path('domain_edit_front', {'id': domain.id}) }}">edit</a>
 
-    {{ include('domain/_delete_form.html.twig') }}
+    {{ include('FrontInterface/domain/_delete_form.html.twig') }}
 {% endblock %}

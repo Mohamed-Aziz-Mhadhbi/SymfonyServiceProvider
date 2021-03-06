@@ -10,25 +10,33 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/quiz")
- */
+
 class QuizController extends AbstractController
 {
     /**
-     * @Route("/", name="quiz_index", methods={"GET"})
+     * @Route("/admin/dashboard/quiz", name="quiz_index_back", methods={"GET"})
      */
-    public function index(QuizRepository $quizRepository): Response
+    public function indexBack(QuizRepository $quizRepository): Response
     {
-        return $this->render('quiz/index.html.twig', [
+        return $this->render('BackInterface/quiz/index.html.twig', [
             'quizzes' => $quizRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="quiz_new", methods={"GET","POST"})
+     * @Route("/home/quiz", name="quiz_index_front", methods={"GET"})
      */
-    public function new(Request $request): Response
+    public function indexFront(QuizRepository $quizRepository): Response
+    {
+        return $this->render('FrontInterface/quiz/index.html.twig', [
+            'quizzes' => $quizRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/dashboard/quiz/new", name="quiz_new_back", methods={"GET","POST"})
+     */
+    public function newBack(Request $request): Response
     {
         $quiz = new Quiz();
         $form = $this->createForm(QuizType::class, $quiz);
@@ -39,29 +47,62 @@ class QuizController extends AbstractController
             $entityManager->persist($quiz);
             $entityManager->flush();
 
-            return $this->redirectToRoute('quiz_index');
+            return $this->redirectToRoute('quiz_index_back');
         }
 
-        return $this->render('quiz/new.html.twig', [
+        return $this->render('BackInterface/quiz/new.html.twig', [
             'quiz' => $quiz,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="quiz_show", methods={"GET"})
+     * @Route("/home/quiz/new", name="quiz_new_front", methods={"GET","POST"})
      */
-    public function show(Quiz $quiz): Response
+    public function newFront(Request $request): Response
     {
-        return $this->render('quiz/show.html.twig', [
+        $quiz = new Quiz();
+        $form = $this->createForm(QuizType::class, $quiz);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($quiz);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('quiz_index_front');
+        }
+
+        return $this->render('FrontInterface/quiz/new.html.twig', [
+            'quiz' => $quiz,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/dashboard/quiz/{id}", name="quiz_show_back", methods={"GET"})
+     */
+    public function showBack(Quiz $quiz): Response
+    {
+        return $this->render('BackInterface/quiz/show.html.twig', [
             'quiz' => $quiz,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="quiz_edit", methods={"GET","POST"})
+     * @Route("/home/quiz/{id}", name="quiz_show_front", methods={"GET"})
      */
-    public function edit(Request $request, Quiz $quiz): Response
+    public function showFront(Quiz $quiz): Response
+    {
+        return $this->render('FrontInterface/quiz/show.html.twig', [
+            'quiz' => $quiz,
+        ]);
+    }
+
+    /**
+     * @Route("/admin/dashboard/quiz/{id}/edit", name="quiz_edit_back", methods={"GET","POST"})
+     */
+    public function editBack(Request $request, Quiz $quiz): Response
     {
         $form = $this->createForm(QuizType::class, $quiz);
         $form->handleRequest($request);
@@ -69,19 +110,39 @@ class QuizController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('quiz_index');
+            return $this->redirectToRoute('quiz_index_back');
         }
 
-        return $this->render('quiz/edit.html.twig', [
+        return $this->render('BackInterface/quiz/edit.html.twig', [
             'quiz' => $quiz,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="quiz_delete", methods={"DELETE"})
+     * @Route("/home/quiz/{id}/edit", name="quiz_edit_front", methods={"GET","POST"})
      */
-    public function delete(Request $request, Quiz $quiz): Response
+    public function editFront(Request $request, Quiz $quiz): Response
+    {
+        $form = $this->createForm(QuizType::class, $quiz);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('quiz_index_front');
+        }
+
+        return $this->render('FrontInterface/quiz/edit.html.twig', [
+            'quiz' => $quiz,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/dashboard/quiz/{id}", name="quiz_delete_back", methods={"DELETE"})
+     */
+    public function deleteBack(Request $request, Quiz $quiz): Response
     {
         if ($this->isCsrfTokenValid('delete'.$quiz->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -89,6 +150,21 @@ class QuizController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('quiz_index');
+        return $this->redirectToRoute('quiz_index_back');
     }
+
+    /**
+     * @Route("/home/quiz/{id}", name="quiz_delete_front", methods={"DELETE"})
+     */
+    public function deleteFront(Request $request, Quiz $quiz): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$quiz->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($quiz);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('quiz_index_front');
+    }
+
 }

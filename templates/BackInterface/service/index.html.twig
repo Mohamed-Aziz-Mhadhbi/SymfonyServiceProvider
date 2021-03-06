@@ -1,8 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseAdmin.html.twig' %}
 
 {% block title %}Service index{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Service index</h1>
 
     <table class="table">
@@ -27,8 +27,8 @@
                 <td>{{ service.creatAt ? service.creatAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ service.image }}</td>
                 <td>
-                    <a href="{{ path('service_show', {'id': service.id}) }}">show</a>
-                    <a href="{{ path('service_edit', {'id': service.id}) }}">edit</a>
+                    <a href="{{ path('service_show_Back', {'id': service.id}) }}">show</a>
+
                 </td>
             </tr>
         {% else %}
@@ -39,5 +39,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('service_new') }}">Create new</a>
 {% endblock %}

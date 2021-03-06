@@ -1,8 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseAdmin.html.twig' %}
 
 {% block title %}Skill index{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Skill index</h1>
 
     <table class="table">
@@ -21,8 +21,8 @@
                 <td>{{ skill.title }}</td>
                 <td>{{ skill.description }}</td>
                 <td>
-                    <a href="{{ path('skill_show', {'id': skill.id}) }}">show</a>
-                    <a href="{{ path('skill_edit', {'id': skill.id}) }}">edit</a>
+                    <a href="{{ path('skill_show_back', {'id': skill.id}) }}">show</a>
+                    <a href="{{ path('skill_edit_back', {'id': skill.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('skill_new') }}">Create new</a>
+    <a href="{{ path('skill_new_back') }}">Create new</a>
 {% endblock %}

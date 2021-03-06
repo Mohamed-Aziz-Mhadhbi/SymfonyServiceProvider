@@ -1,8 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseAdmin.html.twig' %}
 
 {% block title %}Question index{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Question index</h1>
 
     <table class="table">
@@ -27,8 +27,8 @@
                 <td>{{ question.answerC }}</td>
                 <td>{{ question.rightAnswer }}</td>
                 <td>
-                    <a href="{{ path('question_show', {'id': question.id}) }}">show</a>
-                    <a href="{{ path('question_edit', {'id': question.id}) }}">edit</a>
+                    <a href="{{ path('question_show_back', {'id': question.id}) }}">show</a>
+                    <a href="{{ path('question_edit_back', {'id': question.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -39,5 +39,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('question_new') }}">Create new</a>
+    <a href="{{ path('question_new_back') }}">Create new</a>
 {% endblock %}

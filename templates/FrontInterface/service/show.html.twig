@@ -34,9 +34,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('service_index') }}">back to list</a>
+    <a href="{{ path('service_index_front') }}">back to list</a>
 
-    <a href="{{ path('service_edit', {'id': service.id}) }}">edit</a>
+    <a href="{{ path('service_edit_front', {'id': service.id}) }}">edit</a>
 
-    {{ include('service/_delete_form.html.twig') }}
+    {{ include('FrontInterface/service/_delete_form.html.twig') }}
 {% endblock %}

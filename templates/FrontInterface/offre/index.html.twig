@@ -23,8 +23,8 @@
                 <td>{{ offre.description }}</td>
                 <td>{{ offre.creatAt ? offre.creatAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('offre_show', {'id': offre.id}) }}">show</a>
-                    <a href="{{ path('offre_edit', {'id': offre.id}) }}">edit</a>
+                    <a href="{{ path('offre_show_front', {'id': offre.id}) }}">show</a>
+                    <a href="{{ path('offre_edit_front', {'id': offre.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('offre_new') }}">Create new</a>
+    <a href="{{ path('offre_new_front') }}">Create new</a>
 {% endblock %}

@@ -10,25 +10,32 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/service")
- */
+
 class ServiceController extends AbstractController
 {
     /**
-     * @Route("/", name="service_index", methods={"GET"})
+     * @Route("/admin/dashboard/service", name="service_index_back", methods={"GET"})
      */
-    public function index(ServiceRepository $serviceRepository): Response
+    public function indexBack(ServiceRepository $serviceRepository): Response
     {
-        return $this->render('service/index.html.twig', [
+        return $this->render('BackInterface/service/index.html.twig', [
+            'services' => $serviceRepository->findAll(),
+        ]);
+    }
+    /**
+     * @Route("/home/service", name="service_index_front", methods={"GET"})
+     */
+    public function indexFront(ServiceRepository $serviceRepository): Response
+    {
+        return $this->render('FrontInterface/service/index.html.twig', [
             'services' => $serviceRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="service_new", methods={"GET","POST"})
+     * @Route("/home/service/new", name="service_new_front", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function newFront(Request $request): Response
     {
         $service = new Service();
         $form = $this->createForm(ServiceType::class, $service);
@@ -39,29 +46,39 @@ class ServiceController extends AbstractController
             $entityManager->persist($service);
             $entityManager->flush();
 
-            return $this->redirectToRoute('service_index');
+            return $this->redirectToRoute('service_index_front');
         }
 
-        return $this->render('service/new.html.twig', [
+        return $this->render('FrontInterface/service/new.html.twig', [
             'service' => $service,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="service_show", methods={"GET"})
+     * @Route("/admin/dashboard/service/{id}", name="service_show_Back", methods={"GET"})
      */
-    public function show(Service $service): Response
+    public function showBack(Service $service): Response
     {
-        return $this->render('service/show.html.twig', [
+        return $this->render('BackInterface/service/show.html.twig', [
             'service' => $service,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="service_edit", methods={"GET","POST"})
+     * @Route("/home/service/{id}", name="service_show_front", methods={"GET"})
      */
-    public function edit(Request $request, Service $service): Response
+    public function showFront(Service $service): Response
+    {
+        return $this->render('FrontInterface/service/show.html.twig', [
+            'service' => $service,
+        ]);
+    }
+
+    /**
+     * @Route("/home/service/{id}/edit", name="service_edit_front", methods={"GET","POST"})
+     */
+    public function editFront(Request $request, Service $service): Response
     {
         $form = $this->createForm(ServiceType::class, $service);
         $form->handleRequest($request);
@@ -69,19 +86,19 @@ class ServiceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('service_index');
+            return $this->redirectToRoute('service_index_front');
         }
 
-        return $this->render('service/edit.html.twig', [
+        return $this->render('FrontInterface/service/edit.html.twig', [
             'service' => $service,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="service_delete", methods={"DELETE"})
+     * @Route("/admin/dashboard/service/{id}", name="service_delete_Back", methods={"DELETE"})
      */
-    public function delete(Request $request, Service $service): Response
+    public function deleteBack(Request $request, Service $service): Response
     {
         if ($this->isCsrfTokenValid('delete'.$service->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -89,6 +106,21 @@ class ServiceController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('service_index');
+        return $this->redirectToRoute('service_index_back');
     }
+
+    /**
+     * @Route("/home/service/{id}", name="service_delete_front", methods={"DELETE"})
+     */
+    public function deleteFront(Request $request, Service $service): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$service->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($service);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('service_index_front');
+    }
+
 }

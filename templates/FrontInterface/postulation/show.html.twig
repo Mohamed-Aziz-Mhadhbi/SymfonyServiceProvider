@@ -26,9 +26,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('postulation_index') }}">back to list</a>
+    <a href="{{ path('postulation_index_front') }}">back to list</a>
 
-    <a href="{{ path('postulation_edit', {'id': postulation.id}) }}">edit</a>
+    <a href="{{ path('postulation_edit_front', {'id': postulation.id}) }}">edit</a>
 
-    {{ include('postulation/_delete_form.html.twig') }}
+    {{ include('FrontInterface/postulation/_delete_form.html.twig') }}
 {% endblock %}

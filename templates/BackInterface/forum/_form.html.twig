@@ -19,7 +19,7 @@
         {{ form_widget(form.us,{'attr':{'class':'form-control custom-select' , 'id':'inputStatus'}}) }}
     </div>
     <button class="btn btn-success">{{ button_label|default('Save') }}</button>
-    <a href="{{ path('forum_index') }}">Go Back</a>
+    <a href="{{ path('forum_index_back') }}">Go Back</a>
 </div>
 
 {{ form_end(form) }}

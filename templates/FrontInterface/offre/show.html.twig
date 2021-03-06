@@ -26,9 +26,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('offre_index') }}">back to list</a>
+    <a href="{{ path('offre_index_front') }}">back to list</a>
 
-    <a href="{{ path('offre_edit', {'id': offre.id}) }}">edit</a>
+    <a href="{{ path('offre_edit_front', {'id': offre.id}) }}">edit</a>
 
-    {{ include('offre/_delete_form.html.twig') }}
+    {{ include('FrontInterface/offre/_delete_form.html.twig') }}
 {% endblock %}

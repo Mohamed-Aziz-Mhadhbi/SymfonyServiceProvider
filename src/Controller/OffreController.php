@@ -10,25 +10,33 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/offre")
- */
+
 class OffreController extends AbstractController
 {
     /**
-     * @Route("/", name="offre_index", methods={"GET"})
+     * @Route("/admin/dashboard/offre", name="offre_index_back", methods={"GET"})
      */
-    public function index(OffreRepository $offreRepository): Response
+    public function indexBack(OffreRepository $offreRepository): Response
     {
-        return $this->render('offre/index.html.twig', [
+        return $this->render('BackInterface/offre/index.html.twig', [
             'offres' => $offreRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="offre_new", methods={"GET","POST"})
+     * @Route("/home/offre", name="offre_index_front", methods={"GET"})
      */
-    public function new(Request $request): Response
+    public function indexFront(OffreRepository $offreRepository): Response
+    {
+        return $this->render('FrontInterface/offre/index.html.twig', [
+            'offres' => $offreRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/home/offre/new", name="offre_new_front", methods={"GET","POST"})
+     */
+    public function newFront(Request $request): Response
     {
         $offre = new Offre();
         $form = $this->createForm(OffreType::class, $offre);
@@ -39,29 +47,40 @@ class OffreController extends AbstractController
             $entityManager->persist($offre);
             $entityManager->flush();
 
-            return $this->redirectToRoute('offre_index');
+            return $this->redirectToRoute('offre_index_front');
         }
 
-        return $this->render('offre/new.html.twig', [
+        return $this->render('FrontInterface/offre/new.html.twig', [
             'offre' => $offre,
             'form' => $form->createView(),
         ]);
     }
 
+
     /**
-     * @Route("/{id}", name="offre_show", methods={"GET"})
+     * @Route("/admin/dashboard/offre/{id}", name="offre_show_back", methods={"GET"})
      */
-    public function show(Offre $offre): Response
+    public function showBack(Offre $offre): Response
     {
-        return $this->render('offre/show.html.twig', [
+        return $this->render('BackInterface/offre/show.html.twig', [
             'offre' => $offre,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="offre_edit", methods={"GET","POST"})
+     * @Route("/home/offre/{id}", name="offre_show_front", methods={"GET"})
      */
-    public function edit(Request $request, Offre $offre): Response
+    public function showFront(Offre $offre): Response
+    {
+        return $this->render('FrontInterface/offre/show.html.twig', [
+            'offre' => $offre,
+        ]);
+    }
+
+    /**
+     * @Route("/home/offre/{id}/edit", name="offre_edit_front", methods={"GET","POST"})
+     */
+    public function editFront(Request $request, Offre $offre): Response
     {
         $form = $this->createForm(OffreType::class, $offre);
         $form->handleRequest($request);
@@ -69,17 +88,17 @@ class OffreController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('offre_index');
+            return $this->redirectToRoute('offre_index_front');
         }
 
-        return $this->render('offre/edit.html.twig', [
+        return $this->render('FrontInterface/offre/edit.html.twig', [
             'offre' => $offre,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="offre_delete", methods={"DELETE"})
+     * @Route("/admin/dashboard/offre/{id}", name="offre_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Offre $offre): Response
     {
@@ -89,6 +108,21 @@ class OffreController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('offre_index');
+        return $this->redirectToRoute('offre_index_back');
     }
+
+    /**
+     * @Route("/home/offre/{id}", name="offre_delete_front", methods={"DELETE"})
+     */
+    public function deleteFront(Request $request, Offre $offre): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$offre->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($offre);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('offre_index_front');
+    }
+
 }

@@ -23,8 +23,8 @@
                 <td>{{ order.creatAt ? order.creatAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ order.status ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('order_show', {'id': order.id}) }}">show</a>
-                    <a href="{{ path('order_edit', {'id': order.id}) }}">edit</a>
+                    <a href="{{ path('order_show_front', {'id': order.id}) }}">show</a>
+                    <a href="{{ path('order_edit_front', {'id': order.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('order_new') }}">Create new</a>
+    <a href="{{ path('order_new_front') }}">Create new</a>
 {% endblock %}

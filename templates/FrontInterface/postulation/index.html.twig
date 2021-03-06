@@ -23,8 +23,8 @@
                 <td>{{ postulation.price }}</td>
                 <td>{{ postulation.duration }}</td>
                 <td>
-                    <a href="{{ path('postulation_show', {'id': postulation.id}) }}">show</a>
-                    <a href="{{ path('postulation_edit', {'id': postulation.id}) }}">edit</a>
+                    <a href="{{ path('postulation_show_front', {'id': postulation.id}) }}">show</a>
+                    <a href="{{ path('postulation_edit_front', {'id': postulation.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('postulation_new') }}">Create new</a>
+    <a href="{{ path('postulation_new_front') }}">Create new</a>
 {% endblock %}

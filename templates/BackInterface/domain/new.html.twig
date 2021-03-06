@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseAdmin.html.twig' %}
 
 {% block title %}New Domain{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Create new Domain</h1>
 
-    {{ include('domain/_form.html.twig') }}
+    {{ include('BackInterface/domain/_form.html.twig') }}
 
-    <a href="{{ path('domain_index') }}">back to list</a>
+    <a href="{{ path('domain_index_back') }}">back to list</a>
 {% endblock %}

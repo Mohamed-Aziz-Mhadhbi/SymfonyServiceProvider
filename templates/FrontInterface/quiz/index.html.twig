@@ -23,8 +23,8 @@
                 <td>{{ quiz.totalQuestion }}</td>
                 <td>{{ quiz.difficulty }}</td>
                 <td>
-                    <a href="{{ path('quiz_show', {'id': quiz.id}) }}">show</a>
-                    <a href="{{ path('quiz_edit', {'id': quiz.id}) }}">edit</a>
+                    <a href="{{ path('quiz_show_front', {'id': quiz.id}) }}">show</a>
+                    <a href="{{ path('quiz_edit_front', {'id': quiz.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('quiz_new') }}">Create new</a>
+    <a href="{{ path('quiz_new_front') }}">Create new</a>
 {% endblock %}

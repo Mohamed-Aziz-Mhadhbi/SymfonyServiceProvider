@@ -16,40 +16,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class ForumController extends AbstractController
 {
     /**
-     * @Route("/admin/dashboard/forum", name="forum_index", methods={"GET"})
+     * @Route("/admin/dashboard/forum", name="forum_index_back", methods={"GET"})
      */
-    public function index(ForumRepository $forumRepository): Response
+    public function indexBack(ForumRepository $forumRepository): Response
     {
-        return $this->render('forum/index.html.twig', [
-            'forums' => $forumRepository->findAll(),
-        ]);
-    }
-    /**
-     * @Route("/forum", name="forum", methods={"GET"})
-     */
-    public function forumActive(ForumRepository $forumRepository,TagRepository $tagRepository,PostRepository $postRepository): Response
-    {
-        return $this->render('forum/forum.html.twig', [
-            'forums' => $forumRepository->findAll(),
-            'tags' => $tagRepository->findAll(),
-            'posts' => $postRepository->findAll(),
-
-        ]);
-    }
-    /**
-     * @Route("/forums", name="forums", methods={"GET"})
-     */
-    public function forumsActive(ForumRepository $forumRepository): Response
-    {
-        return $this->render('forum/forums.html.twig', [
+        return $this->render('BackInterface/forum/index.html.twig', [
             'forums' => $forumRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/admin/dashboard/forum/new", name="forum_new", methods={"GET","POST"})
+     * @Route("/admin/dashboard/forum/new", name="forum_new_back", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function newBack(Request $request): Response
     {
         $forum = new Forum();
         $form = $this->createForm(ForumType::class, $forum);
@@ -60,29 +39,29 @@ class ForumController extends AbstractController
             $entityManager->persist($forum);
             $entityManager->flush();
 
-            return $this->redirectToRoute('forum_index');
+            return $this->redirectToRoute('forum_index_back');
         }
 
-        return $this->render('forum/new.html.twig', [
+        return $this->render('BackInterface/forum/new.html.twig', [
             'forum' => $forum,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/admin/dashboard/forum/{id}", name="forum_show", methods={"GET"})
+     * @Route("/admin/dashboard/forum/{id}", name="forum_show_back", methods={"GET"})
      */
-    public function show(Forum $forum): Response
+    public function showBack(Forum $forum): Response
     {
-        return $this->render('forum/show.html.twig', [
+        return $this->render('BackInterface/forum/show.html.twig', [
             'forum' => $forum,
         ]);
     }
 
     /**
-     * @Route("/admin/dashboard/forum/{id}/edit", name="forum_edit", methods={"GET","POST"})
+     * @Route("/admin/dashboard/forum/{id}/edit", name="forum_edit_Back", methods={"GET","POST"})
      */
-    public function edit(Request $request, Forum $forum): Response
+    public function editBack(Request $request, Forum $forum): Response
     {
         $form = $this->createForm(ForumType::class, $forum);
         $form->handleRequest($request);
@@ -90,19 +69,19 @@ class ForumController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('forum_index');
+            return $this->redirectToRoute('forum_index_back');
         }
 
-        return $this->render('forum/edit.html.twig', [
+        return $this->render('BackInterface/forum/edit.html.twig', [
             'forum' => $forum,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/admin/dashboard/forum/{id}", name="forum_delete", methods={"DELETE"})
+     * @Route("/admin/dashboard/forum/{id}", name="forum_delete_back", methods={"DELETE"})
      */
-    public function delete(Request $request, Forum $forum): Response
+    public function deleteBack(Request $request, Forum $forum): Response
     {
         if ($this->isCsrfTokenValid('delete'.$forum->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -110,6 +89,6 @@ class ForumController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('forum_index');
+        return $this->redirectToRoute('forum_index_back');
     }
 }

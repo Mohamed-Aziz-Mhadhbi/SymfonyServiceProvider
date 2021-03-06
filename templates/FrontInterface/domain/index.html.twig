@@ -19,8 +19,8 @@
                 <td>{{ domain.id }}</td>
                 <td>{{ domain.title }}</td>
                 <td>
-                    <a href="{{ path('domain_show', {'id': domain.id}) }}">show</a>
-                    <a href="{{ path('domain_edit', {'id': domain.id}) }}">edit</a>
+                    <a href="{{ path('domain_show_front', {'id': domain.id}) }}">show</a>
+                    <a href="{{ path('domain_edit_front', {'id': domain.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -31,5 +31,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('domain_new') }}">Create new</a>
+    <a href="{{ path('domain_new_front') }}">Create new</a>
 {% endblock %}

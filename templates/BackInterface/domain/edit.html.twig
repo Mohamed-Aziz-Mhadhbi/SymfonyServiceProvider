@@ -1,13 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseAdmin.html.twig' %}
 
 {% block title %}Edit Domain{% endblock %}
 
 {% block body %}
     <h1>Edit Domain</h1>
 
-    {{ include('domain/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('BackInterface/domain/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('domain_index') }}">back to list</a>
+    <a href="{{ path('domain_index_back') }}">back to list</a>
 
-    {{ include('domain/_delete_form.html.twig') }}
+    {{ include('BackInterface/domain/_delete_form.html.twig') }}
 {% endblock %}

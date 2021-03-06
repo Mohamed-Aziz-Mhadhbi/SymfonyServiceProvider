@@ -10,25 +10,33 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/order")
- */
+
 class OrderController extends AbstractController
 {
     /**
-     * @Route("/", name="order_index", methods={"GET"})
+     * @Route("/admin/dashboard/order", name="order_index_back", methods={"GET"})
      */
-    public function index(OrderRepository $orderRepository): Response
+    public function indexBack(OrderRepository $orderRepository): Response
     {
-        return $this->render('order/index.html.twig', [
+        return $this->render('BackInterface/order/index.html.twig', [
             'orders' => $orderRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="order_new", methods={"GET","POST"})
+     * @Route("/home/order", name="order_index", methods={"GET"})
      */
-    public function new(Request $request): Response
+    public function indexFront(OrderRepository $orderRepository): Response
+    {
+        return $this->render('FrontInterface/order/index.html.twig', [
+            'orders' => $orderRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/home/order/new", name="order_new_front", methods={"GET","POST"})
+     */
+    public function newFront(Request $request): Response
     {
         $order = new Order();
         $form = $this->createForm(OrderType::class, $order);
@@ -39,29 +47,40 @@ class OrderController extends AbstractController
             $entityManager->persist($order);
             $entityManager->flush();
 
-            return $this->redirectToRoute('order_index');
+            return $this->redirectToRoute('order_index_front');
         }
 
-        return $this->render('order/new.html.twig', [
+        return $this->render('FrontInterface/order/new.html.twig', [
             'order' => $order,
             'form' => $form->createView(),
         ]);
     }
 
+
     /**
-     * @Route("/{id}", name="order_show", methods={"GET"})
+     * @Route("/admin/dashboard/order/{id}", name="order_show_back", methods={"GET"})
      */
-    public function show(Order $order): Response
+    public function showBack(Order $order): Response
     {
-        return $this->render('order/show.html.twig', [
+        return $this->render('BackInterface/order/show.html.twig', [
             'order' => $order,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="order_edit", methods={"GET","POST"})
+     * @Route("/home/order/{id}", name="order_show_front", methods={"GET"})
      */
-    public function edit(Request $request, Order $order): Response
+    public function showFront(Order $order): Response
+    {
+        return $this->render('FrontInterface/order/show.html.twig', [
+            'order' => $order,
+        ]);
+    }
+
+    /**
+     * @Route("/home/order/{id}/edit", name="order_edit_front", methods={"GET","POST"})
+     */
+    public function editFront(Request $request, Order $order): Response
     {
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
@@ -69,19 +88,19 @@ class OrderController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('order_index');
+            return $this->redirectToRoute('order_index_front');
         }
 
-        return $this->render('order/edit.html.twig', [
+        return $this->render('FrontInterface/order/edit.html.twig', [
             'order' => $order,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="order_delete", methods={"DELETE"})
+     * @Route("/admin/dashboard/order/{id}", name="order_delete_back", methods={"DELETE"})
      */
-    public function delete(Request $request, Order $order): Response
+    public function deleteBack(Request $request, Order $order): Response
     {
         if ($this->isCsrfTokenValid('delete'.$order->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -89,6 +108,19 @@ class OrderController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('order_index');
+        return $this->redirectToRoute('order_index_back');
+    }
+    /**
+     * @Route("/home/order/{id}", name="order_delete_front", methods={"DELETE"})
+     */
+    public function deleteFront(Request $request, Order $order): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$order->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($order);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('order_index_front');
     }
 }

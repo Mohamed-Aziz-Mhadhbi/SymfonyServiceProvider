@@ -1,8 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseAdmin.html.twig' %}
 
 {% block title %}Quiz index{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Quiz index</h1>
 
     <table class="table">
@@ -23,8 +23,8 @@
                 <td>{{ quiz.totalQuestion }}</td>
                 <td>{{ quiz.difficulty }}</td>
                 <td>
-                    <a href="{{ path('quiz_show', {'id': quiz.id}) }}">show</a>
-                    <a href="{{ path('quiz_edit', {'id': quiz.id}) }}">edit</a>
+                    <a href="{{ path('quiz_show_back', {'id': quiz.id}) }}">show</a>
+                    <a href="{{ path('quiz_edit_back', {'id': quiz.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('quiz_new') }}">Create new</a>
+    <a href="{{ path('quiz_new_back') }}">Create new</a>
 {% endblock %}
