@@ -1,0 +1,110 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+<section class="content">
+
+    <h1>User</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ user.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ user.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ user.role }}</td>
+            </tr>
+
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Enabled</th>
+                <td>{{ user.enabled ? 'Yes' : 'No' }}</td>
+            </tr>
+
+            <tr>
+                <th>Phone</th>
+                <td>{{ user.phone }}</td>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                <td>{{ user.photo }}</td>
+            </tr>
+            <tr>
+                <th>Bio</th>
+                <td>{{ user.bio }}</td>
+            </tr>
+            <tr>
+                <th>NomEntreprise</th>
+                <td>{{ user.nomEntreprise }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ user.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Secteur</th>
+                <td>{{ user.secteur }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ user.type }}</td>
+            </tr>
+            <tr>
+                <th>Specialisation</th>
+                <td>{{ user.specialisation }}</td>
+            </tr>
+            <tr>
+                <th>SiteWeb</th>
+                <td>{{ user.siteWeb }}</td>
+            </tr>
+            <tr>
+                <th>Presentation</th>
+                <td>{{ user.presentation }}</td>
+            </tr>
+            <tr>
+                <th>Taille</th>
+                <td>{{ user.taille }}</td>
+            </tr>
+            <tr>
+                <th>MontantHoraire</th>
+                <td>{{ user.montantHoraire }}</td>
+            </tr>
+            <tr>
+                <th>IsVerified</th>
+                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_index') }}">back to list</a>
+
+    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+
+    {{ include('user/_delete_form.html.twig') }}
+
+</section>
+</div>
+{% endblock %}
