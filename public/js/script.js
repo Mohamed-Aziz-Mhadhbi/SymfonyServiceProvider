@@ -297,13 +297,13 @@ $(window).on("load", function() {
                }
              },
              color: {
-               value: "#ffffff"
+               value: "#11a852"
              },
              shape: {
                type: "circle",
                stroke: {
                  width: 0,
-                 color: "#ffffff"
+                 color: "#11a852"
                },
                polygon: {
                  nb_sides: 5
@@ -337,7 +337,7 @@ $(window).on("load", function() {
              line_linked: {
                enable: true,
                distance: 150,
-               color: "#ffffff",
+               color: "#11a852",
                opacity: 0.2,
                width: 1
              },

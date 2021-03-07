@@ -44,6 +44,12 @@ class Domain
      */
     private $domainUser;
 
+    public function __toString()
+    {
+        return $this->title;
+    }
+
+
     public function __construct()
     {
         $this->offres = new ArrayCollection();

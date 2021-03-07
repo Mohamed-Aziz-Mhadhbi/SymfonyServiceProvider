@@ -1,4 +1,37 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<div class="card-body">
+    <div class="form-group">
+        <label >Title Quiz * :</label>
+        {{ form_widget(form.name,{'attr':{'class':'form-control' , 'id':'inputName'}}) }}
+        <div style="color :red;" >
+            {{form_errors(form.name)}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label >Total question * :</label>
+        {{ form_widget(form.total_question,{'attr':{'class':'form-control' , 'id':'inputTotalQuestion'}}) }}
+        <div style="color :red;" >
+            {{form_errors(form.total_question)}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label >Difficulty * :</label>
+        {{ form_widget(form.difficulty,{'attr':{'class':'form-control' , 'id':'inputDifficulty'}}) }}
+        <div style="color :red;" >
+            {{form_errors(form.total_question)}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputSkill">Skill :</label>
+        {{ form_widget(form.skill,{'attr':{'class':'form-control custom-select' , 'id':'inputSkill'}}) }}
+    </div>
+
+    <div class="form-group">
+        <label for="inputUser">Quiz user :</label>
+        {{ form_widget(form.quizUser,{'attr':{'class':'form-control custom-select' , 'id':'inputUser'}}) }}
+    </div>
+    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+
+</div>
 {{ form_end(form) }}

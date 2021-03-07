@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Service Provider</title>
+    {% block stylesheets %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <link href="{{ asset('css/app.css') }}" type="text/css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/animate.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/line-awesome.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/line-awesome-font-awesome.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.mCustomScrollbar.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('lib/slick/slick.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('lib/slick/slick-theme.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/responsive.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/svgstyle.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style-starter.css') }}">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@600&family=Inconsolata&display=swap" rel="stylesheet">
+
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/png" href="{{ asset('images/2.png') }}" >
+    {% endblock %}
+
+</head>
+<body onload="myFunction()">
+
+<div id="loader">
+    <svg xmlns="http://www.w3.org/2000/svg" width="670" height="236" viewBox="0 0 670 236">
+
+    <g transform="translate(0.000000,245.000000) scale(0.100000,-0.100000)"
+       fill="#000000" stroke="none">
+        <path d="M2120 4549 l-225 -149 -271 0 c-205 0 -274 -3 -282 -12 -6 -7 -84
+-140 -174 -295 l-163 -281 -275 -182 c-151 -100 -276 -184 -278 -185 -2 -2 4
+-122 13 -268 l17 -266 -141 -242 -142 -243 175 -306 174 -305 16 -280 c9 -154
+19 -303 22 -332 l5 -51 237 -119 238 -118 136 -235 135 -235 349 -5 349 -5
+301 -152 300 -151 235 154 234 154 266 0 266 0 167 288 166 287 288 189 c158
+104 288 190 288 190 1 1 -4 96 -11 211 -8 116 -15 242 -16 280 l-3 71 133 228
+c83 143 130 234 126 244 -3 9 -77 140 -165 292 l-159 277 -20 329 c-12 181
+-21 336 -21 344 0 10 -88 59 -249 139 l-248 124 -134 234 -134 233 -335 0
+-335 0 -302 150 c-167 83 -309 150 -316 149 -6 0 -113 -68 -237 -150z m435
+-82 l130 -66 -128 0 c-76 -1 -137 4 -149 10 -15 8 -30 8 -57 0 -20 -7 -75 -11
+-125 -9 l-89 3 114 76 c132 89 98 90 304 -14z m1540 -1109 c292 -507 531 -928
+533 -934 2 -7 -238 -429 -534 -938 l-537 -926 -1070 2 -1071 3 -533 929 c-294
+511 -532 932 -531 936 2 4 244 422 538 928 l535 922 1070 0 1070 0 530 -922z
+m199 120 c4 -68 9 -148 13 -178 3 -30 3 -53 1 -50 -20 20 -128 223 -128 240 0
+12 -13 33 -28 48 -16 15 -41 50 -57 77 -15 28 -37 65 -48 83 l-19 33 129 -65
+130 -65 7 -123z m-3501 -30 c-36 -62 -71 -117 -79 -121 -8 -4 -14 -16 -14 -25
+-1 -26 -99 -188 -104 -171 -2 8 -7 66 -11 130 l-6 116 138 91 c76 49 139 91
+140 91 1 1 -28 -50 -64 -111z m3619 -1904 l4 -80 -119 -80 c-66 -43 -133 -88
+-150 -99 l-31 -20 32 55 c18 30 47 81 64 112 18 31 42 62 55 69 15 8 23 22 23
+37 0 14 24 67 53 119 l52 93 7 -62 c3 -35 8 -99 10 -144z m-3652 -94 c33 -58
+60 -112 60 -122 0 -9 6 -21 14 -25 14 -8 120 -183 111 -183 -3 0 -56 26 -119
+57 l-115 57 -6 85 c-3 47 -8 122 -11 166 -4 44 -4 77 0 74 3 -3 33 -52 66
+-109z m1835 -1022 c19 -9 30 -8 48 1 14 7 58 11 121 9 l99 -3 -118 -79 -119
+-79 -160 81 -161 81 132 0 c80 1 142 -4 158 -11z"/>
+        <path d="M1476 4138 c-50 -79 -989 -1705 -989 -1714 0 -6 224 -401 498 -878
+l498 -866 568 0 569 0 0 409 0 408 41 27 c50 33 94 101 119 185 19 58 20 94
+20 486 l0 424 -22 26 c-13 14 -52 36 -88 49 l-65 24 -3 126 c-2 78 2 134 8
+147 11 20 16 20 448 17 429 -3 438 -4 495 -27 32 -12 77 -37 100 -55 43 -33
+98 -114 119 -176 17 -50 24 -954 8 -1030 -28 -129 -108 -224 -227 -271 -53
+-21 -78 -23 -305 -27 l-248 -4 0 -369 0 -369 234 0 c175 0 236 3 244 13 6 6
+234 397 507 867 414 713 494 858 486 875 -5 11 -230 403 -499 870 l-489 850
+-1006 3 -1006 2 -15 -22z m1019 -306 c107 -40 180 -117 216 -230 19 -57 22
+-98 27 -283 4 -193 3 -217 -13 -232 -14 -15 -40 -17 -184 -17 -118 0 -172 4
+-183 13 -14 10 -17 38 -20 170 l-3 159 -33 29 c-32 29 -34 29 -153 29 -129 0
+-167 -10 -191 -53 -9 -16 -14 -89 -16 -254 l-4 -232 359 -117 c197 -64 371
+-123 386 -131 54 -28 57 -48 57 -450 0 -205 -5 -397 -11 -433 -21 -132 -93
+-239 -194 -286 -86 -41 -138 -46 -428 -42 -259 3 -275 5 -332 27 -81 33 -163
+115 -196 196 -22 57 -23 71 -24 305 l0 245 190 0 190 0 5 -157 c6 -179 15
+-202 86 -226 58 -20 230 -12 266 12 43 28 49 70 46 300 l-3 209 -360 118
+c-198 65 -369 123 -381 130 -42 22 -44 41 -44 485 0 403 1 428 21 486 37 110
+94 175 193 219 76 33 124 38 406 35 246 -2 269 -3 325 -24z"/>
+        <path d="M3020 2216 l0 -406 155 0 c167 0 202 8 227 53 9 16 14 97 16 297 4
+327 -1 390 -33 428 l-23 27 -171 3 -171 3 0 -405z"/>
+    </g>
+    </svg>
+
+</div>
+
+<div style="display:none;" id="myDiv">
+
+
+
+    {% block header %}
+
+        <header style="background: linear-gradient(to right, #11a852, rgba(0, 0, 0, 0.08))">
+            <div class="container">
+                <div class="header-data">
+                    <div class="logo pd-btm">
+                        <a href="home" title=""><img src="images/4.png" alt=""></a>
+                    </div>
+                    <!--logo end-->
+
+                    <!--search-bar end-->
+                    <div class="login_register">
+                        <ul>
+                            <li><a href="{{ path('app_login') }}" title="" style="background:#11a852">Login</a></li>
+                            <li><a href="{{ path('register') }}" title="" style="background:#11a852">Register</a></li>
+                        </ul>
+                    </div>
+                    <!--login_register end-->
+                    <div class="search-bar st2">
+                        <form>
+                            <input type="text" name="search" placeholder="Search...">
+                            <button type="submit"><i class="la la-search"></i></button>
+                        </form>
+                    </div>
+                    <!--search-bar end-->
+                </div>
+                <!--header-data end-->
+            </div>
+        </header>
+
+    {% endblock %}
+
+
+
+
+    {% block content %}
+
+        <!-- index-block1 -->
+        {# #}
+
+        <section class="w3l-index-block10">
+            <div class="new-block top-bottom">
+                <div class="container">
+                    <div class="middle-section">
+                        <!-- <h5>Tagline</h5> -->
+                        <div class="section-width">
+                            <h2 style="font-family: 'Dosis', sans-serif; font-size: 50px; color: lightgray; line-height:1.2;">Make bright ideas<br><span style="color: #11a852; "> happen</span></h2>
+                        </div>
+                        <div class="link-list-menu">
+                            <p class="mb-5" style="font-family: 'Dosis', monospace;">Find the best freelancers to deliver your projects</p>
+                            <a href="about.html" class="btn btn-outline-light btn-more">START NOW FOR FREE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="bg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="670" height="236" viewBox="0 0 670 236">
+
+                <g transform="translate(0.000000,245.000000) scale(0.100000,-0.100000)"
+                   fill="#000000" stroke="none">
+                    <path d="M2120 4549 l-225 -149 -271 0 c-205 0 -274 -3 -282 -12 -6 -7 -84
+-140 -174 -295 l-163 -281 -275 -182 c-151 -100 -276 -184 -278 -185 -2 -2 4
+-122 13 -268 l17 -266 -141 -242 -142 -243 175 -306 174 -305 16 -280 c9 -154
+19 -303 22 -332 l5 -51 237 -119 238 -118 136 -235 135 -235 349 -5 349 -5
+301 -152 300 -151 235 154 234 154 266 0 266 0 167 288 166 287 288 189 c158
+104 288 190 288 190 1 1 -4 96 -11 211 -8 116 -15 242 -16 280 l-3 71 133 228
+c83 143 130 234 126 244 -3 9 -77 140 -165 292 l-159 277 -20 329 c-12 181
+-21 336 -21 344 0 10 -88 59 -249 139 l-248 124 -134 234 -134 233 -335 0
+-335 0 -302 150 c-167 83 -309 150 -316 149 -6 0 -113 -68 -237 -150z m435
+-82 l130 -66 -128 0 c-76 -1 -137 4 -149 10 -15 8 -30 8 -57 0 -20 -7 -75 -11
+-125 -9 l-89 3 114 76 c132 89 98 90 304 -14z m1540 -1109 c292 -507 531 -928
+533 -934 2 -7 -238 -429 -534 -938 l-537 -926 -1070 2 -1071 3 -533 929 c-294
+511 -532 932 -531 936 2 4 244 422 538 928 l535 922 1070 0 1070 0 530 -922z
+m199 120 c4 -68 9 -148 13 -178 3 -30 3 -53 1 -50 -20 20 -128 223 -128 240 0
+12 -13 33 -28 48 -16 15 -41 50 -57 77 -15 28 -37 65 -48 83 l-19 33 129 -65
+130 -65 7 -123z m-3501 -30 c-36 -62 -71 -117 -79 -121 -8 -4 -14 -16 -14 -25
+-1 -26 -99 -188 -104 -171 -2 8 -7 66 -11 130 l-6 116 138 91 c76 49 139 91
+140 91 1 1 -28 -50 -64 -111z m3619 -1904 l4 -80 -119 -80 c-66 -43 -133 -88
+-150 -99 l-31 -20 32 55 c18 30 47 81 64 112 18 31 42 62 55 69 15 8 23 22 23
+37 0 14 24 67 53 119 l52 93 7 -62 c3 -35 8 -99 10 -144z m-3652 -94 c33 -58
+60 -112 60 -122 0 -9 6 -21 14 -25 14 -8 120 -183 111 -183 -3 0 -56 26 -119
+57 l-115 57 -6 85 c-3 47 -8 122 -11 166 -4 44 -4 77 0 74 3 -3 33 -52 66
+-109z m1835 -1022 c19 -9 30 -8 48 1 14 7 58 11 121 9 l99 -3 -118 -79 -119
+-79 -160 81 -161 81 132 0 c80 1 142 -4 158 -11z"/>
+                    <path d="M1476 4138 c-50 -79 -989 -1705 -989 -1714 0 -6 224 -401 498 -878
+l498 -866 568 0 569 0 0 409 0 408 41 27 c50 33 94 101 119 185 19 58 20 94
+20 486 l0 424 -22 26 c-13 14 -52 36 -88 49 l-65 24 -3 126 c-2 78 2 134 8
+147 11 20 16 20 448 17 429 -3 438 -4 495 -27 32 -12 77 -37 100 -55 43 -33
+98 -114 119 -176 17 -50 24 -954 8 -1030 -28 -129 -108 -224 -227 -271 -53
+-21 -78 -23 -305 -27 l-248 -4 0 -369 0 -369 234 0 c175 0 236 3 244 13 6 6
+234 397 507 867 414 713 494 858 486 875 -5 11 -230 403 -499 870 l-489 850
+-1006 3 -1006 2 -15 -22z m1019 -306 c107 -40 180 -117 216 -230 19 -57 22
+-98 27 -283 4 -193 3 -217 -13 -232 -14 -15 -40 -17 -184 -17 -118 0 -172 4
+-183 13 -14 10 -17 38 -20 170 l-3 159 -33 29 c-32 29 -34 29 -153 29 -129 0
+-167 -10 -191 -53 -9 -16 -14 -89 -16 -254 l-4 -232 359 -117 c197 -64 371
+-123 386 -131 54 -28 57 -48 57 -450 0 -205 -5 -397 -11 -433 -21 -132 -93
+-239 -194 -286 -86 -41 -138 -46 -428 -42 -259 3 -275 5 -332 27 -81 33 -163
+115 -196 196 -22 57 -23 71 -24 305 l0 245 190 0 190 0 5 -157 c6 -179 15
+-202 86 -226 58 -20 230 -12 266 12 43 28 49 70 46 300 l-3 209 -360 118
+c-198 65 -369 123 -381 130 -42 22 -44 41 -44 485 0 403 1 428 21 486 37 110
+94 175 193 219 76 33 124 38 406 35 246 -2 269 -3 325 -24z"/>
+                    <path d="M3020 2216 l0 -406 155 0 c167 0 202 8 227 53 9 16 14 97 16 297 4
+327 -1 390 -33 428 l-23 27 -171 3 -171 3 0 -405z"/>
+                </g>
+            </svg>
+        </div>
+
+        <!-- //index-block1 -->
+        <!-- index-block2 -->
+        <section class="w3l-index-block2 py-5">
+            <div class="container py-md-3">
+                <div class="heading text-center mx-auto">
+                    <h3 class="head">Most popular categories </h3>
+                     </div>
+                <div class="row bottom_grids pt-md-3">
+                    <div class="col-lg-4 col-md-6 mt-5">
+                        <div class="s-block">
+                            <a href="#blog-single.html" class="d-block p-lg-4 p-3">
+                                <img src="assets/images/s1.png" alt="" class="img-fluid" />
+                                <h3 class="my-3">Global Network</h3>
+                                <p class="">Our goal is to help our companies maintain or achieve best in class positions. Build an online presence with this professional bootstrap 4 template.</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mt-5">
+                        <div class="s-block">
+                            <a href="#blog-single.html" class="d-block p-lg-4 p-3">
+                                <img src="assets/images/s2.png" alt="" class="img-fluid" />
+                                <h3 class="my-3">High Benefits</h3>
+                                <p class="">Our goal is to help our companies maintain or achieve best in class positions. Build an online presence with this professional bootstrap 4 template.</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mt-5">
+                        <div class="s-block">
+                            <a href="#blog-single.html" class="d-block p-lg-4 p-3">
+                                <img src="assets/images/s3.png" alt="" class="img-fluid" />
+                                <h3 class="my-3">Partnership</h3>
+                                <p class="">Our goal is to help our companies maintain or achieve best in class positions. Build an online presence with this professional bootstrap 4 template.</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /index-block2 -->
+        <!-- content-with-photo17 -->
+        <section class="w3l-index-block3">
+            <div class="section-info py-5">
+                <div class="container py-md-3">
+                    <div class="row cwp17-two align-items-center">
+                        <div class="col-md-6 cwp17-image">
+                            <img src="{{ asset('images/s1.png') }}" class="img-fluid" alt="" />
+                        </div>
+                        <div class="col-md-6 cwp17-text">
+                            <h2>Getting work done has never been easier</h2>
+                            <p>Get matched with expert freelancers in minutes</p>
+                            <p>Dedicated 24/7 customer service team</p>
+                            <p>Money back guarantee and anti-fraud protection</p>
+                            <a href="#signup.html">Learn more &raquo;</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- content-with-photo17 -->
+        <div class="w3l-index-block4">
+            <div class="features-bg py-5">
+                <!-- features15 block -->
+                <div class="container py-md-3">
+                    <div class="heading text-center mx-auto">
+                        <h3 class="head">Marketing solutions for your business </h3>
+                        <p class="my-3 head"> Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+                            Nulla mollis dapibus nunc, ut rhoncus
+                            turpis sodales quis. Integer sit amet mattis quam.</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 features15-col-text">
+                            <a href="#url" class="d-flex flex-wrap feature-unit align-items-center">
+                                <div class="col-sm-3">
+                                    <div class="features15-info">
+                                        <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 mt-sm-0 mt-4">
+                                    <div class="features15-para">
+                                        <h4>Mobile Apps</h4>
+                                        <p>It is a long established fact that a reader will be distracted by the readable content.</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 features15-col-text">
+                            <a href="#url" class="d-flex flex-wrap feature-unit align-items-center">
+                                <div class="col-sm-3">
+                                    <div class="features15-info">
+                                        <span class="fa fa-usd" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 mt-sm-0 mt-4">
+                                    <div class="features15-para">
+                                        <h4>Marketing</h4>
+                                        <p>It is a long established fact that a reader will be distracted by the readable content.</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 features15-col-text">
+                            <a href="#url" class="d-flex flex-wrap feature-unit align-items-center">
+                                <div class="col-sm-3">
+                                    <div class="features15-info">
+                                        <span class="fa fa-graduation-cap" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 mt-sm-0 mt-4">
+                                    <div class="features15-para">
+                                        <h4>Web Development</h4>
+                                        <p>It is a long established fact that a reader will be distracted by the readable content.</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 features15-col-text">
+                            <a href="#url" class="d-flex flex-wrap feature-unit align-items-center">
+                                <div class="col-sm-3">
+                                    <div class="features15-info">
+                                        <span class="fa fa-sort-alpha-asc" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 mt-sm-0 mt-4">
+                                    <div class="features15-para">
+                                        <h4>Optimization</h4>
+                                        <p>It is a long established fact that a reader will be distracted by the readable content.</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 features15-col-text">
+                            <a href="#url" class="d-flex flex-wrap feature-unit align-items-center">
+                                <div class="col-sm-3">
+                                    <div class="features15-info">
+                                        <span class="fa fa-laptop" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 mt-sm-0 mt-4">
+                                    <div class="features15-para">
+                                        <h4>Web Design</h4>
+                                        <p>It is a long established fact that a reader will be distracted by the readable content.</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 features15-col-text">
+                            <a href="#url" class="d-flex flex-wrap feature-unit align-items-center">
+                                <div class="col-sm-3">
+                                    <div class="features15-info">
+                                        <span class="fa fa-line-chart" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 mt-sm-0 mt-4">
+                                    <div class="features15-para">
+                                        <h4>Emailing</h4>
+                                        <p>It is a long established fact that a reader will be distracted by the readable content.</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <!-- features15 block -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-with-photo17 -->
+        <section class="w3l-index-block7 py-5">
+            <div class="container py-md-3">
+                <div class="row cwp17-two align-items-center">
+                    <div class="col-md-6 cwp17-text">
+                        <h2>Great features app
+                            that everyone Love</h2>
+                        <p>Improve your user experience and boost sales through regular website optimisations. Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
+                            Latin literature from 45 BC, making it over 2000 years old. </p>
+                        <a href="#signup.html">Learn more &raquo;</a>
+                    </div>
+                    <div class="col-md-6 cwp17-image">
+                        <img src="{{ asset('images/s2.png') }}" class="img-fluid" alt="" />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- content-with-photo17 -->
+        <section class="w3l-index-block5">
+            <!-- main-slider -->
+            <div class="testimonials py-5">
+                <div class="container text-center py-lg-3">
+                    <div class="heading text-center mx-auto">
+                        <h3 class="head">They love us </h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 mx-auto">
+                            <div class="owl-one owl-carousel owl-theme">
+                                <div class="item">
+                                    <div class="slider-info mt-lg-4 mt-3">
+                                        <div class="img-circle">
+                                            <img src="assets/images/emp2.jpg" class="img-fluid rounded" alt="client image">
+                                        </div>
+                                        <div class="message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea sit id accusantium
+                                            officia quod quasi necessitatibus perspiciatis Harum error provident
+                                            quibusdam tenetur.</div>
+                                        <div class="name">- Camilla</div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="slider-info mt-lg-4 mt-3">
+                                        <div class="img-circle">
+                                            <img src="assets/images/emp1.jpg" class="img-fluid rounded" alt="client image">
+                                        </div>
+                                        <div class="message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea sit id accusantium
+                                            officia quod quasi necessitatibus perspiciatis Harum error provident
+                                            quibusdam tenetur.</div>
+                                        <div class="name">- Dennis Jack</div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="slider-info mt-lg-4 mt-3">
+                                        <div class="img-circle">
+                                            <img src="assets/images/emp3.jpg" class="img-fluid rounded" alt="client image">
+                                        </div>
+                                        <div class="message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea sit id accusantium
+                                            officia quod quasi necessitatibus perspiciatis Harum error provident
+                                            quibusdam tenetur.</div>
+                                        <div class="name">- Anthony</div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="slider-info mt-lg-4 mt-3">
+                                        <div class="img-circle">
+                                            <img src="assets/images/emp4.jpg" class="img-fluid rounded" alt="client image">
+                                        </div>
+                                        <div class="message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea sit id accusantium
+                                            officia quod quasi necessitatibus perspiciatis Harum error provident
+                                            quibusdam tenetur.</div>
+                                        <div class="name">- Charlotte</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /main-slider -->
+        </section>
+        <!-- partners -->
+        <section class="w3l-index-block9" id="partners">
+            <div class="partners py-5">
+                <div class="container py-lg-3">
+                    <div class="heading text-center mx-auto">
+                        <h3 class="head">Over 16,000 Companies that trust our amazing product </h3>
+                    </div>
+                    <div class="row col-md-10 justify-content-between grid-part text-center mx-auto">
+                        <div class="parts-w3ls col-sm-2 col-6 mt-5">
+                            <span class="fa fa-cc-visa"></span>
+                        </div>
+                        <div class="parts-w3ls col-sm-2 col-6 mt-5">
+                            <span class="fa fa-digg"></span>
+                        </div>
+                        <div class="parts-w3ls col-sm-2 col-6 mt-5">
+                            <span class="fa fa-lastfm"></span>
+                        </div>
+                        <div class="parts-w3ls col-sm-2 col-6 mt-5">
+                            <span class="fa fa-cc-discover"></span>
+                        </div>
+                        <div class="parts-w3ls col-sm-2 col-6 mt-5">
+                            <span class="fa fa-ravelry"></span>
+                        </div>
+                        <div class="parts-w3ls col-sm-2 col-6 mt-5">
+                            <span class="fa fa-cc-stripe"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- //partners -->
+        <!-- subscribe section -->
+        <section class="w3l-index-block6 py-5">
+            <div class="container py-lg-3">
+                <div class="subscribe mx-auto">
+                    <div class="heading text-center mx-auto">
+                        <h3 class="head">Stay Updated! </h3>
+                        <p class="my-3 head"> Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+                            Nulla mollis dapibus nunc, ut rhoncus
+                            turpis sodales quis. Integer sit amet mattis quam.</p>
+                    </div>
+                    <form action="#" method="post" class="subscribe-wthree pt-2 mt-5">
+                        <div class="d-flex flex-wrap subscribe-wthree-field">
+                            <input class="form-control" type="email" placeholder="Enter your email..." name="email" required="">
+                            <button class="btn form-control btn-primary" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section class="w3l-index-block8 py-5">
+            <div class="container py-md-3 text-center">
+                <div class="heading text-center mx-auto">
+                    <h3 class="head">Ready to get started? </h3>
+                </div>
+                <div class="buttons mt-4">
+                    <a href="contact.html" class="btn btn-outline-primary mr-2 btn-demo">Book a Demo</a>
+                    <a href="contact.html" class="btn btn-primary btn-demo ml-2">Get Started</a>
+                </div>
+            </div>
+        </section>
+        <!-- / index-block8 -->
+        <!-- footer-28 block -->
+
+
+    {% endblock %}
+
+    {% block footer %}
+        <footer>
+            <div class="footy-sec mn no-margin">
+                <div class="container">
+                    <ul>
+                        <li><a href="#" title="">Help Center</a></li>
+                        <li><a href="#" title="">Privacy Policy</a></li>
+                        <li><a href="#" title="">Community Guidelines</a></li>
+                        <li><a href="#" title="">Cookies Policy</a></li>
+                        <li><a href="#" title="">Career</a></li>
+                        <li><a href="#" title="">Forum</a></li>
+                        <li><a href="#" title="">Language</a></li>
+                        <li><a href="#" title="">Copyright Policy</a></li>
+                    </ul>
+                    <p><img src="{{ asset('images/copy-icon2.png') }}" alt="">Copyright 2021 <a href="https://github.com/CoffeeTim">Coffee Tim</a></p>
+                    <img class="fl-rgt" src="{{ asset('images/logo2.png') }}" alt="">
+                </div>
+            </div>
+        </footer><!--footer end-->
+    {% endblock %}
+</div>
+
+    {% block js %}
+        <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/popper.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.mCustomScrollbar.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('lib/slick/slick.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/scrollbar.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/particles.min.js') }}"></script>
+    {% endblock %}
+
+    <script>
+        var myVar;
+
+        function myFunction() {
+            myVar = setTimeout(showPage, 600);
+        }
+
+        function showPage() {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("myDiv").style.display = "block";
+        }
+    </script>
+
+
+</body>
+</html>

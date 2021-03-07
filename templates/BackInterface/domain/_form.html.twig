@@ -1,4 +1,19 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<div class="card-body">
+    <div class="form-group">
+        <label >Title * :</label>
+        {{ form_widget(form.title,{'attr':{'class':'form-control' , 'id':'inputName'}}) }}
+        <div style="color :red;" >
+            {{form_errors(form.title)}}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputUser">Domain Users :</label>
+        {{ form_widget(form.domainUser,{'attr':{'class':'form-control custom-select' , 'id':'inputUser'}}) }}
+    </div>
+    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+
+</div>
 {{ form_end(form) }}

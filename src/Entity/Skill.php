@@ -45,6 +45,12 @@ class Skill
      */
     private $quizSkill;
 
+    public function __toString()
+    {
+        return $this->title;
+    }
+
+
     public function __construct()
     {
         $this->skillUser = new ArrayCollection();

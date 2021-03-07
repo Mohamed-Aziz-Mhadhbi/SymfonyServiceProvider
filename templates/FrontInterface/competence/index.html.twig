@@ -1,4 +1,4 @@
-{% extends 'baseAdmin.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Competence index{% endblock %}
 
@@ -26,8 +26,8 @@
                 <td>{{ competence.verification ? 'Yes' : 'No' }}</td>
                 <td>{{ competence.idQuiz }}</td>
                 <td>
-                    <a href="{{ path('competence_show', {'id': competence.id}) }}">show</a>
-                    <a href="{{ path('competence_edit', {'id': competence.id}) }}">edit</a>
+                    <a href="{{ path('competence_show_front', {'id': competence.id}) }}">show</a>
+                    <a href="{{ path('competence_edit_front', {'id': competence.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -38,6 +38,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('competence_new') }}">Create new</a>
+    <a href="{{ path('competence_new_front') }}">Create new</a>
 </div>
 {% endblock %}
