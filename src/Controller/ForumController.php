@@ -8,13 +8,27 @@ use App\Repository\CommentRepository;
 use App\Repository\ForumRepository;
 use App\Repository\PostRepository;
 use App\Repository\TagRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class ForumController extends AbstractController
 {
+    /**
+     * @var Security
+     */
+    private $security;
+
+
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     /**
      * @Route("/admin/dashboard/forum", name="forum_index_back", methods={"GET"})
      */
@@ -43,8 +57,10 @@ class ForumController extends AbstractController
      */
     public function forumsFront(ForumRepository $forumRepository): Response
     {
+        $user = $this->security->getUser();
         return $this->render('FrontInterface/forum/forums.html.twig', [
             'forums' => $forumRepository->findAll(),
+            'user' => $user,
         ]);
     }
 
