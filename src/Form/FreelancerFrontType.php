@@ -60,6 +60,11 @@ class FreelancerFrontType extends AbstractType
                     'class' => 'form-control'
 
                 ]])
+            ->add('specialisation',TextType::class ,[
+                'attr' => [
+                    'class' => 'form-control'
+
+                ]])
 
             ->add('skills')
             ->add('domains')

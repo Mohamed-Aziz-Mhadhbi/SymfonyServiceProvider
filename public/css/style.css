@@ -2689,7 +2689,7 @@ footer {
 	color: #51a5fb;
 }
 .star-descp span {
-	float: left;
+	float: center;
 	color: #686868;
 	font-size: 18px;
 	font-weight: 600;

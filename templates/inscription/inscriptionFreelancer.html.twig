@@ -87,16 +87,21 @@
 
 
 
-            <form id="regForm">
-                {{ form_start(form) }}
+
+                {{ form_start(form, { 'attr': {'id': 'regForm'}}) }}
                 <h1>Register:</h1>
+    <div class="alert alert-success" role="alert">
+        {% for message in app.flashes('success') %}
+            {{ message }}
+        {% endfor %}
+    </div>
                 <!-- One "tab" for each step in the form: -->
                 <div class="tab">General information:
                     {{ form_row(form.username, {'attr': {'placeholder': 'Username ...'}}) }}
                     {{ form_row(form.email, {'attr': {'placeholder': 'Email ...'}}) }}
                     {{ form_row(form.password, {'attr': {'placeholder': 'Password ...'}}) }}
                 </div>
-                <div class="tab">Profile information:
+                <div class="tab">Profil information:
                     {{ form_row(form.prenom, {'attr': {'placeholder': 'First name ...'}}) }}
                     {{ form_row(form.nom, {'attr': {'placeholder': 'Last name ...'}}) }}
                     {{ form_row(form.bio, {'attr': {'placeholder': 'Tell us about your self ...'}}) }}
@@ -104,13 +109,15 @@
                     {{ form_row(form.photo) }}
 
                 </div>
-                <div class="tab">Birthday:
+                <div class="tab">Freelancer information :
+                    {{ form_row(form.specialisation) }}
+                    {{ form_row(form.domains) }}
+                    {{ form_row(form.skills) }}
+                    {{ form_row(form.montantHoraire) }}
+                    <button type="submit">Envoyer</button>
 
                 </div>
-                <div class="tab">Login Info:
-                    <p><input placeholder="Username..." oninput="this.className = ''" name="uname"></p>
-                    <p><input placeholder="Password..." oninput="this.className = ''" name="pword" type="password"></p>
-                </div>
+
                 <div style="overflow:auto;">
                     <div style="float:right;">
                         <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
@@ -122,9 +129,10 @@
                     <span class="step"></span>
                     <span class="step"></span>
                     <span class="step"></span>
-                    <span class="step"></span>
+
                 </div>
-            </form>
+                {{ form_end(form) }}
+
 
     <script>
         var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -141,7 +149,7 @@
                 document.getElementById("prevBtn").style.display = "inline";
             }
             if (n == (x.length - 1)) {
-                document.getElementById("nextBtn").innerHTML = "Submit";
+               // document.getElementById("nextBtn").innerHTML = "Submit";
             } else {
                 document.getElementById("nextBtn").innerHTML = "Next";
             }

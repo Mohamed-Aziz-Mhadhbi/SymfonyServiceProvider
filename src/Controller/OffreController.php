@@ -9,10 +9,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 
 class OffreController extends AbstractController
 {
+    /**
+     * @var Security
+     */
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     /**
      * @Route("/admin/dashboard/offre", name="offre_index_back", methods={"GET"})
      */
@@ -28,8 +39,10 @@ class OffreController extends AbstractController
      */
     public function indexFront(OffreRepository $offreRepository): Response
     {
+        $user = $this->security->getUser();
         return $this->render('FrontInterface/offre/index.html.twig', [
             'offres' => $offreRepository->findAll(),
+            'user' => $user
         ]);
     }
 
@@ -38,6 +51,7 @@ class OffreController extends AbstractController
      */
     public function newFront(Request $request): Response
     {
+        $user = $this->security->getUser();
         $offre = new Offre();
         $form = $this->createForm(OffreType::class, $offre);
         $form->handleRequest($request);
@@ -53,6 +67,7 @@ class OffreController extends AbstractController
         return $this->render('FrontInterface/offre/new.html.twig', [
             'offre' => $offre,
             'form' => $form->createView(),
+            'user' => $user
         ]);
     }
 
@@ -72,8 +87,10 @@ class OffreController extends AbstractController
      */
     public function showFront(Offre $offre): Response
     {
+        $user = $this->security->getUser();
         return $this->render('FrontInterface/offre/show.html.twig', [
             'offre' => $offre,
+            'user' => $user
         ]);
     }
 
@@ -82,6 +99,7 @@ class OffreController extends AbstractController
      */
     public function editFront(Request $request, Offre $offre): Response
     {
+        $user = $this->security->getUser();
         $form = $this->createForm(OffreType::class, $offre);
         $form->handleRequest($request);
 
@@ -94,6 +112,7 @@ class OffreController extends AbstractController
         return $this->render('FrontInterface/offre/edit.html.twig', [
             'offre' => $offre,
             'form' => $form->createView(),
+            'user' => $user
         ]);
     }
 

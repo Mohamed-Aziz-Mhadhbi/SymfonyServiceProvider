@@ -52,7 +52,8 @@ class UserController extends AbstractController
                 $this->passwordEncoder->encodePassword($user, $form->get("password")->getData())
             );
             $user->setToken($this->generateToken());
-            $user->setRoles('client');
+            $user->setRole('client');
+            $user->setRoles(['ROLE_USER']);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -79,7 +80,8 @@ class UserController extends AbstractController
                 $this->passwordEncoder->encodePassword($user, $form->get("password")->getData())
             );
             $user->setToken($this->generateToken());
-            $user->setRoles('entreprise');
+            $user->setRole('entreprise');
+            $user->setRoles(['ROLE_USER']);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -106,7 +108,8 @@ class UserController extends AbstractController
                 $this->passwordEncoder->encodePassword($user, $form->get("password")->getData())
             );
             $user->setToken($this->generateToken());
-            $user->setRoles('prestataire');
+            $user->setRole('prestataire');
+            $user->setRoles(['ROLE_USER']);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();

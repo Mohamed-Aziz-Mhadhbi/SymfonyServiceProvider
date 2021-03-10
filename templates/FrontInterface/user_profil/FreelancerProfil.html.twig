@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserProfilController!{% endblock %}
+
+{% block content %}
+    <section class="cover-sec">
+        <img src="http://via.placeholder.com/1600x400" alt="">
+        <a href="#" title=""><i class="fa fa-camera"></i> Change Image</a>
+    </section>
+    <main>
+        <div class="main-section">
+            <div class="container">
+                <div class="main-section-data">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="main-left-sidebar">
+                                <div class="user_profile">
+                                    <div class="user-pro-img">
+                                        <img src="{{ asset('Kernel.project_dir/public/uploads/') ~ user.photo| imagine_filter('profil') }}" alt="">
+                                        <a href="#" title=""><i class="fa fa-camera"></i></a>
+                                    </div><!--user-pro-img end-->
+                                    <div class="user_pro_status">
+											<div class="user-tab-sec">
+												<h3>{{ user.prenom }} {{ user.nom }}</h3>
+												<div class="star-descp">
+													<span>{{ user.specialisation }}</span>
+											    </div><!--star-descp end-->
+									     	</div>
+										<div class="user-profile-ov">
+
+											<p>{{ user.bio }}</p>
+										</div><!--user-profile-ov end-->
+                                    </div><!--user_pro_status end-->
+
+
+                                    	<div class="suggestions full-width">
+										<div class="sd-title">
+											<h3>People Viewed Profile</h3>
+											<i class="la la-ellipsis-v"></i>
+										</div><!--sd-title end-->
+										<div class="suggestions-list">
+											<div class="suggestion-usd">
+
+												<ul class="social_links">
+													<li><a href="#" title=""><i class="la la-globe"></i> www.example.com</a></li>
+												</ul>
+												<img src="http://via.placeholder.com/35x35" alt="">
+												<div class="sgt-text">
+													<h4>Jessica William</h4>
+													<span>Graphic Designer</span>
+												</div>
+												<span><i class="la la-plus"></i></span>
+											</div>
+
+											<div class="suggestion-usd">
+												<img src="http://via.placeholder.com/35x35" alt="">
+												<div class="sgt-text">
+													<h4>John Doe</h4>
+													<span>PHP Developer</span>
+												</div>
+												<span><i class="la la-plus"></i></span>
+											</div>
+											<div class="suggestion-usd">
+												<img src="http://via.placeholder.com/35x35" alt="">
+												<div class="sgt-text">
+													<h4>Poonam</h4>
+													<span>Wordpress Developer</span>
+												</div>
+												<span><i class="la la-plus"></i></span>
+											</div>
+											<div class="suggestion-usd">
+												<img src="http://via.placeholder.com/35x35" alt="">
+												<div class="sgt-text">
+													<h4>Bill Gates</h4>
+													<span>C & C++ Developer</span>
+												</div>
+												<span><i class="la la-plus"></i></span>
+											</div>
+											<div class="suggestion-usd">
+												<img src="http://via.placeholder.com/35x35" alt="">
+												<div class="sgt-text">
+													<h4>Jessica William</h4>
+													<span>Graphic Designer</span>
+												</div>
+												<span><i class="la la-plus"></i></span>
+											</div>
+											<div class="suggestion-usd">
+												<img src="http://via.placeholder.com/35x35" alt="">
+												<div class="sgt-text">
+													<h4>John Doe</h4>
+													<span>PHP Developer</span>
+												</div>
+												<span><i class="la la-plus"></i></span>
+											</div>
+											<div class="view-more">
+												<a href="#" title="">View More</a>
+											</div>
+										</div><!--suggestions-list end-->
+									</div><!--suggestions end-->
+                                </div><!--user_profile end-->
+                                <div class="suggestions full-width">
+                                    <div class="suggestion-usd">
+												<img src="http://via.placeholder.com/35x35" alt="">
+												<div class="sgt-text">
+													<h4>Jessica William</h4>
+													<span>Graphic Designer</span>
+												</div>
+												<span><i class="la la-plus"></i></span>
+									</div>
+                                    
+                                </div><!--suggestions end-->
+                            </div><!--main-left-sidebar end-->
+                        </div>
+                        <div class="col-lg">
+                            <div class="main-ws-sec">
+                                <div class="user-tab-sec">
+                                    <h3>{{ user.prenom }} {{ user.nom }}</h3>
+                                    <div class="star-descp">
+                                        <span>Graphic Designer at Self Employed</span>
+                                        <ul>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star-half-o"></i></li>
+                                        </ul>
+                                        <a href="#" title="">Status</a>
+                                    </div><!--star-descp end-->
+                                </div>    
+                                
+                            </div><!--main-ws-sec end-->
+                        </div>
+                        
+                            
+                            
+                    </div>
+                </div><!-- main-section-data end-->
+            </div>
+        </div>
+    </main>
+{% endblock %}

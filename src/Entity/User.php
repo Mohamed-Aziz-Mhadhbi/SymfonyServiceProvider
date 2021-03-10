@@ -155,6 +155,11 @@ class User implements UserInterface
     private $isVerified = false;
 
     /**
+     * @ORM\Column (type="json")
+     */
+    private $roles = [];
+
+    /**
      * @ORM\OneToMany(targetEntity=Offre::class, mappedBy="User")
      */
     private $offres;
@@ -384,10 +389,18 @@ class User implements UserInterface
     /**
      * @param mixed $role
      */
-    public function setRoles($role): void
+    public function setRole($role): void
     {
         $this->role = $role;
 
+    }
+
+    /**
+     * @param mixed $roles
+     */
+    public function setRoles(array $roles)
+    {
+        $this->roles = $roles;
     }
 
     /**
@@ -515,9 +528,7 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return [
-            'ROLE_USER'
-        ];
+        return $this->roles;
     }
 
     public function setUsername(string $username): self

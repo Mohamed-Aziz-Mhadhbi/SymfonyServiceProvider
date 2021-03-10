@@ -47,7 +47,8 @@ class InscriptionController extends AbstractController
                 $this->passwordEncoder->encodePassword($user, $form->get("password")->getData())
             );
             $user->setToken($this->generateToken());
-            $user->setRoles('client');
+            $user->setRole('client');
+            $user->setRoles(['ROLE_USER']);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -91,8 +92,8 @@ class InscriptionController extends AbstractController
             $user->setPassword(
                 $this->passwordEncoder->encodePassword($user, $form->get("password")->getData())
             );
-            $file = $request->files->get('User')['photo'];
 
+            $file = $user->getPhoto();
             $Uploads_directory = $this->getParameter('Uploads_directory');
             $filename = md5(uniqid()) . '.' . $file->guessExtension();
 
@@ -100,9 +101,9 @@ class InscriptionController extends AbstractController
               $Uploads_directory,
               $filename
             );
-
             $user->setToken($this->generateToken());
-            $user->setRoles('prestataire');
+            $user->setRole('prestataire');
+            $user->setRoles(['ROLE_USER']);
             $user->setPhoto($filename);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

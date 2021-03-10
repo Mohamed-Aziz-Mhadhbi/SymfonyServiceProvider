@@ -2,14 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
-class ProfileController extends AbstractController
+class UserProfilController extends AbstractController
 {
     /**
      * @var Security
@@ -22,14 +20,13 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/home/profile", name="profile")
+     * @Route("/home/profil", name="user_profil")
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(): Response
     {
         $user = $this->security->getUser();
-        return $this->render('FrontInterface/profile/index.html.twig', [
-            'controller_name' => 'ProfileController',
-            'users' => $userRepository->findByRoleField('prestataire'),
+        return $this->render('FrontInterface/user_profil/FreelancerProfil.html.twig', [
+            'controller_name' => 'UserProfilController',
             'user' => $user
         ]);
     }
