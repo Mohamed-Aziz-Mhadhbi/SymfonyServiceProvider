@@ -25,6 +25,7 @@ class UserProfilController extends AbstractController
     public function index(): Response
     {
         $user = $this->security->getUser();
+
         return $this->render('FrontInterface/user_profil/FreelancerProfil.html.twig', [
             'controller_name' => 'UserProfilController',
             'user' => $user

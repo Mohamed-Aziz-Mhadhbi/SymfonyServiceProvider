@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ClientType;
+use App\Form\CompanyType;
 use App\Form\FreelancerFrontType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,7 +33,7 @@ class InscriptionController extends AbstractController
     }
 
     /**
-     * @Route("/inscription", name="register")
+     * @Route("/inscription/client", name="register")
      * @param Request $request
      * @return Response
      */
@@ -128,6 +129,56 @@ class InscriptionController extends AbstractController
             $this->addFlash("success", "Inscription réussie !");
         }
         return $this->render('inscription/inscriptionFreelancer.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/inscription/entreprise", name="registerEntreprise")
+     * @param Request $request
+     * @return Response
+     */
+    public function registerEntreprise(Request $request,\Swift_Mailer $mailer): Response
+    {
+        $user = new User();
+        $form = $this->createForm(CompanyType::class, $user);
+        $form->handleRequest($request);
+
+
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword(
+                $this->passwordEncoder->encodePassword($user, $form->get("password")->getData())
+            );
+
+
+            $user->setToken($this->generateToken());
+            $user->setRole('client');
+            $user->setRoles(['ROLE_USER']);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $mail = (new \Swift_Message('Thanks for signing up!'))
+                // On attribue l'expéditeur
+                ->setFrom('service.provider.time@gmail.com')
+                // On attribue le destinataire
+                ->setTo($user->getEmail())
+                // On crée le texte avec la vue
+                ->setBody(
+                    $this->renderView(
+                        'emails/registration.html.twig', ['token' => $user->getToken()]
+                    ),
+                    'text/html'
+                )
+            ;
+            $mailer->send($mail);
+
+
+            $this->addFlash("success", "Inscription réussie !");
+        }
+        return $this->render('inscription/inscriptionEntrepise.html.twig', [
             'form' => $form->createView()
         ]);
     }

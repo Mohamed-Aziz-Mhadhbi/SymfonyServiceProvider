@@ -86,7 +86,9 @@
 {% block content %}
 
 
-
+    <a href="{{ path('register') }}" >client</a>
+    <a href="{{ path('registerEntreprise') }}" >Company</a>
+    <a href="{{ path('registerFreelancer') }}" >Freelancer</a>
 
                 {{ form_start(form, { 'attr': {'id': 'regForm'}}) }}
                 <h1>Register:</h1>
