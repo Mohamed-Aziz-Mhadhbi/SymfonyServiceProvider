@@ -2,23 +2,8 @@
 
 {% block title %}Post{% endblock %}
 {% block content %}
-    <section class="forum-sec">
-        <div class="container">
-            <div class="forum-links">
-                <ul>
-                    <li class="active"><a href="#" title="">Latest</a></li>
-                    <li><a href="#" title="">Unanswered</a></li>
-                    <li><a href="#" title="">Treading</a></li>
-                    <li><a href="#" title="">Popular This Week</a></li>
-                    <li><a href="#" title="">Popular of Month</a></li>
+    <!-- summernote -->
 
-                </ul>
-            </div><!--forum-links end-->
-            <div class="forum-links-btn">
-                <a href="#" title=""><i class="fa fa-bars"></i></a>
-            </div>
-        </div>
-    </section>
 
     <section class="forum-page">
         <div class="container">
@@ -31,57 +16,71 @@
                                 <div class="usr_img">
                                     <img src="http://via.placeholder.com/60x60" alt="">
                                 </div>
+                                <p title="{{ post.creatAt ? post.creatAt|date('Y-m-d H:i') : '' }}"
+                                   style="text-align: right; line-height: 2;">
+                                    🕘 {{ post.creatAt ? post.creatAt|date("M d H:i a") : '' }}</p>
                                 <div class="usr_quest">
-                                    <h3>{{ post.title }}</h3>
-                                    <span><i class="fa fa-clock-o"></i>{{ post.creatAt ? post.creatAt|date('Y-m-d H:i:s') : '' }}</span>
+
+                                    <h3 style="line-height: 1.4;">{{ post.title }}</h3>
                                     <p>{{ post.description }}</p>
                                     <ul class="react-links">
-                                        <li><a href="#" title=""><i class="fa fa-heart"></i> Likes {{ post.likes }}</a></li>
-                                        <li><a href="#" title="">Views {{ post.views }}</a></li>
+                                        <li><a href="{{ path('clickLikes', {'id': post.id}) }}" title="">❤️ Likes</span>
+                                                {% if post.likes is null %}
+                                                    0
+                                                {% else %}
+                                                    {{ post.likes }}
+                                                {% endif %}
+                                            </a></li>
+                                        <li><a href="#" title=""> 👁️ Views
+                                                {% if post.views is null %}
+                                                    0
+                                                {% else %}
+                                                    {{ post.views }}
+                                                {% endif %}</a></li>
                                     </ul>
+
+
                                     <ul class="quest-tags">
-                                            <li><a href="#" title=""></a></li>
+                                        {% for tag in tags %}
+                                            {% if post.frm.id == tag.tagPost.get('id') %}
+                                                <li><a href="#" title="{{ tag.description }}">{{ tag.title }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
                                     </ul>
+
                                     <div class="comment-section">
-                                        <h3>03 Comments</h3>
+                                        <h3>{{ post.noc }} Comments</h3>
                                         <div class="comment-sec">
                                             <ul>
-                                                <li>
-                                                    <div class="comment-list">
-                                                        <div class="bg-img">
-                                                            <img src="http://via.placeholder.com/40x40" alt="">
-                                                        </div>
-                                                        <div class="comment">
-                                                            <h3>John Smith</h3>
-                                                            <span><img src="images/clock.png" alt=""> 3 min ago</span>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at libero elit. Mauris ultrices sed lorem nec efficitur.</p>
-                                                        </div>
-                                                    </div><!--comment-list end-->
-                                                </li>
-                                                <li>
-                                                    <div class="comment-list">
-                                                        <div class="bg-img">
-                                                            <img src="http://via.placeholder.com/40x40" alt="">
-                                                        </div>
-                                                        <div class="comment">
-                                                            <h3>John Doe</h3>
-                                                            <span><img src="images/clock.png" alt=""> 3 min ago</span>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at.</p>
-                                                        </div>
-                                                    </div><!--comment-list end-->
-                                                </li>
-                                                <li>
-                                                    <div class="comment-list">
-                                                        <div class="bg-img">
-                                                            <img src="http://via.placeholder.com/40x40" alt="">
-                                                        </div>
-                                                        <div class="comment">
-                                                            <h3>John Doe</h3>
-                                                            <span><img src="images/clock.png" alt=""> 3 min ago</span>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at.</p>
-                                                        </div>
-                                                    </div><!--comment-list end-->
-                                                </li>
+
+                                                {% for comment in comments %}
+                                                    {% if comment.pst.id == post.id %}
+
+                                                        <li>
+                                                            <div class="comment-list">
+                                                                <div class="bg-img">
+                                                                    <img src="http://via.placeholder.com/40x40" alt="">
+                                                                </div>
+                                                                <div class="comment">
+                                                                    <h3>{{ comment.usr.username }}</h3>
+                                                                    <span><img src="{{ asset('images/clock.png') }}"
+                                                                               alt=""> {{ comment.creatAt ? comment.creatAt|date('Y-m-d H:i:s') : '' }}</span>
+                                                                    <p>{{ comment.content }}</p>
+                                                                    <br>
+                                                                    <a href="{{ path('clickLikescomment', {'id': comment.id}) }}">❤️
+                                                                        Likes</span>
+                                                                        {% if comment.likes is null %}
+                                                                            0
+                                                                        {% else %}
+                                                                            {{ comment.likes }}
+                                                                        {% endif %}
+                                                                    </a>
+                                                                </div>
+                                                            </div><!--comment-list end-->
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+
                                             </ul>
                                         </div><!--comment-sec end-->
                                     </div>
@@ -89,47 +88,21 @@
                             </div><!--usr-question end-->
                         </div><!--forum-post-view end-->
                         <div class="post-comment-box">
-                            <h3>03 Comments</h3>
+                            <h3>{{ post.noc }} Comments</h3>
                             <div class="user-poster">
                                 <div class="usr-post-img">
                                     <img src="http://via.placeholder.com/40x40" alt="">
                                 </div>
                                 <div class="post_comment_sec">
-                                    <form>
-                                        <textarea placeholder="Your Answer"></textarea>
-                                        <button type="submit">Post Answer</button>
-                                    </form>
+                                    {{ include('FrontInterface/comment/_form.html.twig') }}
                                 </div><!--post_comment_sec end-->
                             </div><!--user-poster end-->
                         </div><!--post-comment-box end-->
-                        <div class="next-prev">
-                            <a href="#" title="" class="fl-left">Preview</a>
-                            <a href="#" title="" class="fl-right">Next</a>
-                        </div><!--next-prev end-->
+
                     </div>
                     <div class="col-lg-4">
-                        <div class="widget widget-feat">
-                            <ul>
-                                <li>
-                                    <i class="fa fa-heart"></i>
-                                    <span>1185</span>
-                                </li>
-                                <li>
-                                    <i class="fa fa-comment"></i>
-                                    <span>1165</span>
-                                </li>
-                                <li>
-                                    <i class="fa fa-share-alt"></i>
-                                    <span>1120</span>
-                                </li>
-                                <li>
-                                    <i class="fa fa-eye"></i>
-                                    <span>1009</span>
-                                </li>
-                            </ul>
-                        </div><!--widget-feat end-->
                         <div class="widget widget-user">
-                            <h3 class="title-wd">Top User of the Week</h3>
+                            <h3 class="title-wd">Top Forums of the Week</h3>
                             <ul>
                                 <li>
                                     <div class="usr-msg-details">
@@ -141,43 +114,6 @@
                                             <p>Graphic Designer </p>
                                         </div><!--usr-mg-info end-->
                                     </div>
-                                    <span><img src="images/price1.png" alt="">1185</span>
-                                </li>
-                                <li>
-                                    <div class="usr-msg-details">
-                                        <div class="usr-ms-img">
-                                            <img src="http://via.placeholder.com/50x50" alt="">
-                                        </div>
-                                        <div class="usr-mg-info">
-                                            <h3>John Doe</h3>
-                                            <p>PHP Developer</p>
-                                        </div><!--usr-mg-info end-->
-                                    </div>
-                                    <span><img src="images/price2.png" alt="">1165</span>
-                                </li>
-                                <li>
-                                    <div class="usr-msg-details">
-                                        <div class="usr-ms-img">
-                                            <img src="http://via.placeholder.com/50x50" alt="">
-                                        </div>
-                                        <div class="usr-mg-info">
-                                            <h3>Poonam</h3>
-                                            <p>Wordpress Developer </p>
-                                        </div><!--usr-mg-info end-->
-                                    </div>
-                                    <span><img src="images/price3.png" alt="">1120</span>
-                                </li>
-                                <li>
-                                    <div class="usr-msg-details">
-                                        <div class="usr-ms-img">
-                                            <img src="http://via.placeholder.com/50x50" alt="">
-                                        </div>
-                                        <div class="usr-mg-info">
-                                            <h3>Bill Gates</h3>
-                                            <p>C & C++ Developer </p>
-                                        </div><!--usr-mg-info end-->
-                                    </div>
-                                    <span><img src="images/price4.png" alt="">1009</span>
                                 </li>
                             </ul>
                         </div><!--widget-user end-->
@@ -189,4 +125,7 @@
             </div><!--forum-questions-sec end-->
         </div>
     </section><!--forum-page end-->
+
+    <!-- Summernote -->
 {% endblock %}
+

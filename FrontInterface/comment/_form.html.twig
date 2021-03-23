@@ -1,17 +1,16 @@
 {{ form_start(form) }}
 
+{{ form_widget(form.content,{'attr': {'class': 'form-control w-100 mt-2 mb-2','placeholder': 'Write a comment ..'}})}}
 
-{{form_row(form.content,{'attr': {'class': 'form-control w-100 mt-2 mb-2'}})}}
-<div style="color :red;" >
-    {{form_errors(form.content)}}
-</div>
-{{form_row(form.likes,{'attr': {'class':'form-control w-100 mt-2 mb-2'}})}}
-<div style="color :red;" >
-    {{form_errors(form.likes)}}
-</div>
-{{form_row(form.pst,{'attr': {'class': 'form-control w-100 mt-2 mb-2'}})}}
-{{form_row(form.usr,{'attr': {'class': 'form-control w-100 mt-2 mb-2'}})}}
+{{form_widget(form.creatAt,{'attr': {'style':'display:none'}})}}
+{{form_widget(form.likes,{'attr': {'style':'display:none'}})}}
+{{form_widget(form.pst,{'attr': {'style':'display:none'}})}}
+{{form_widget(form.usr,{'attr': {'style':'display:none'}})}}
+{{ form_widget(form.statusLike,{'attr':{'style':'display:none'}})}}
 
 <button class="btn btn-success">{{ button_label|default('Save') }}</button>
-<a href="{{ path('comment_index_front') }}">Go Back</a>
+
 {{ form_end(form) }}
+
+
+

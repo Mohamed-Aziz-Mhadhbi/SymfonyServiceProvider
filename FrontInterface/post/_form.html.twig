@@ -1,63 +1,35 @@
-{{ form_start(form,{'attr':{'novalidate':'novalidate'}})}}
+{{ form_start(form)}}
 <!--row-->
 
 <div class="card-body">
     <div class="form-group">
-        <label >Title* :</label>
+        <label style='line-height: 2;'>Title * :</label>
         {{ form_widget(form.title,{'attr':{'class':'form-control' , 'id':'inputName'}}) }}
-        <div style="color :red;" >
+        <div style="color :red;">
             {{form_errors(form.title)}}
         </div>
     </div>
     <div class="form-group">
-        <label >Description* :</label>
+        <label style='line-height: 2;'>Description * :</label>
         {{ form_widget(form.description,{'attr':{'class':'form-control' , 'id':'inputDescription'}}) }}
-        <div style="color :red;" >
+        <div style="color :red;">
             {{form_errors(form.description)}}
         </div>
     </div>
     <div class="form-group">
-        <label for="inputStatus">Tags :</label>
-        {{ form_widget(form.tg,{'attr':{'class':'form-control custom-select' , 'id':'inputStatus'}}) }}
+        <label style='line-height: 2;'  for="inputStatus">Tags :</label>
+        {{ form_widget(form.tg,{'attr':{'class':'form-select' , 'id':'inputStatus'}}) }}
     </div>
-    <div class="form-group">
-        <label for="inputStatus">User :</label>
-        {{ form_widget(form.usr,{'attr':{'class':'form-control custom-select' , 'id':'inputStatus'}}) }}
-    </div>
-    <div class="form-group ">
-    {{ form_label(form.creatAt , 'Date Time') }}
-        <div class="row m-2">
-            {{form_widget(form.creatAt,{'attr': {'class': 'form-control w-25 m-2'}})}}
-    </div>
-
-        <div class="form-group">
-            <label for="inputStatus">Views:</label>
-            {{ form_widget(form.views,{'attr':{'class':'form-control custom-select' , 'id':'inputStatus'}}) }}
-        </div>
-        <div style="color :red;" >
-            {{form_errors(form.views)}}
-        </div>
-        <div class="form-group">
-            <label for="inputStatus">likes:</label>
-            {{ form_widget(form.likes,{'attr':{'class':'form-control custom-select' , 'id':'inputStatus'}}) }}
-        </div>
-        <div style="color :red;" >
-            {{form_errors(form.likes)}}
-        </div>
-        <div class="form-group">
-            <label for="inputStatus">Nombers of Comments :</label>
-            {{ form_widget(form.noc,{'attr':{'class':'form-control custom-select' , 'id':'inputStatus'}}) }}
-        </div>
-        <div style="color :red;" >
-            {{form_errors(form.noc)}}
-        </div>
-    <div class="form-group">
-        <label for="inputStatus">Forums:</label>
-        {{ form_widget(form.frm,{'attr':{'class':'form-control custom-select' , 'id':'inputStatus'}}) }}
-    </div>
+    
+    {{ form_widget(form.usr,{'attr':{'style':'display:none'}}) }}
+    {{ form_widget(form.creatAt,{'attr':{'style':'display:none'}})}}
+    {{ form_widget(form.views,{'attr':{'style':'display:none'}}) }}
+    {{ form_widget(form.likes,{'attr':{'style':'display:none'}}) }}
+    {{ form_widget(form.noc,{'attr':{'style':'display:none'}}) }}
+    {{ form_widget(form.frm,{'attr':{'style':'display:none'}}) }}
+    {{ form_widget(form.statusLike,{'attr':{'style':'display:none'}}) }}
 
     <button class="btn btn-success">{{ button_label|default('Save') }}</button>
-    <a href="{{ path('post_index_front') }}">Go Back</a>
 </div>
 
 {{ form_end(form) }}

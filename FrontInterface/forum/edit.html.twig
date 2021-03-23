@@ -1,89 +1,113 @@
-{% extends 'basehtml.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Edit Forum{% endblock %}
+{% block title %}Forums{% endblock %}
 
 {% block content %}
 
+    <section class="forum-sec">
+        <div class="container">
+            <div class="forum-links">
+                <ul>
+                    <li class="active"><a href="#" title="">Latest</a></li>
+                    <li><a href="#" title="">Unanswered</a></li>
+                    <li><a href="#" title="">Treading</a></li>
+                    <li><a href="#" title="">Popular This Week</a></li>
+                    <li><a href="#" title="">Popular of Month</a></li>
+                </ul>
+            </div>
+            <!--forum-links end-->
+            <div class="forum-links-btn" >
+                <a href="#" title=""><i class="fa fa-bars"></i></a>
+            </div>
+        </div>
+    </section>
 
-    <div class="content-wrapper" style="min-height: 1593.75px;">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Forum</li>
-                        </ol>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
-        </section>
 
 
-        <section class="content">
-            <div class="container-fluid">
+    <section class="forum-page">
+        <div class="container">
+            <div class="forum-questions-sec">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-lg-8">
+                        <div class="forum-questions" style="border-radius: 5px;">
+                            <div class="post-topbar">
+                                <div>
+                                    <img src="{{ asset('images/cm-logo.png') }}" alt="">
+                                </div>
+
+                            </div><!--post-topbar end-->
 
 
 
-                        <!-- Main content -->
-                        <div class="invoice p-3 mb-3">
-                            <!-- title row -->
-                            <div class="row">
-                                <div class="col-12">
+                            {% for forum in forums %}
 
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Edit Forum :</h3>
-
-                                                    <div class="card-tools">
-                                                        <div class="input-group input-group-sm" style="width: 150px;">
-                                                            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                                                            <div class="input-group-append">
-                                                                <button type="submit" class="btn btn-default">
-                                                                    <i class="fas fa-search"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- /.card-header -->
-                                                <div class="card-body table-responsive p-0" style="height: 400px;">
-
-                                                    {{ include('FrontInterface/forum/_form.html.twig', {'button_label': 'Update'}) }}
-
-                                                </div>
-                                                <!-- /.card-body -->
-                                            </div>
-                                            <!-- /.card -->
+                                <div class="usr-question">
+                                    <div class="usr_img">
+                                        <img src="http://via.placeholder.com/60x60" alt="">
+                                    </div>
+                                    <div class="usr_quest">
+                                        <a style="color: #11a852;" href="{{ path('forum_show_front', {'id': forum.id}) }}">{{ forum.title }}</a>
+                                        <p>{{ forum.description }}</p>
+                                        {% if forum.us == user %}
+                                        <div style="width: 100%; display:flex; justify-content: flex-end">
+                                           <a href="{{ path('forum_edit_front', {'id': forum.id}) }}"><button type="button" class="btn-sm shadow-sm btn btn-primary mt-2 mb-2 mr-2"> Edit</button></a>
+                                            {{ include('FrontInterface/forum/_delete_form.html.twig') }}
                                         </div>
+                                        {% endif %}
                                     </div>
 
-
+                                    <!--usr_quest end-->
                                 </div>
-                                <!-- /.col -->
-                            </div>
-                            <!-- info row -->
+                                <!--usr-question end-->
 
-
-                            <!-- this row will not appear when printing -->
+                            {% endfor %}
 
                         </div>
-                        <!-- /.invoice -->
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
-    </div>
+                        <!--forum-questions end-->
 
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 5px;">
 
+                            <h3 class="title-wd" style="color: #6a737c; font-size: 16px;">Edit Forum </h3>
+                            <ul>
+                                {{ include('FrontInterface/forum/_form.html.twig', {'button_label': 'Update'}) }}
+                            </ul>
+
+                        </div>
+
+                        <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 5px;">
+
+                            <h3 class="title-wd" style="color: #6a737c; font-size: 16px;">Top News Communities 🌐</h3>
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <div class="usr-msg-details">
+                                            <div class="usr-ms-img">
+                                                <p></p>
+                                                <img src="http://via.placeholder.com/50x50" alt="">
+                                            </div>
+                                            <div class="usr-mg-info">
+                                                <h3 style="color: #6a737c; font-size: 14px;">Jessica William</h3>
+                                                <p>Graphic Designer </p>
+                                            </div>
+                                            <!--usr-mg-info end-->
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--widget-user end-->
+                        <div class="widget widget-adver">
+                            <img src="http://via.placeholder.com/370x270" alt="">
+                        </div>
+                        <!--widget-adver end-->
+                    </div>
+                </div>
+            </div>
+            <!--forum-questions-sec end-->
+        </div>
+    </section>
+    <!--forum-page end-->
 
 {% endblock %}

@@ -16,7 +16,7 @@
                 </ul>
             </div>
             <!--forum-links end-->
-            <div class="forum-links-btn">
+            <div class="forum-links-btn" >
                 <a href="#" title=""><i class="fa fa-bars"></i></a>
             </div>
         </div>
@@ -29,10 +29,10 @@
             <div class="forum-questions-sec">
                 <div class="row">
                     <div class="col-lg-8">
-                        <div class="forum-questions">
+                        <div class="forum-questions" style="border-radius: 5px;">
                             <div class="post-topbar">
                                 <div>
-                                    <img src="images/cm-logo.png" alt="">
+                                    <img src="{{ asset('images/cm-logo.png') }}" alt="">
                                 </div>
 
                             </div><!--post-topbar end-->
@@ -46,92 +46,56 @@
                                         <img src="http://via.placeholder.com/60x60" alt="">
                                     </div>
                                     <div class="usr_quest">
-                                        <a href="{{ path('forum_index_front', {'id': forum.id}) }}">{{ forum.title }}</a>
+                                        <a style="color: #11a852;" href="{{ path('forum_show_front', {'id': forum.id}) }}">{{ forum.title }}</a>
+                                        <p>{{ forum.description }}</p>
+                                        {% if forum.us == user %}
+                                        <div style="width: 100%; display:flex; justify-content: flex-end">
+                                           <a href="{{ path('forum_edit_front', {'id': forum.id}) }}"><button type="button" class="btn-sm shadow-sm btn btn-primary mt-2 mb-2 mr-2"> Edit</button></a>
+                                            {{ include('FrontInterface/forum/_delete_form.html.twig') }}
+                                        </div>
+                                        {% endif %}
                                     </div>
+
                                     <!--usr_quest end-->
                                 </div>
                                 <!--usr-question end-->
-                            {% else %}
-
-                                <p colspan="4">no records found</p>
 
                             {% endfor %}
 
-
-
-
-
                         </div>
                         <!--forum-questions end-->
-                        <nav aria-label="Page navigation example" class="full-pagi">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link pvr" href="#">Previous</a></li>
-                                <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                                <li class="page-item"><a class="page-link pvr" href="#">Next</a></li>
-                            </ul>
-                        </nav>
+
                     </div>
                     <div class="col-lg-4">
-                        <div class="widget widget-user">
-                            <h3 class="title-wd">Top User of the Week</h3>
+                        <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 5px;">
+
+                            <h3 class="title-wd" style="color: #6a737c; font-size: 16px;">Create New Communities  ➕</h3>
                             <ul>
+                                    {{ include('FrontInterface/forum/_form.html.twig') }}
+                            </ul>
+
+                        </div>
+
+                        <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 5px;">
+
+                            <h3 class="title-wd" style="color: #6a737c; font-size: 16px;">Top News Communities 🌐</h3>
+                            <ul>
+                             {% for forum in forums | sort() %}
                                 <li>
-                                    <div class="usr-msg-details">
-                                        <div class="usr-ms-img">
-                                            <img src="http://via.placeholder.com/50x50" alt="">
+                                    <a href="#">
+                                        <div class="usr-msg-details">
+                                            <div class="usr-ms-img">
+                                                <p></p>
+                                                <img src="http://via.placeholder.com/50x50" alt="">
+                                            </div>
+                                            <div class="usr-mg-info">
+                                                <h3 style="color: #6a737c; font-size: 14px;">{{forum.title}}</h3>
+                                            </div>
+                                            <!--usr-mg-info end-->
                                         </div>
-                                        <div class="usr-mg-info">
-                                            <h3>Jessica William</h3>
-                                            <p>Graphic Designer </p>
-                                        </div>
-                                        <!--usr-mg-info end-->
-                                    </div>
-                                    <span><img src="images/price1.png" alt="">1185</span>
+                                    </a>
                                 </li>
-                                <li>
-                                    <div class="usr-msg-details">
-                                        <div class="usr-ms-img">
-                                            <img src="http://via.placeholder.com/50x50" alt="">
-                                        </div>
-                                        <div class="usr-mg-info">
-                                            <h3>John Doe</h3>
-                                            <p>PHP Developer</p>
-                                        </div>
-                                        <!--usr-mg-info end-->
-                                    </div>
-                                    <span><img src="images/price2.png" alt="">1165</span>
-                                </li>
-                                <li>
-                                    <div class="usr-msg-details">
-                                        <div class="usr-ms-img">
-                                            <img src="http://via.placeholder.com/50x50" alt="">
-                                        </div>
-                                        <div class="usr-mg-info">
-                                            <h3>Poonam</h3>
-                                            <p>Wordpress Developer </p>
-                                        </div>
-                                        <!--usr-mg-info end-->
-                                    </div>
-                                    <span><img src="images/price3.png" alt="">1120</span>
-                                </li>
-                                <li>
-                                    <div class="usr-msg-details">
-                                        <div class="usr-ms-img">
-                                            <img src="http://via.placeholder.com/50x50" alt="">
-                                        </div>
-                                        <div class="usr-mg-info">
-                                            <h3>Bill Gates</h3>
-                                            <p>C & C++ Developer </p>
-                                        </div>
-                                        <!--usr-mg-info end-->
-                                    </div>
-                                    <span><img src="images/price4.png" alt="">1009</span>
-                                </li>
+                                {% endfor %}
                             </ul>
                         </div>
                         <!--widget-user end-->
