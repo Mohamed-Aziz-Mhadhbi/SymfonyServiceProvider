@@ -3,11 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface
 {
@@ -19,18 +24,26 @@ class User implements UserInterface
     private $id;
 
 
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    private $username;
 
     /**
-     * @ORM\Column(type="string", length=25)
+     * @Assert\Length(min="3",max="25")
+     * @ORM\Column(type="string", length=25, nullable=true)
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=25)
+     * @Assert\Length(min="3",max="25")
+     * @ORM\Column(type="string", length=25, nullable=true)
      */
     private $prenom;
 
     /**
+     * @Assert\Email()
      * @ORM\Column (type="string", length=180, unique=true)
      */
     private $email;
@@ -41,71 +54,162 @@ class User implements UserInterface
     private $role;
 
     /**
-     * @ORM\Column (type="string")
+     * @Assert\NotBlank()
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
     private $password;
 
     /**
-     * @ORM\Column (type="integer", length=8, unique=true)
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $enabled;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $token;
+
+    /**
+     * @Assert\Length (min="8", max="8")
+     * @ORM\Column (type="integer", length=8, unique=true, nullable=true)
      */
     private $phone;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $photo;
 
     /**
-     * @ORM\Column (type="string", length=300)
+     * @Assert\Length (min="10", max="300")
+     * @ORM\Column (type="string", length=300, nullable=true)
      */
     private $bio;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @Assert\Length(min="3",max="25")
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $nomEntreprise;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @Assert\Length(min="3",max="200")
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $adresse;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @Assert\Length(min="3",max="50")
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $secteur;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @Assert\Length(min="3",max="50")
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $type;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @Assert\Length(min="3",max="25")
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $specialisation;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @Assert\Url()
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $siteWeb;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @Assert\Length(min="3",max="25")
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $presentation;
 
     /**
-     * @ORM\Column (type="string", length=255)
+     * @Assert\Length(min="3",max="25")
+     * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $taille;
 
     /**
-     * @ORM\Column (type="integer")
+     * @ORM\Column (type="integer", nullable=true)
      */
     private $montantHoraire;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Offre::class, mappedBy="User")
+     */
+    private $offres;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Postulation::class, mappedBy="postulationUser")
+     */
+    private $postulations;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Service::class, mappedBy="serviceUser")
+     */
+    private $services;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="orderUser")
+     */
+    private $orders;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Project::class, mappedBy="projectUser")
+     */
+    private $projects;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Skill::class, mappedBy="skillUser")
+     */
+    private $skills;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Quiz::class, mappedBy="quizUser")
+     */
+    private $quizzes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Domain::class, mappedBy="domainUser")
+     */
+    private $domains;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $req_user;
+
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->enabled = false;
+        $this->offres = new ArrayCollection();
+        $this->postulations = new ArrayCollection();
+        $this->services = new ArrayCollection();
+        $this->orders = new ArrayCollection();
+        $this->projects = new ArrayCollection();
+        $this->skills = new ArrayCollection();
+        $this->quizzes = new ArrayCollection();
+        $this->domains = new ArrayCollection();
+
+    }
 
 
 
@@ -281,9 +385,10 @@ class User implements UserInterface
     /**
      * @param mixed $role
      */
-    public function setRole($role): void
+    public function setRoles($role): void
     {
         $this->role = $role;
+
     }
 
     /**
@@ -390,7 +495,10 @@ class User implements UserInterface
         $this->montantHoraire = $montantHoraire;
     }
 
-
+    public function __toString()
+    {
+        return $this->email;
+    }
 
     public function eraseCredentials()
     {
@@ -402,7 +510,7 @@ class User implements UserInterface
     }
     public function getUsername()
     {
-        // TODO: Implement getUsername() method.
+        return $this->username;
     }
     public function getPassword()
     {
@@ -421,4 +529,299 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * @param false $enabled
+     */
+    public function setEnabled($enabled): void
+    {
+        $this->enabled = $enabled;
+    }
+
+    /**
+     * @return false
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function supportsClass($class)
+    {
+        return User::class === $class;
+    }
+
+    /**
+     * @return Collection|Offre[]
+     */
+    public function getOffres(): Collection
+    {
+        return $this->offres;
+    }
+
+    public function addOffre(Offre $offre): self
+    {
+        if (!$this->offres->contains($offre)) {
+            $this->offres[] = $offre;
+            $offre->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffre(Offre $offre): self
+    {
+        if ($this->offres->removeElement($offre)) {
+            // set the owning side to null (unless already changed)
+            if ($offre->getUser() === $this) {
+                $offre->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Postulation[]
+     */
+    public function getPostulations(): Collection
+    {
+        return $this->postulations;
+    }
+
+    public function addPostulation(Postulation $postulation): self
+    {
+        if (!$this->postulations->contains($postulation)) {
+            $this->postulations[] = $postulation;
+            $postulation->setPostulationUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostulation(Postulation $postulation): self
+    {
+        if ($this->postulations->removeElement($postulation)) {
+            // set the owning side to null (unless already changed)
+            if ($postulation->getPostulationUser() === $this) {
+                $postulation->setPostulationUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Service[]
+     */
+    public function getServices(): Collection
+    {
+        return $this->services;
+    }
+
+    public function addService(Service $service): self
+    {
+        if (!$this->services->contains($service)) {
+            $this->services[] = $service;
+            $service->addServiceUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeService(Service $service): self
+    {
+        if ($this->services->removeElement($service)) {
+            $service->removeServiceUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setOrderUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getOrderUser() === $this) {
+                $order->setOrderUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Project[]
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    public function addProject(Project $project): self
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects[] = $project;
+            $project->setProjectUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Project $project): self
+    {
+        if ($this->projects->removeElement($project)) {
+            // set the owning side to null (unless already changed)
+            if ($project->getProjectUser() === $this) {
+                $project->setProjectUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Skill[]
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): self
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills[] = $skill;
+            $skill->addSkillUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): self
+    {
+        if ($this->skills->removeElement($skill)) {
+            $skill->removeSkillUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Quiz[]
+     */
+    public function getQuizzes(): Collection
+    {
+        return $this->quizzes;
+    }
+
+    public function addQuiz(Quiz $quiz): self
+    {
+        if (!$this->quizzes->contains($quiz)) {
+            $this->quizzes[] = $quiz;
+            $quiz->setQuizUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuiz(Quiz $quiz): self
+    {
+        if ($this->quizzes->removeElement($quiz)) {
+            // set the owning side to null (unless already changed)
+            if ($quiz->getQuizUser() === $this) {
+                $quiz->setQuizUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Domain[]
+     */
+    public function getDomains(): Collection
+    {
+        return $this->domains;
+    }
+
+    public function addDomain(Domain $domain): self
+    {
+        if (!$this->domains->contains($domain)) {
+            $this->domains[] = $domain;
+            $domain->addDomainUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDomain(Domain $domain): self
+    {
+        if ($this->domains->removeElement($domain)) {
+            $domain->removeDomainUser($this);
+        }
+
+        return $this;
+    }
+
+    public function getReqUser(): ?string
+    {
+        return $this->req_user;
+    }
+
+    public function setReqUser(?string $req_user): self
+    {
+        $this->req_user = $req_user;
+
+        return $this;
+    }
 }

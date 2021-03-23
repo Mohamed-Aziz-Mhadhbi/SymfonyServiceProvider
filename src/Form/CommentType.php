@@ -2,29 +2,31 @@
 
 namespace App\Form;
 
-use App\Entity\Question;
+use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-class QuestionType extends AbstractType
+class CommentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('statement')
-            ->add('answerA')
-            ->add('answerB')
-            ->add('answerC')
-            ->add('rightAnswer')
-            ->add('quiz')
+
+            ->add('content')
+            ->add('likes')
+            ->add('statusLike')
+            ->add('creatAt')
+            ->add('usr')
+            ->add('pst',HiddenType::class)
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Question::class,
+            'data_class' => Comment::class,
         ]);
     }
 }

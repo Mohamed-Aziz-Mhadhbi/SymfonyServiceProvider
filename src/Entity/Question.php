@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\QuestionRepository;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * @ORM\Entity(repositoryClass=QuestionRepository::class)
@@ -21,80 +20,108 @@ class Question
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $enonce;
-
-
+    private $statement;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $proposition_correcte;
+    private $answerA;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $answerB;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $answerC;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $proposition_A;
+    private $rightAnswer;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=Quiz::class, inversedBy="quizQuestion")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $proposition_B;
-
-   
+    private $quiz;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEnonce(): ?string
+    public function getStatement(): ?string
     {
-        return $this->enonce;
+        return $this->statement;
     }
 
-    public function setEnonce(string $enonce): self
+    public function setStatement(string $statement): self
     {
-        $this->enonce = $enonce;
+        $this->statement = $statement;
 
         return $this;
     }
 
-   
-
-    public function getPropositionCorrecte(): ?int
+    public function getAnswerA(): ?string
     {
-        return $this->proposition_correcte;
+        return $this->answerA;
     }
 
-    public function setPropositionCorrecte(int $proposition_correcte): self
+    public function setAnswerA(?string $answerA): self
     {
-        $this->proposition_correcte = $proposition_correcte;
+        $this->answerA = $answerA;
 
         return $this;
     }
 
-    public function getPropositionA(): ?string
+    public function getAnswerB(): ?string
     {
-        return $this->proposition_A;
+        return $this->answerB;
     }
 
-    public function setPropositionA(string $proposition_A): self
+    public function setAnswerB(?string $answerB): self
     {
-        $this->proposition_A = $proposition_A;
+        $this->answerB = $answerB;
 
         return $this;
     }
 
-    public function getPropositionB(): ?string
+    public function getAnswerC(): ?string
     {
-        return $this->proposition_B;
+        return $this->answerC;
     }
 
-    public function setPropositionB(string $proposition_B): self
+    public function setAnswerC(?string $answerC): self
     {
-        $this->proposition_B = $proposition_B;
+        $this->answerC = $answerC;
 
         return $this;
     }
 
+    public function getRightAnswer(): ?string
+    {
+        return $this->rightAnswer;
+    }
+
+    public function setRightAnswer(string $rightAnswer): self
+    {
+        $this->rightAnswer = $rightAnswer;
+
+        return $this;
+    }
+
+    public function getQuiz(): ?Quiz
+    {
+        return $this->quiz;
+    }
+
+    public function setQuiz(?Quiz $quiz): self
+    {
+        $this->quiz = $quiz;
+
+        return $this;
+    }
 }

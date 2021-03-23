@@ -2,29 +2,28 @@
 
 namespace App\Form;
 
-use App\Entity\Question;
+use App\Entity\Order;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class QuestionType extends AbstractType
+class OrderType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('statement')
-            ->add('answerA')
-            ->add('answerB')
-            ->add('answerC')
-            ->add('rightAnswer')
-            ->add('quiz')
+            ->add('message')
+            ->add('creatAt')
+            ->add('status')
+            ->add('service')
+            ->add('orderUser')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Question::class,
+            'data_class' => Order::class,
         ]);
     }
 }

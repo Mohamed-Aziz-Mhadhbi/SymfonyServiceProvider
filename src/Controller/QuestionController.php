@@ -2,74 +2,168 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\QuestionRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Form\QuestionType;
 use App\Entity\Question;
+use App\Form\QuestionType;
+use App\Repository\QuestionRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
 
 class QuestionController extends AbstractController
 {
     /**
-     * @Route("/question", name="question")
+     * @Route("/admin/dashboard/Question", name="question_index_back", methods={"GET"})
      */
-    public function index(): Response
+    public function indexBack(QuestionRepository $questionRepository): Response
     {
-        return $this->render('question/index.html.twig', [
-            'controller_name' => 'QuestionController',
+        return $this->render('BackInterface/question/index.html.twig', [
+            'questions' => $questionRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/question/new", name="question")
+     * @Route("home/question", name="question_index_front", methods={"GET"})
      */
-    function new(Request $request, EntityManagerInterface $em):Response{
+    public function indexFront(QuestionRepository $questionRepository): Response
+    {
+        return $this->render('FrontInterface/question/index.html.twig', [
+            'questions' => $questionRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/dashboard/Question/new", name="question_new_back", methods={"GET","POST"})
+     */
+    public function newBack(Request $request): Response
+    {
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
-        $form = handleRequest($request);
-        if($form->isSubmitted()){
-            $question = new Question();
-            $question.setEnonce($request->get("enonce"));
-            $question.setPropositionA($request->get("proposition_A"));
-            $question.setPropositionB($request->get("proposition_B"));
-            $question.setPropositionCorrecte($request->get("proposition_correcte"));
-            $em->persist();
-            $em->flush();
-            // TODO :redirect to page administration
-        }
-        return $this->render('question/new.html.twig', [
-            "form"=> $form->createView(),
-        ]);
+        $form->handleRequest($request);
 
-    }
-    /**
-     * @Route("/question/{id}", name="question")
-     */
-    public function edit(Request $request, QuestionRepository $repository,  EntityManagerInterface $em,int  $id):Response{
-        $question = $repository->findOneQuestionById($id);
-        $form = $this->createForm(QuestionType::class, $question);
-        $form = handleRequest($request);
-        if($form->isSubmitted()){
-            $question = $form->getData();
-            $em->flush();
-            //TODO redirect to admin page
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($question);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('question_index_back');
         }
-        return $this->render('question/edit.html.twig', [
-            "form"=> $form->createView(),
+
+        return $this->render('BackInterface/question/new.html.twig', [
+            'question' => $question,
+            'form' => $form->createView(),
         ]);
     }
+
     /**
-     * @Route("/question/{id}", name="question", method="delete")
+     * @Route("home/question/new", name="question_new_front", methods={"GET","POST"})
      */
-   /* public function delete(int $id, QuestionRepository $qr, EntityManagerInterface $em){
-        $question = $qr->findOneQuestionById($id);
-        $em->remove($question);
-        $em->flush();
-    }
-    protected function forward(string $controller, array $path = [], array $query = []): Response
+    public function newFront(Request $request): Response
     {
-    }*/
+        $question = new Question();
+        $form = $this->createForm(QuestionType::class, $question);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($question);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('question_index_front');
+        }
+
+        return $this->render('FrontInterface/question/new.html.twig', [
+            'question' => $question,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/dashboard/Question/{id}", name="question_show_back", methods={"GET"})
+     */
+    public function showBack(Question $question): Response
+    {
+        return $this->render('BackInterface/question/show.html.twig', [
+            'question' => $question,
+        ]);
+    }
+
+    /**
+     * @Route("home/question/{id}", name="question_show_front", methods={"GET"})
+     */
+    public function showFront(Question $question): Response
+    {
+        return $this->render('FrontInterface/question/show.html.twig', [
+            'question' => $question,
+        ]);
+    }
+
+    /**
+     * @Route("/admin/dashboard/Question/{id}/edit", name="question_edit_back", methods={"GET","POST"})
+     */
+    public function editBack(Request $request, Question $question): Response
+    {
+        $form = $this->createForm(QuestionType::class, $question);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('question_index_back');
+        }
+
+        return $this->render('BackInterface/question/edit.html.twig', [
+            'question' => $question,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("home/question/{id}/edit", name="question_edit_front", methods={"GET","POST"})
+     */
+    public function editFront(Request $request, Question $question): Response
+    {
+        $form = $this->createForm(QuestionType::class, $question);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('question_index_front');
+        }
+
+        return $this->render('FrontInterface/question/edit.html.twig', [
+            'question' => $question,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/dashboard/Question/{id}", name="question_delete_back", methods={"DELETE"})
+     */
+    public function deleteBack(Request $request, Question $question): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($question);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('question_index_back');
+    }
+
+    /**
+     * @Route("home/question/{id}", name="question_delete_front", methods={"DELETE"})
+     */
+    public function deleteFront(Request $request, Question $question): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($question);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('question_index_front');
+    }
 }

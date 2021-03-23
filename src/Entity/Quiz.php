@@ -22,37 +22,42 @@ class Quiz
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $difficulte;
+    private $name;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $nbr_question;
+    private $total_question;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      */
-    private $note_max;
+    private $difficulty;
 
     /**
-     * @ORM\OneToMany(targetEntity=QuestionQuiz::class, mappedBy="quiz", orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity=Skill::class, inversedBy="quizSkill")
      */
-    private $quizQuestions;
+    private $skill;
 
     /**
-     * @ORM\OneToMany(targetEntity=NoteQuiz::class, mappedBy="quiz", orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="quizzes")
      */
-    private $quizNotes;
+    private $quizUser;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="quizzes")
+     * @ORM\OneToMany(targetEntity=Question::class, mappedBy="quiz")
      */
-    private $categorie;
+    private $quizQuestion;
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
 
     public function __construct()
     {
-        $this->quizQuestions = new ArrayCollection();
-        $this->quizNotes = new ArrayCollection();
+        $this->quizQuestion = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -60,110 +65,92 @@ class Quiz
         return $this->id;
     }
 
-    public function getDifficulte(): ?string
+    public function getName(): ?string
     {
-        return $this->difficulte;
+        return $this->name;
     }
 
-    public function setDifficulte(string $difficulte): self
+    public function setName(string $name): self
     {
-        $this->difficulte = $difficulte;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getNbrQuestion(): ?int
+    public function getTotalQuestion(): ?int
     {
-        return $this->nbr_question;
+        return $this->total_question;
     }
 
-    public function setNbrQuestion(int $nbr_question): self
+    public function setTotalQuestion(int $total_question): self
     {
-        $this->nbr_question = $nbr_question;
+        $this->total_question = $total_question;
 
         return $this;
     }
 
-    public function getNoteMax(): ?int
+    public function getDifficulty(): ?string
     {
-        return $this->note_max;
+        return $this->difficulty;
     }
 
-    public function setNoteMax(int $note_max): self
+    public function setDifficulty(string $difficulty): self
     {
-        $this->note_max = $note_max;
+        $this->difficulty = $difficulty;
+
+        return $this;
+    }
+
+    public function getSkill(): ?Skill
+    {
+        return $this->skill;
+    }
+
+    public function setSkill(?Skill $skill): self
+    {
+        $this->skill = $skill;
+
+        return $this;
+    }
+
+    public function getQuizUser(): ?User
+    {
+        return $this->quizUser;
+    }
+
+    public function setQuizUser(?User $quizUser): self
+    {
+        $this->quizUser = $quizUser;
 
         return $this;
     }
 
     /**
-     * @return Collection|QuestionQuiz[]
+     * @return Collection|Question[]
      */
-    public function getQuizQuestions(): Collection
+    public function getQuizQuestion(): Collection
     {
-        return $this->quizQuestions;
+        return $this->quizQuestion;
     }
 
-    public function addQuizQuestion(QuestionQuiz $quizQuestion): self
+    public function addQuizQuestion(Question $quizQuestion): self
     {
-        if (!$this->quizQuestions->contains($quizQuestion)) {
-            $this->quizQuestions[] = $quizQuestion;
+        if (!$this->quizQuestion->contains($quizQuestion)) {
+            $this->quizQuestion[] = $quizQuestion;
             $quizQuestion->setQuiz($this);
         }
 
         return $this;
     }
 
-    public function removeQuizQuestion(QuestionQuiz $quizQuestion): self
+    public function removeQuizQuestion(Question $quizQuestion): self
     {
-        if ($this->quizQuestions->removeElement($quizQuestion)) {
+        if ($this->quizQuestion->removeElement($quizQuestion)) {
             // set the owning side to null (unless already changed)
             if ($quizQuestion->getQuiz() === $this) {
                 $quizQuestion->setQuiz(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|NoteQuiz[]
-     */
-    public function getQuizNotes(): Collection
-    {
-        return $this->quizNotes;
-    }
-
-    public function addQuizNote(NoteQuiz $quizNote): self
-    {
-        if (!$this->quizNotes->contains($quizNote)) {
-            $this->quizNotes[] = $quizNote;
-            $quizNote->setQuiz($this);
-        }
-
-        return $this;
-    }
-
-    public function removeQuizNote(NoteQuiz $quizNote): self
-    {
-        if ($this->quizNotes->removeElement($quizNote)) {
-            // set the owning side to null (unless already changed)
-            if ($quizNote->getQuiz() === $this) {
-                $quizNote->setQuiz(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getCategorie(): ?Categorie
-    {
-        return $this->categorie;
-    }
-
-    public function setCategorie(?Categorie $categorie): self
-    {
-        $this->categorie = $categorie;
 
         return $this;
     }
