@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use DoctrineExtensions\Query\Mysql;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -32,6 +33,42 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function countAll()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('count(u)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    public function countByRole($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.role = :val')
+            ->setParameter('val', $value)
+            ->select('count(u)')
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+
+    public function CountByMonth($months)
+    {
+        $start = new \DateTime();
+        $start->sub(new \DateInterval("P{$months}M"));
+
+        return $this->createQueryBuilder('u')
+            ->select('MONTH(u.createdAt) AS month, count(u.id) AS count')
+            ->where('u.createdAt between :last_registration_start and :last_registration_end')
+            ->setParameter('last_registration_start',$start)
+            ->setParameter('last_registration_end',new \DateTime())
+            ->groupBy('month')
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
 

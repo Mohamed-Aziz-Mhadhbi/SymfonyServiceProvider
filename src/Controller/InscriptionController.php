@@ -153,7 +153,7 @@ class InscriptionController extends AbstractController
 
 
             $user->setToken($this->generateToken());
-            $user->setRole('client');
+            $user->setRole('entreprise');
             $user->setRoles(['ROLE_USER']);
 
             $em = $this->getDoctrine()->getManager();

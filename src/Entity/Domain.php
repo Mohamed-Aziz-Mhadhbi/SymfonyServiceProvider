@@ -44,6 +44,11 @@ class Domain
      */
     private $domainUser;
 
+    /**
+     * @ORM\Column(type="string", length=7, nullable=true)
+     */
+    private $color;
+
     public function __toString()
     {
         return $this->title;
@@ -185,6 +190,18 @@ class Domain
     public function removeDomainUser(User $domainUser): self
     {
         $this->domainUser->removeElement($domainUser);
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }
