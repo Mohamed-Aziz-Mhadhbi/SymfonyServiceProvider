@@ -83,4 +83,12 @@ class Categorie
 
         return $this;
     }
+
+    /**
+     * @param mixed $id
+     */
+    public function __toString(): string
+    {
+       return $this->disgnation;
+    }
 }

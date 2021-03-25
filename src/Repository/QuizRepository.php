@@ -47,4 +47,19 @@ class QuizRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findByCatAndDiff($value1,$value2)
+    {
+        return $this->createQueryBuilder('q')
+
+            ->andWhere('q.categorie = :val1')
+            ->andWhere('q.difficulte = :val2')
+
+            ->setParameter('val1', $value1)
+            ->setParameter('val2', $value2)
+            ->orderBy('q.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

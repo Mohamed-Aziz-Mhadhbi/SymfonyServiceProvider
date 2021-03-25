@@ -53,7 +53,7 @@ class CategorieController extends AbstractController
             $em->persist($categorie);
             $em->flush();
             $this->addFlash('success', 'Categorie ajouté avec succés!');
-            return $this->redirectToRoute('categories');
+                 $this->redirectToRoute('categories');
         }
         return $this->render('categorie/new.html.twig', [
             "form"=> $form->createView(),
