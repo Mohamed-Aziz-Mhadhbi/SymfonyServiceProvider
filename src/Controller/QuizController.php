@@ -8,6 +8,7 @@ use App\Form\CompleteQuizType;
 use App\Repository\CategorieRepository;
 use App\Repository\QuestionQuizRepository;
 
+use App\Repository\QuestionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,13 +76,17 @@ class QuizController extends AbstractController
     /**
      * @Route("/quiz/show/{category}/{diff}", name="show_quiz")
      */
-    public  function show(Request $request, QuizRepository $qz,CategorieRepository $cr,$category,$diff):Response{
+    public  function show(Request $request, QuizRepository $qz,CategorieRepository $cr, QuestionQuizRepository $qr, QuestionRepository $quesr,$category,$diff):Response{
+
         $cat =$cr->findOneByDisgnation($category);
         $quizes =$qz->findByCatAndDiff($cat->getId(),$diff);
-
-        $r= rand(0, count($quizes));
+        $r= rand(0, count($quizes)-1);
         $quiz = $quizes[$r];
-        dump($quiz);
+        $quizquestions = $qr->findByQuiz($quiz->getId());
+        $questions=[];
+        foreach ($quizquestions as $q){
+            array_push($questions,$quesr->findOneById($q->getQuestion()));
+        }
         $form = $this->createForm(CompleteQuizType::class,$quiz);
         $form->handleRequest($request);
         if ($form->isSubmitted()){
@@ -89,6 +94,7 @@ class QuizController extends AbstractController
         }
         return $this->render('quiz/show.html.twig', [
             "form"=> $form->createView()
+
         ]);
 
     }
@@ -101,20 +107,18 @@ class QuizController extends AbstractController
 
 
 
-        $form = $this->createFormBuilder()
-            ->add('categorie',EntityType::class,[
-                'class'=>Categorie::class
-            ])
-            ->add('save' ,SubmitType::class)
-            ->getForm();
+//        $form = $this->createFormBuilder()
+//            ->add('categorie',EntityType::class,[
+//                'class'=>Categorie::class
+//            ])
+//            ->add('save' ,SubmitType::class)
+//            ->getForm();
+        $quiz = new Quiz();
+        $form=$this->createForm(CompleteQuizType::class,$quiz);
         $form->handleRequest($request);
-        if ($form->isSubmitted()){
-            $categorie=$form->getData()['categorie'];
 
-            return $this->redirectToRoute('show_quiz', [
-                'category'=>$categorie->getDisgnation(),
-                'diff'=>'facile'
-            ]);
+        if ($form->isSubmitted()){
+
         }
 
         return $this->render('quiz/selectQuiz.html.twig', [
