@@ -3,18 +3,23 @@
 {% block title %}Edit Offre{% endblock %}
 
 {% block content %}
-<div class="card card-primary">
-    <div class="card-header">
-        <h2 class="card-title">Edit Annonces</h2>
-    </div>
-    <!-- /.card-header -->
-    <!-- form start -->
-    <div class="card-body">
-    {{ include('FrontInterface/offre/_form.html.twig', {'button_label': 'Update'}) }}
-    </div>
-    <a href="{{ path('offre_index_front') }}">back to list</a>
+    <div class="container">
 
-    {{ include('FrontInterface/offre/_delete_form.html.twig') }}
-</div>
+
+        <div class="card card-primary">
+            <div class="card-header">
+                <h2 class="card-title">Edit Annonces</h2>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <div class="card-body">
+                {{ include('FrontInterface/offre/_form.html.twig', {'button_label': 'Update'}) }}
+            </div>
+            <a href="{{ path('offre_index_front') }}">back to list</a>
+
+            {{ include('FrontInterface/offre/_delete_form.html.twig') }}
+        </div>
+    </div>
+
 
 {% endblock %}

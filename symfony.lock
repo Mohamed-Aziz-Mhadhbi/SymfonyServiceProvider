@@ -1,4 +1,10 @@
 {
+    "captcha-com/captcha": {
+        "version": "4.2.5"
+    },
+    "captcha-com/symfony-captcha-bundle": {
+        "version": "4.2.12"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.1"
     },
@@ -99,6 +105,9 @@
     "laminas/laminas-eventmanager": {
         "version": "3.3.0"
     },
+    "laminas/laminas-json": {
+        "version": "3.2.0"
+    },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.1.1"
     },
@@ -120,6 +129,9 @@
     },
     "nikic/php-parser": {
         "version": "v4.10.4"
+    },
+    "ob/highcharts-bundle": {
+        "version": "1.7"
     },
     "php": {
         "version": "7.4"

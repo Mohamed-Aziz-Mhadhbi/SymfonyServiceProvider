@@ -3,15 +3,15 @@
 {% block title %}New Offre{% endblock %}
 
 {% block content %}
-<div class="card card-primary">
-    <div class="card-header">
-        <h2 class="card-title">Create Annonces</h2>
+    <div class="card card-primary">
+        <div class="card-header">
+            <h2 class="card-title">Create Annonces</h2>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <div class="card-body">
+            {{ include('FrontInterface/offre/_form.html.twig') }}
+        </div>
+        <a href="{{ path('offre_index_front') }}">back to list</a>
     </div>
-    <!-- /.card-header -->
-    <!-- form start -->
-    <div class="card-body">
-    {{ include('FrontInterface/offre/_form.html.twig') }}
-    </div>
-    <a href="{{ path('offre_index_front') }}">back to list</a>
-</div>
 {% endblock %}

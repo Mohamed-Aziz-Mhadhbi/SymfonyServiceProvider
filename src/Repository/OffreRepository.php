@@ -18,6 +18,46 @@ class OffreRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Offre::class);
     }
+    /**
+     * @param $title
+     * @return int|mixed|string
+     */
+    function searchtitle($title){
+        return $this->createQueryBuilder('o')
+            ->where('.title LIKE :title')
+            ->setParameter('title','%' . $title . '%')
+            ->getQuery()->getResult();
+    }
+
+    /**
+     * @param $data
+     * @return int|mixed|string
+     */
+    public function search($data){
+
+        $query = $this->createQueryBuilder('o');
+        if($data){
+            $query->andWhere('o.id LIKE :data OR
+                 o.title LIKE :data OR
+                 o.description LIKE :data OR
+                 o.creatAt LIKE :data  ')
+                ->setParameter('data','%'.$data.'%');
+        }
+        return $query
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function stat1()
+    {
+        $rawSql = "SELECT o.domain_offer_id,count(o.id) as nbdom FROM Offre o group by o.domain_offer_id";
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare($rawSql);
+        $stmt->execute([]);
+
+        return $stmt->fetchAll();
+    }
+
 
     // /**
     //  * @return Offre[] Returns an array of Offre objects

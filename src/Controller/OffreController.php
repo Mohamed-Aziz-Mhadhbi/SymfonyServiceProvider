@@ -5,11 +5,15 @@ namespace App\Controller;
 use App\Entity\Offre;
 use App\Form\OffreType;
 use App\Repository\OffreRepository;
+use App\Repository\PostLikeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Ob\HighchartsBundle\Highcharts\Highchart;
+use App\Entity\PostLike;
 
 
 class OffreController extends AbstractController
@@ -142,6 +146,97 @@ class OffreController extends AbstractController
         }
 
         return $this->redirectToRoute('offre_index_front');
+    }
+
+    /**
+     * @param OffreRepository $repository
+     * @param Request $request
+     * @return Response
+     * @Route("/offre/recherche",name="recherche")
+     */
+    public function Recherche(OffreRepository $repository,Request $request)
+    {
+        $user = $this->security->getUser();
+        $data=$request->get('search');
+        $em=$repository->search($data);
+
+        return $this->render('FrontInterface/offre/index.html.twig',[
+            'offres'=>$em,
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * @return Response
+     * @Route ("/BackInterface/offre/statistique",name="statistique")
+     */
+    public function statistique(OffreRepository $repo): Response
+    {
+        $ob = new Highchart();
+        $ob->chart->renderTo('linechart');
+        $ob->title->text('Browser market shares at a specific website in 2010');
+        $ob->plotOptions->pie(array(
+            'allowPointSelect'  => true,
+            'cursor'    => 'pointer',
+            'dataLabels'    => array('enabled' => false),
+            'showInLegend'  => true
+        ));
+        $offre=$repo->stat1();
+        $data =array();
+        foreach ($offre as $values)
+        {
+            $a =array($values['domain_offer_id'],intval($values['nbdom']));
+            array_push($data,$a);
+        }
+
+        $ob->series(array(array('type' => 'pie','name' => 'Browser share', 'data' => $data)));
+        return $this->render('BackInterface/offre/statitstique.html.twig', array(
+            'chart' => $ob
+        ));
+
+
+    }
+    /**
+     * @Route ("/post/{id}/like",name="post_like")
+     * @param Offre $offre
+     * @param PostLikeRepository $likerepo
+     *
+     * @return Response
+     */
+    public function like (Offre $offre,PostLikeRepository $likerepo,EntityManagerInterface $entityManager):Response
+    { $user=$this->getUser();
+        if(!$user) return $this->json([
+            'code'=> 403,
+            'message'=> "unsuthorised"
+        ],403);
+
+        if($offre->islikedByUser($user)){
+            $like=$likerepo->findOneBy([
+                'post'=>$offre,
+                'user'=>$user
+            ]);
+            $entityManager->remove($like);
+            $entityManager->flush();
+            return $this->json(
+                [
+                    'code'=> 200,
+                    'message'=>'like bien supprime',
+                    'likes'=>$likerepo->count(['post'=>$offre])
+                ],200
+
+            );
+        }
+        $like =new Postlike();
+        $like->setPost($offre)
+            ->setUser($user);
+        $entityManager->persist($like);
+        $entityManager->flush();
+
+
+
+
+        return $this->json(['code'=> 200, 'message'=>'clike bien ajoute','likes'=>$likerepo->count(['post'=>$offre])],200);
+
     }
 
 }

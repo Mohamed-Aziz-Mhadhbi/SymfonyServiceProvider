@@ -6,6 +6,7 @@ use App\Entity\Offre;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Captcha\Bundle\CaptchaBundle\Form\Type\CaptchaType;
 
 class OffreType extends AbstractType
 {
@@ -17,6 +18,9 @@ class OffreType extends AbstractType
             ->add('creatAt')
             ->add('User')
             ->add('domainOffer')
+            ->add('captchaCode', CaptchaType::class, array(
+                'captchaConfig' => 'ExampleCaptcha'
+            ))
         ;
     }
 

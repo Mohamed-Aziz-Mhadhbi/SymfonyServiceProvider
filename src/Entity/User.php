@@ -199,6 +199,11 @@ class User implements UserInterface
      */
     private $domains;
 
+    /**
+     * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="user")
+     */
+    private $Likes;
+
 
     public function __construct()
     {
@@ -212,6 +217,7 @@ class User implements UserInterface
         $this->skills = new ArrayCollection();
         $this->quizzes = new ArrayCollection();
         $this->domains = new ArrayCollection();
+        $this->Likes = new ArrayCollection();
 
     }
 
@@ -817,6 +823,36 @@ class User implements UserInterface
     {
         if ($this->domains->removeElement($domain)) {
             $domain->removeDomainUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PostLike[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->Likes;
+    }
+
+    public function addLike(PostLike $like): self
+    {
+        if (!$this->Likes->contains($like)) {
+            $this->Likes[] = $like;
+            $like->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(PostLike $like): self
+    {
+        if ($this->Likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getUser() === $this) {
+                $like->setUser(null);
+            }
         }
 
         return $this;
