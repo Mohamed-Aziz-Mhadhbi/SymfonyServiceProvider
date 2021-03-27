@@ -9,10 +9,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 
 class ServiceController extends AbstractController
 {
+    /**
+     * @var Security
+     */
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
+
     /**
      * @Route("/admin/dashboard/service", name="service_index_back", methods={"GET"})
      */
@@ -25,10 +39,18 @@ class ServiceController extends AbstractController
     /**
      * @Route("/home/service", name="service_index_front", methods={"GET"})
      */
-    public function indexFront(ServiceRepository $serviceRepository): Response
+    public function indexFront(Request $request,ServiceRepository $serviceRepository,PaginatorInterface $paginator): Response
     {
+        $user = $this->security->getUser();
+        $donnees=$serviceRepository->findAll();
+        $services = $paginator->paginate(
+            $donnees, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            2// Nombre de résultats par page
+        );
         return $this->render('FrontInterface/service/index.html.twig', [
-            'services' => $serviceRepository->findAll(),
+            'services' => $services,
+            'user' => $user,
         ]);
     }
 
@@ -37,12 +59,18 @@ class ServiceController extends AbstractController
      */
     public function newFront(Request $request): Response
     {
+        $user = $this->security->getUser();
         $service = new Service();
         $form = $this->createForm(ServiceType::class, $service);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $service->setCreatAt(new \DateTime('now'));
+            $file = $service->getImage();
+            $filename= md5(uniqid()) . '.' . $file->guessExtension();
+            $file->move($this->getParameter('images_directory'), $filename);
+            $service->setImage($filename);
             $entityManager->persist($service);
             $entityManager->flush();
 
@@ -52,6 +80,7 @@ class ServiceController extends AbstractController
         return $this->render('FrontInterface/service/new.html.twig', [
             'service' => $service,
             'form' => $form->createView(),
+            'user' => $user,
         ]);
     }
 
@@ -70,8 +99,10 @@ class ServiceController extends AbstractController
      */
     public function showFront(Service $service): Response
     {
+        $user = $this->security->getUser();
         return $this->render('FrontInterface/service/show.html.twig', [
             'service' => $service,
+            'user' => $user,
         ]);
     }
 
@@ -123,4 +154,28 @@ class ServiceController extends AbstractController
         return $this->redirectToRoute('service_index_front');
     }
 
+    /**
+     * @Route("/home/service/search", name="search", methods={"GET"})
+     */
+    public function searchAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $requestString = $request->get('q');
+        $services =  $em->getRepository('Entity\Service')->findEntitiesByString($requestString);
+        if(!$services) {
+            $result['services']['error'] = "Post Not found :( ";
+        } else {
+            $result['services'] = $this->getRealEntities($services);
+        }
+        return new Response(json_encode($result));
+    }
+    public function getRealEntities($services){
+        foreach ($services as $services){
+            $realEntities[$services->getId()] = [$services->getTitle(),$services->getDescription()];
+
+        }
+        return $realEntities;
+    }
 }
+
+

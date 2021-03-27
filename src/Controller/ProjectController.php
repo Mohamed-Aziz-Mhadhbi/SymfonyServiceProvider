@@ -9,10 +9,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 
 class ProjectController extends AbstractController
 {
+    /**
+     * @var Security
+     */
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
+
     /**
      * @Route("/admin/dashboard/project", name="project_index_back", methods={"GET"})
      */
@@ -28,8 +40,10 @@ class ProjectController extends AbstractController
      */
     public function indexFront(ProjectRepository $projectRepository): Response
     {
+        $user = $this->security->getUser();
         return $this->render('FrontInterface/project/index.html.twig', [
             'projects' => $projectRepository->findAll(),
+            'user' => $user,
         ]);
     }
 
@@ -61,6 +75,7 @@ class ProjectController extends AbstractController
      */
     public function newFront(Request $request): Response
     {
+        $user = $this->security->getUser();
         $project = new Project();
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
@@ -76,6 +91,7 @@ class ProjectController extends AbstractController
         return $this->render('FrontInterface/project/new.html.twig', [
             'project' => $project,
             'form' => $form->createView(),
+            'user' => $user,
         ]);
     }
 
@@ -94,8 +110,10 @@ class ProjectController extends AbstractController
      */
     public function showFront(Project $project): Response
     {
+        $user = $this->security->getUser();
         return $this->render('FrontInterface/project/show.html.twig', [
             'project' => $project,
+            'user' => $user,
         ]);
     }
 

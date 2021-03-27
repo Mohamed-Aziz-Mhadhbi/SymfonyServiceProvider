@@ -106,6 +106,7 @@ class InscriptionController extends AbstractController
             $user->setRole('prestataire');
             $user->setRoles(['ROLE_USER']);
             $user->setPhoto($filename);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();

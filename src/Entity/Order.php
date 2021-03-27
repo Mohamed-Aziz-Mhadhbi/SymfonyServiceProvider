@@ -48,6 +48,7 @@ class Order
         return $this->id;
     }
 
+
     public function getMessage(): ?string
     {
         return $this->message;
