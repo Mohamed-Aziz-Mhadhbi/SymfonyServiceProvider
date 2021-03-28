@@ -1,0 +1,7 @@
+{% for post in posts %}
+    {% if post.id == post.frm.id %}
+
+{{ include('FrontInterface/post/Posts.html.twig') }}
+
+{% endif %}
+{% endfor %}

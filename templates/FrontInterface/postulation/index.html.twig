@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Postulation index{% endblock %}
+
+{% block content %}
+    <h1>Postulation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Motivation</th>
+                <th>Price</th>
+                <th>Duration</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for postulation in postulations %}
+            <tr>
+                <td>{{ postulation.id }}</td>
+                <td>{{ postulation.motivation }}</td>
+                <td>{{ postulation.price }}</td>
+                <td>{{ postulation.duration }}</td>
+                <td>
+                    <a href="{{ path('postulation_show_front', {'id': postulation.id}) }}">show</a>
+                    <a href="{{ path('postulation_edit_front', {'id': postulation.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('postulation_new_front') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,35 @@
+{{ form_start(form)}}
+<!--row-->
+
+<div class="card-body">
+    <div class="form-group">
+        <label style='line-height: 2;'>Title * :</label>
+        {{ form_widget(form.title,{'attr':{'class':'form-control' , 'id':'inputName'}}) }}
+        <div style="color :red;">
+            {{form_errors(form.title)}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label style='line-height: 2;'>Description * :</label>
+        {{ form_widget(form.description,{'attr':{'class':'form-control' , 'id':'inputDescription'}}) }}
+        <div style="color :red;">
+            {{form_errors(form.description)}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label style='line-height: 2;'  for="inputStatus">Tags :</label>
+        {{ form_widget(form.tg,{'attr':{'class':'form-select' , 'id':'inputStatus'}}) }}
+    </div>
+    
+    {{ form_widget(form.usr,{'attr':{'style':'display:none'}}) }}
+    {{ form_widget(form.creatAt,{'attr':{'style':'display:none'}})}}
+    {{ form_widget(form.views,{'attr':{'style':'display:none'}}) }}
+    {{ form_widget(form.likes,{'attr':{'style':'display:none'}}) }}
+    {{ form_widget(form.noc,{'attr':{'style':'display:none'}}) }}
+    {{ form_widget(form.frm,{'attr':{'style':'display:none'}}) }}
+    {{ form_widget(form.statusLike,{'attr':{'style':'display:none'}}) }}
+
+    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+</div>
+
+{{ form_end(form) }}
