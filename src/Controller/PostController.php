@@ -38,6 +38,7 @@ class PostController extends AbstractController
      */
     public function indexBack(PostRepository $postRepository): Response
     {
+
         return $this->render('BackInterface/post/index.html.twig', [
             'posts' => $postRepository->findAll(),
             
