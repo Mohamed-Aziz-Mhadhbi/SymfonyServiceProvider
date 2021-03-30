@@ -1,0 +1,44 @@
+<span>
+{% set day = "now"|date("d") - value | date("d") %}
+{% set month = "now"|date("m") - value | date("m") %}
+{% set year = "now"|date("Y") - value | date("Y") %}
+{% set hours =  "now"|date("H") - value |date("H") %}
+{% set min = "now" |date("i") - value |date("i") %}
+{% set sec = "now"|date("s") - value |date("s") %}
+
+{% if year == 0 %}
+    {% if day == 0 %}
+        {% if month == 0 %}
+            {% if hours == 0 %}
+                {% if min == 0 %}
+                    {% if sec == 0 %}
+                        just now
+                    {% else %}
+                        {{ sec }} secs ago
+                    {% endif %}
+                {% elseif min > 1 %}
+                    {{ min }} mins ago
+                {% else %}
+                    {{ min }} min ago
+                {% endif %}
+            {% elseif hours > 1 %}
+                {{ hours }} hours ago
+            {% elseif hours == 1 %}
+                {{ hours }} hour ago
+            {% endif %}
+        {% elseif month > 1 %}
+            {{ month }} months ago
+        {% else %}
+            {{ month }} month ago
+        {% endif %}
+    {% elseif day > 1 %}
+        {{ day }} days ago
+    {% else %}
+        {{ day }} day ago
+    {% endif %}
+{% elseif year > 1 %}
+    {{ year }} years ago
+{% else %}
+    {{ year }} year ago
+{% endif %}
+    </span>

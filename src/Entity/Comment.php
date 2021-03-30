@@ -24,7 +24,12 @@ class Comment
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank (message="this field must be full")
+     * @Assert\NotBlank (message="This field must be full")
+     * @Assert\Length (
+     *     max="10000",
+     *     min="10",
+     *     maxMessage="This field must be at maximum 10000 caracters",
+     *     minMessage="This field must be at minimum 10 caraters")
      */
     private $content;
 

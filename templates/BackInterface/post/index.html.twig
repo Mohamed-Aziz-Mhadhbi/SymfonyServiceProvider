@@ -75,7 +75,7 @@
                                                             <tr>
                                                                 <td>{{ post.id }}</td>
                                                                 <td>{{ post.title }}</td>
-                                                                <td>{{ post.description }}</td>
+                                                                <td>{{ post.description | raw }}</td>
                                                                 <td>{{ post.creatAt ? post.creatAt|date('Y-m-d H:i:s') : '' }}</td>
                                                                 <td>{{ post.views }}</td>
                                                                 <td>{{ post.likes }}</td>
@@ -94,10 +94,12 @@
                                                         {% endfor %}
                                                         </tbody>
                                                     </table>
+
                                                 </div>
                                                 <!-- /.card-body -->
                                             </div>
                                             <!-- /.card -->
+                                            <!--% include'BackInterface/admin_dashboard/pagination.html.twig' with {'route' : 'post_index_back'} %}-->
                                         </div>
                                     </div>
 
@@ -111,6 +113,7 @@
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
+            </div>
         </section>
         <!-- /.content -->
     </div>

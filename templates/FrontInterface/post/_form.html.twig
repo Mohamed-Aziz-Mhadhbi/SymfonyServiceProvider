@@ -1,6 +1,4 @@
-{{ form_start(form)}}
-<!--row-->
-
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}})}}
 <div class="card-body">
     <div class="form-group">
         <label style='line-height: 2;'>Title * :</label>
@@ -16,11 +14,8 @@
             {{form_errors(form.description)}}
         </div>
     </div>
-    <div class="form-group">
-        <label style='line-height: 2;'  for="inputStatus">Tags :</label>
-        {{ form_widget(form.tg,{'attr':{'class':'form-select' , 'id':'inputStatus'}}) }}
-    </div>
-    
+
+    {{ form_widget(form.tg,{'attr':{'style':'display:none'}}) }}
     {{ form_widget(form.usr,{'attr':{'style':'display:none'}}) }}
     {{ form_widget(form.creatAt,{'attr':{'style':'display:none'}})}}
     {{ form_widget(form.views,{'attr':{'style':'display:none'}}) }}

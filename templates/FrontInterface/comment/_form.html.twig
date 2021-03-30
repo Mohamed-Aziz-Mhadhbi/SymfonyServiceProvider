@@ -1,6 +1,9 @@
 {{ form_start(form) }}
 
 {{ form_widget(form.content,{'attr': {'class': 'form-control w-100 mt-2 mb-2','placeholder': 'Write a comment ..'}})}}
+<div style="color :red;" >
+    {{form_errors(form.content)}}
+</div>
 {{ form_widget(form.rating,{'attr': {'class': 'form-control w-100 mt-2 mb-2','placeholder' : 'please indicate your score from 0 to 5'}}) }}
 {{form_widget(form.creatAt,{'attr': {'style':'display:none'}})}}
 {{form_widget(form.likes,{'attr': {'style':'display:none'}})}}
@@ -11,6 +14,3 @@
 <button class="btn btn-success">{{ button_label|default('Save') }}</button>
 
 {{ form_end(form) }}
-
-
-

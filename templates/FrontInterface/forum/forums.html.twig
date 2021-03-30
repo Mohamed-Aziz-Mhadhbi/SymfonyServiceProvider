@@ -37,9 +37,7 @@
 
                             </div><!--post-topbar end-->
 
-
-                            {% for forum in forums %}
-
+                            {% for forum in forums | sort((a,b) => a.posts|length <=> b.posts|length) | reverse %}
                                 <div class="usr-question">
                                     <div class="usr_img">
                                         <img src="http://via.placeholder.com/60x60" alt="">
@@ -47,7 +45,13 @@
                                     <div class="usr_quest">
                                         <a style="color: #11a852;"
                                            href="{{ path('forum_show_front', {'id': forum.id}) }}">{{ forum.title }}</a>
+                                        <span style="font-size: 12px;">Created {% include 'FrontInterface/comment/FormaDateTime.html.twig' with {'value' : forum.creatAt } %}</span>
                                         <p>{{ forum.description }}</p>
+                                        {% if forum.posts|length == 0 %}
+                                            <p>There is <span style="color: #00b44e">no Posts</span></p>
+                                        {% else %}
+                                            <p> There is <span style="color: #00b44e">{{ forum.posts|length }} posts </span></p>
+                                            {% endif %}
                                         {% if forum.us == user %}
                                             <div style="width: 100%; display:flex; justify-content: flex-end">
                                                 <a href="{{ path('forum_edit_front', {'id': forum.id}) }}">
@@ -83,7 +87,7 @@
 
                         <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 5px;">
 
-                            <h3 class="title-wd" style="color: #6a737c; font-size: 16px;">Top 5 community 🌐</h3>
+                            <h3 class="title-wd" style="color: #6a737c; font-size: 16px;">Top new 5 community 🌐</h3>
                             <ul>
                                 {% for forum in forums |sort|reverse|slice(0,5) %}
 

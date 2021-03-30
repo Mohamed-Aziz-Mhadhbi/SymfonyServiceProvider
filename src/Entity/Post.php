@@ -22,11 +22,23 @@ class Post
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank (message="this field must be full")
+     * @Assert\Length (
+     *     max="255",
+     *     min="10",
+     *     maxMessage="This field must be at maximum 255 caracters",
+     *     minMessage="This field must be at minimum 10 caraters")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank (message="this field must be full")
+     * @Assert\Length (
+     *     max="10000",
+     *     min="10",
+     *     maxMessage="This field must be at maximum 10000 caracters",
+     *     minMessage="This field must be at minimum 10 caraters")
      */
     private $description;
 

@@ -4,228 +4,322 @@
 
 {% block content %}
 
-<section class="forum-page">
-    <div class="container">
-        <div class="forum-questions-sec">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="forum-questions" style="border-radius: 5px;">
-                        <div class="post-topbar">
-                            <div>
-                                <img src="{{ asset('images/cm-logo.png') }}" alt="">
+    <style>
+        .sticky {
+            position: fixed;
+            top: 10px;
+            width: 27%;
+            padding-right: 0px;
+            padding-left: 0px;
+        }
+    </style>
+    <section class="forum-page">
+        <div class="container">
+            <div class="forum-questions-sec">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="forum-questions" style="border-radius: 5px;">
+                            <div class="post-topbar">
+                                <div>
+                                    <h1 class="text-center" style="
+                            -ms-flex: 1;
+                            flex: 1;
+                            font-size: 28px;
+                            font-weight: 400;
+                            line-height: 32px;
+                            overflow: hidden;
+                            padding: 0 2px 4px 0;
+                            text-overflow: ellipsis;
+                            width: 100%;
+                            color: #11a852;">{{ forum.title }}</h1>
+                                </div>
+                                <br>
+                                <div class="post-st">
+                                    <ul>
+                                        <li style="margin-right: 290px;"><a href="#" title="" data-toggle="modal" data-target="#add-forum-modal">Add Post</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!--post-st end-->
                             </div>
-                            <div class="post-st">
-                                <ul>
-                                    <li><a class="post_project" href="#" title="">Ask question</a></li>
-                                </ul>
-                            </div>
-                            <!--post-st end-->
-                        </div>
-                        <!--post-topbar end-->
-                        {% for post in posts %}
-                        {% if post.frm.id == forum.id %}
+                            <!--post-topbar end-->
+                            {% for post in posts |reverse %}
+                                {% if post.frm.id == forum.id %}
 
-                        <div class="usr-question">
+                                    <div class="usr-question">
 
-                            <p title="{{ post.creatAt ? post.creatAt|date('Y-m-d H:i') : '' }}"
-                                style="text-align: right; line-height: 2;">🕘
-                                {{ post.creatAt ? post.creatAt|date("M d H:i a") : '' }}</p>
+                                        <p title="{{ post.creatAt ? post.creatAt|date('Y-m-d H:i') : '' }}"
+                                           style="text-align: right; line-height: 2;">
+                                            {% include 'FrontInterface/comment/FormaDateTime.html.twig' with {'value' : post.creatAt } %}</p>
 
-                            <div class="usr_quest">
-                                <a style="line-height: 1.4;"
-                                    href="{{ path('post_show_front', {'id': post.id}) }}">{{ post.title }}</a>
-                                <ul class="react-links">
+                                        <div class="usr_quest">
+                                            <a style="line-height: 1.4;"
+                                               href="{{ path('post_show_front', {'id': post.id}) }}">{{ post.title }}</a>
+                                            <ul class="react-links">
 
-                                    <br>
+                                                <br>
 
-                                    <li><a href="#" title="">❤️ Likes {{ post.likes }}</a></li>
-                                    <li><a href="{{ path('post_show_front', {'id': post.id}) }}" title="">🗨️ Comments
-                                            {{ post.noc }}</a></li>
-                                    <li><a title="View"> 👁️ Views {{ post.views }}</a></li>
+                                                <li><a href="#" title="">❤️ Likes {{ post.likes }}</a></li>
+                                                <li><a href="{{ path('post_show_front', {'id': post.id}) }}" title="">🗨️
+                                                        Comments
+                                                        {{ post.comments | length }}</a></li>
+                                                <li><a title="View"> 👁️ Views {{ post.views }}</a></li>
 
-                                </ul>
-                                {% if post.usr == user %}
-                                    <div style="width: 100%; display:flex; justify-content: flex-end">
-                                        <a href="{{ path('post_edit_front', {'id': post.id}) }}"><button type="button" class="btn-sm shadow-sm btn btn-primary mt-2 mb-2 mr-2"> Edit</button></a>
-                                        {{ include('FrontInterface/post/_delete_form.html.twig') }}
+                                            </ul>
+                                            {% if post.usr == user %}
+                                                <div style="width: 100%; display:flex; justify-content: flex-end">
+                                                    <a href="#" data-toggle="modal"
+                                                       data-target="#edit-forum-modal-{{ post.id }}">
+                                                        <button type="button"
+                                                                class="btn-sm shadow-sm btn btn-primary mt-2 mb-2 mr-2">
+                                                            Edit
+                                                        </button>
+                                                    </a>
+                                                    <!-- Modal edit -->
+                                                    <div class="modal fade" id="edit-forum-modal-{{ post.id }}"
+                                                         tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                         aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">
+                                                                        Edit Post</h5>
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal"
+                                                                            aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                   <!--{  render(controller(
+                                                                        'App\\Controller\\PostController::editFront',
+                                                                        { 'id': post.id }
+                                                                    )) }}-->
+                                                                    <!--{ include('FrontInterface/post/_formedit.html.twig', {'id':post.id}) }}-->
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                            data-dismiss="modal">Close
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {{ include('FrontInterface/post/_delete_form.html.twig') }}
+                                                </div>
+                                            {% endif %}
+                                            <ul class="quest-tags">
+                                                {% for tag in tags %}
+
+                                                    {% if post.frm.id == tag.tagPost.get('id') %}
+                                                        <li><a href="" title="{{ tag.description }}">{{ tag.title }}</a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <!--usr_quest end-->
+
                                     </div>
                                 {% endif %}
-                                <ul class="quest-tags">
-                                    {% for tag in tags %}
 
-                                    {% if post.frm.id == tag.tagPost.get('id') %}
-                                    <li><a href="" title="{{ tag.description }}">{{ tag.title }}</a></li>
-                                    {% endif %}
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            <!--usr_quest end-->
+                            {% endfor %}
+
 
                         </div>
-                        {% endif %}
-
-                        {% endfor %}
-
-
+                        <!--forum-questions end-->
                     </div>
-                    <!--forum-questions end-->
-                </div>
-                <div class="col-lg-4">
-                    <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 5px;">
+                    <div class="col-lg-4">
+                        <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 5px;">
 
-                        <h3 class="title-wd" style="color: #6a737c; font-size: 16px;">About Community</h3>
-                        <ul style="background-color: white; border-radius: 2px;">
-                           <li>
-                                <div class="usr-msg-details">
-                                    <div class="usr-mg-info" >
-                                        <p style=" font-family: Noto Sans,Arial,sans-serif; color: black; font-size: 14px; line-height: 1.4">{{ forum.description }}</p>
-                                    </div>
-                                    <!--usr-mg-info end-->
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 5px;">
-                        <h3 class="title-wd" style="color: #6a737c; font-size: 16px;">Top 5 Posts</h3>
-                        <ul>
-                            {% for post in posts|sort((a,b) => a.views <=> b.views)|reverse|slice(0,5) %}
-                            <li>
-                                <div class="usr-msg-details">
-                                    <div class="usr-mg-info" >
-                                        <h3 style="color: #6a737c; font-size: 14px;">{{ post.title }}</h3>
-                                    </div>
-                                    <!--usr-mg-info end-->
-                                </div>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 5px;">
-
-                        <h3 class="title-wd" style="color: #6a737c; font-size: 16px;">Posting to Service Provider</h3>
-                        <ul>
+                            <h3 class="title-wd" style="color: #6a737c; font-size: 16px;">About Community</h3>
+                            <ul style="background-color: white; border-radius: 2px;">
                                 <li>
+                                    <div class="usr-msg-details">
+                                        <div class="usr-mg-info">
+                                            <p style=" font-family: Noto Sans,Arial,sans-serif; color: black; font-size: 14px; line-height: 1.4">{{ forum.description }}</p>
+                                        </div>
+                                        <!--usr-mg-info end-->
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 5px;">
+                            <h3 class="title-wd" style="color: #6a737c; font-size: 16px;">Top 5 Posts</h3>
+                            <ul>
+                                {% for post in posts|sort((a,b) => a.views <=> b.views)|reverse|slice(0,5) %}
+                                    <li>
                                         <div class="usr-msg-details">
                                             <div class="usr-mg-info">
-                                                <h3 style="color: #6a737c; font-size: 14px;">1.Remember the human</h3>
-                                                <hr style=" padding: 0px; margin-top: -1.5em; width: 0px" >
+                                                <h3 style="color: #6a737c; font-size: 14px;">{{ post.title }}</h3>
                                             </div>
                                             <!--usr-mg-info end-->
                                         </div>
-                                </li>
-                            <li>
-                                <div class="usr-msg-details">
-                                    <div class="usr-mg-info">
-                                        <h3 style="color: #6a737c; font-size: 14px;">2.Behave like you would in real life</h3>
-                                        <hr style=" padding: 0px; margin-top:-1.5em">
-                                    </div>
-                                    <!--usr-mg-info end-->
-                                </div>
-                            </li>
-                            <li>
-                                <div class="usr-msg-details">
-                                    <div class="usr-mg-info">
-                                        <h3 style="color: #6a737c; font-size: 14px;">3.Look for the original source of content</h3>
-                                        <hr style=" padding: 0px; margin-top:-1.5em">
-                                    </div>
-                                    <!--usr-mg-info end-->
-                                </div>
-                            </li>
-                            <li>
-                                <div class="usr-msg-details">
-                                    <div class="usr-mg-info">
-                                        <h3 style="color: #6a737c; font-size: 14px;">4.Search for duplicates before posting</h3>
-                                        <hr style=" padding: 0px; margin-top:-1.5em">
-                                    </div>
-                                    <!--usr-mg-info end-->
-                                </div>
-                            </li>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 5px;">
 
-                            <li>
-                                <div class="usr-msg-details">
-                                    <div class="usr-mg-info">
-                                        <h3 style="color: #6a737c; font-size: 14px;">5.Read the community’s rules</h3>
-                                        <hr style=" padding: 0px; margin-top:-1.5em">
+                            <h3 class="title-wd" style="color: #6a737c; font-size: 16px;">Posting to Service
+                                Provider</h3>
+                            <ul>
+                                <li>
+                                    <div class="usr-msg-details">
+                                        <div class="usr-mg-info">
+                                            <h3 style="color: #6a737c; font-size: 14px;">1.Remember the human</h3>
+                                            <hr style=" padding: 0px; margin-top: -1.5em; width: 0px">
+                                        </div>
+                                        <!--usr-mg-info end-->
                                     </div>
-                                    <!--usr-mg-info end-->
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="widget widget-adver">
-                        <img src="http://via.placeholder.com/370x270" alt="">
-                    </div>
-                    <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 6px;">
-                        <footer style="border-radius: 5px;">
-                            <div class="footy-sec  no-margin">
-                                <div class="container">
-                                    <ul>
-                                        <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#" title="">Help Center</a></li>
-                                        <li><a style="color: #6a737c; font-size: 12px; line-height: 0;"  href="#" title="">Privacy Policy</a></li>
-                                        <li><a style="color: #6a737c; font-size: 12px; line-height: 0;"  href="#" title="">Community Guidelines</a></li>
-                                        <li><a style="color: #6a737c; font-size: 12px; line-height: 0;"  href="#" title="">Cookies Policy</a></li>
-                                        <li><a style="color: #6a737c; font-size: 12px; line-height: 0;"  href="#" title="">Career</a></li>
-                                        <li><a style="color: #6a737c; font-size: 12px; line-height: 0;"  href="#" title="">Forum</a></li>
-                                        <li><a style="color: #6a737c; font-size: 12px; line-height: 0;"  href="#" title="">Language</a></li>
-                                        <li><a style="color: #6a737c; font-size: 12px; line-height: 0;"  href="#" title="">Copyright Policy</a></li>
-                                    </ul>
+                                </li>
+                                <li>
+                                    <div class="usr-msg-details">
+                                        <div class="usr-mg-info">
+                                            <h3 style="color: #6a737c; font-size: 14px;">2.Behave like you would in real
+                                                life</h3>
+                                            <hr style=" padding: 0px; margin-top:-1.5em">
+                                        </div>
+                                        <!--usr-mg-info end-->
                                     </div>
+                                </li>
+                                <li>
+                                    <div class="usr-msg-details">
+                                        <div class="usr-mg-info">
+                                            <h3 style="color: #6a737c; font-size: 14px;">3.Look for the original source
+                                                of content</h3>
+                                            <hr style=" padding: 0px; margin-top:-1.5em">
+                                        </div>
+                                        <!--usr-mg-info end-->
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="usr-msg-details">
+                                        <div class="usr-mg-info">
+                                            <h3 style="color: #6a737c; font-size: 14px;">4.Search for duplicates before
+                                                posting</h3>
+                                            <hr style=" padding: 0px; margin-top:-1.5em">
+                                        </div>
+                                        <!--usr-mg-info end-->
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="usr-msg-details">
+                                        <div class="usr-mg-info">
+                                            <h3 style="color: #6a737c; font-size: 14px;">5.Read the community’s
+                                                rules</h3>
+                                            <hr style=" padding: 0px; margin-top:-1.5em">
+                                        </div>
+                                        <!--usr-mg-info end-->
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="widget widget-adver">
+                            <img src="http://via.placeholder.com/370x270" alt="">
+                        </div>
+                        <div id="sticky">
+                            <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 6px;">
+                                <footer style="border-radius: 5px;">
+                                    <div class="footy-sec  no-margin">
+                                        <div class="container">
+                                            <ul>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Help Center</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Privacy Policy</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Community Guidelines</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Cookies Policy</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Career</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Forum</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Language</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Copyright Policy</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </footer><!--footer end-->
                             </div>
-                        </footer><!--footer end-->
+                            <button style=" width: 128px; font-family: Noto Sans,Arial,sans-serif; border-radius: 15px; text-align:center; margin-left: 35%; position: relative;"
+                                    class="btn btn-success d-none d-sm-inline-block btn-sm btn-primary shadow-sm mt-2 mb-2"
+                                    onclick="topFunction()" id="myBtn" title="Go to top">Back to Top
+                            </button>
+                        </div>
                     </div>
-                    <button style=" width: 128px; font-family: Noto Sans,Arial,sans-serif; border-radius: 15px; text-align:center; margin-left: 35%; position: relative;" class="btn btn-success d-none d-sm-inline-block btn-sm btn-primary shadow-sm mt-2 mb-2" onclick="topFunction()" id="myBtn" title="Go to top">Back to Top</button>
-                    <!--widget-adver end-->
+                </div>
+            </div>
+            <!--forum-questions-sec end-->
+        </div>
+
+
+    </section>
+
+    <!--forum-page end-->
+    <!-- Modal Add -->
+    <div class="modal fade" id="add-forum-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> Add Forum</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ include('FrontInterface/post/_form.html.twig') }}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
-        <!--forum-questions-sec end-->
     </div>
 
+    <!--post-project-popup end-->
+    <script>
+        /*
+          ======================================
+                    BACK TO TOP LINK
+        ======================================
+        */
 
-</section>
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () {
+            scrollFunction()
+        };
 
-<!--forum-page end-->
-<div class="post-popup pst-pj">
-    <div class="post-project">
-        <h3>Question ?</h3>
-        <div class="post-project-fields">
-            
-                <div class="row">
-                     {{ include('FrontInterface/post/_form.html.twig') }} 
-                </div>
-        
-        </div>
-        <!--post-project-fields end-->
-        <a href="#" title=""><i class="la la-times-circle-o"></i></a>
-    </div>
-    <!--post-project end-->
-</div>
-
-<!--post-project-popup end-->
-<script>
-    /*
-      ======================================
-                BACK TO TOP LINK
-    ======================================
-    */
-
-    // When the user scrolls down 20px from the top of the document, show the button
-    window.onscroll = function() {scrollFunction()};
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            document.getElementById("myBtn").style.display = "block";
-        } else {
-            document.getElementById("myBtn").style.display = "none";
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("myBtn").style.display = "block";
+            } else {
+                document.getElementById("myBtn").style.display = "none";
+            }
         }
-    }
 
-    // When the user clicks on the button, scroll to the top of the document
-    function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-    }</script>
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }</script>
+    <script>
+        window.onscroll = function () {
+            myFunction()
+        };
 
+        var header = document.getElementById("sticky");
+        var sticky = header.offsetTop + 1240;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+    </script>
 
 
 {% endblock %}

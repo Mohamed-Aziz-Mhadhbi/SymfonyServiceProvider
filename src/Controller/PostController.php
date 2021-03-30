@@ -3,13 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Forum;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\PostType;
 use App\Repository\CommentRepository;
+use App\Repository\ForumRepository;
 use App\Repository\PostRepository;
 use App\Repository\TagRepository;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use phpDocumentor\Reflection\DocBlock\Tags\Uses;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,14 +37,13 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/admin/dashboard/post", name="post_index_back", methods={"GET"})
+     * @Route("/admin/dashboard/post}", name="post_index_back", methods={"GET"})
      */
     public function indexBack(PostRepository $postRepository): Response
     {
 
         return $this->render('BackInterface/post/index.html.twig', [
-            'posts' => $postRepository->findAll(),
-            
+            'posts'=> $postRepository->findAll(),
         ]);
     }
 
@@ -62,31 +64,6 @@ class PostController extends AbstractController
         ]);
     }
 
-
-    /**
-     * @Route("/admin/dashboard/post/new", name="post_new_back", methods={"GET","POST"})
-     */
-    public function newBack(Request $request): Response
-    {
-        $post = new Post();
-        $form = $this->createForm(PostType::class, $post);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($post);
-            $post->setCreatAt(new \DateTime('now'));
-            $entityManager->flush();
-
-            return $this->redirectToRoute('post_index_back');
-        }
-
-        return $this->render('BackInterface/post/new.html.twig', [
-            'post' => $post,
-            'form' => $form->createView(),
-        ]);
-    }
-
     /**
      * @Route("/admin/dashboard/post/{id}", name="post_show_back", methods={"GET"})
      */
@@ -97,26 +74,6 @@ class PostController extends AbstractController
         ]);
     }
 
-
-    /**
-     * @Route("/admin/dashboard/post/{id}/edit", name="post_edit_back", methods={"GET","POST"})
-     */
-    public function editBack(Request $request, Post $post): Response
-    {
-        $form = $this->createForm(PostType::class, $post);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('post_index_back');
-        }
-
-        return $this->render('BackInterface/post/edit.html.twig', [
-            'post' => $post,
-            'form' => $form->createView(),
-        ]);
-    }
 
     /**
      * @Route("/admin/dashboard/post/{id}", name="post_delete_back", methods={"DELETE"})
@@ -135,7 +92,7 @@ class PostController extends AbstractController
     /**
      * @Route("/home/post/new", name="post_new_front", methods={"GET","POST"})
      */
-    public function newFront(Request $request ,User $usr): Response
+    public function newFront(Request $request ,User $usr,FlashyNotifier $flashy): Response
     {
         $user = $this->security->getUser();
         $post = new Post();
@@ -150,7 +107,7 @@ class PostController extends AbstractController
             $post->setViews(0);
             $post->setCreatAt(new \DateTime('now'));
             $entityManager->flush();
-
+            $flashy->success('Post Add!');
             return $this->redirectToRoute('post_index_front');
         }
 
@@ -166,6 +123,16 @@ class PostController extends AbstractController
      */
     public function showFront(Request $request , Post $post,TagRepository $tagRepository,CommentRepository $commentRepository ): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        $arrayUsers = $entityManager->getRepository(User::class)->findAll();
+        foreach ($arrayUsers as $item) {
+            $arrayTags[] = $item->getUsername();
+        }
+        $str = "";
+        foreach ($arrayTags as $tag){
+            $str .= $tag . '/';
+
+        }
         $post->setViews($post->getViews() + 1);
         $user = $this->security->getUser();
         $comment = new Comment();
@@ -204,6 +171,37 @@ class PostController extends AbstractController
             'comments' => $commentRepository->findAll(),
             'user' => $user,
             'form' => $form->createView(),
+            'strTags' => $str,
+        ]);
+    }
+
+
+    /**
+     * @Route("/home/post/{id}/edit", name="post_edit_front", methods={"GET","POST"})
+     */
+    public function editFront(Request $request, Post $post, TagRepository $tagRepository,Forum $forum,ForumRepository $forumRepository,PostRepository $postRepository): Response
+    {
+        $user = $this->security->getUser();
+        $forum = $post->getFrm();
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('forum_show_front',array('id'=>$forum->getId()));
+        }
+
+        return $this->render('FrontInterface/forum/edit.html.twig', [
+            'post' => $post,
+            'form' => $form->createView(),
+            'forum' => $forum,
+            'forums' => $forumRepository->findAll(),
+            'tags' => $tagRepository->findAll(),
+            'posts' => $postRepository->findAll(),
+            'user' => $user,
+            'form' => $form->createView(),
+            'post' => $post,
         ]);
     }
 
@@ -252,15 +250,17 @@ class PostController extends AbstractController
     /**
      * @Route("/home/post/{id}", name="post_delete_font", methods={"DELETE"})
      */
-    public function deleteFront(Request $request, Post $post): Response
+    public function deleteFront(Request $request, Post $post,FlashyNotifier $flashy): Response
     {
+        $Forum =$post->getFrm();
         if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($post);
             $entityManager->flush();
+            $flashy->error('Post Deleted');
         }
 
-        return $this->redirectToRoute('post_show_front',array('id'=>$post->getId()));
+        return $this->redirectToRoute('forum_show_front',array('id'=>$Forum->getId()));
     }
     /**
      * @Route("/home/comment/{id}", name="comment_delete_front", methods={"DELETE"})
@@ -280,7 +280,7 @@ class PostController extends AbstractController
     /**
      * @Route("/home/comment/{id}/edit", name="comment_edit_front", methods={"GET","POST"})
      */
-    public function editFront(Request $request, Comment $comment ,TagRepository $tagRepository,CommentRepository $commentRepository): Response
+    public function editFrontComment(Request $request, Comment $comment ,TagRepository $tagRepository,CommentRepository $commentRepository): Response
     {
         $post = $comment->getPst();
         $user = $this->security->getUser();

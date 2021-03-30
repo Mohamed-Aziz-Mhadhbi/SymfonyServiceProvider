@@ -3,13 +3,38 @@
 {% block title %}Post{% endblock %}
 {% block content %}
     <!-- summernote -->
-
+    <style xmlns="http://www.w3.org/1999/html">
+        .sticky {
+            position: fixed;
+            top: 10px;
+            width: 27%;
+            padding-right: 0px;
+            padding-left: 0px;
+        }
+    </style>
 
     <section class="forum-page">
         <div class="container">
             <div class="forum-questions-sec">
                 <div class="row">
                     <div class="col-lg-8">
+                        {% if post.comments | length > 0 %}
+                            <div class="alert alert-info">
+                                <h4 class="alert-heading text-center">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            Overall rating given by our clients<br>
+                                            <small>this rating is calculated on {{ post.comments | length }}
+                                                comments!</small>
+                                        </div>
+                                        <div class="col">
+                                            {{ post.avgRating | round(1,'floor') }}<br>
+                                            {% include 'FrontInterface/post/rating.html.twig' with {'rating': post.avgRating |round(1,'floor') } %}
+                                        </div>
+                                    </div>
+                                </h4>
+                            </div>
+                        {% endif %}
                         <div class="forum-post-view" style="border-radius: 5px;">
                             <div class="usr-question">
 
@@ -18,11 +43,12 @@
                                 </div>
                                 <p title="{{ post.creatAt ? post.creatAt|date('Y-m-d H:i') : '' }}"
                                    style="text-align: right; line-height: 2;">
-                                    🕘 {{ post.creatAt ? post.creatAt|date("M d H:i a") : '' }}</p>
+                                        {% include 'FrontInterface/comment/FormaDateTime.html.twig' with {'value' : post.creatAt } %}
+                                </p>
                                 <div class="usr_quest">
 
                                     <h3 style="line-height: 1.4;">{{ post.title }}</h3>
-                                    <p>{{ post.description }}</p>
+                                    {{ post.description | raw }}
                                     <ul class="react-links">
                                         <li><a href="{{ path('clickLikes', {'id': post.id}) }}" title="">❤️ Likes</span>
                                                 {% if post.likes is null %}
@@ -31,7 +57,7 @@
                                                     {{ post.likes }}
                                                 {% endif %}
                                             </a></li>
-                                        <li><a  title="View"> 👁️ Views
+                                        <li><a title="View"> 👁️ Views
                                                 {% if post.views is null %}
                                                     0
                                                 {% else %}
@@ -47,14 +73,8 @@
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
-
-                                    {% if post.comments | length > 0 %}
-                                    <div>
-                                        {%  include 'FrontInterface/post/rating.html.twig' with {'rating': post.avgRating }%}
-                                    </div>
-                                    {% endif %}
                                     <div class="comment-section">
-                                        <h3>{{ post.noc }} Comments</h3>
+                                        <h3>{{ post.comments | length }} Comments</h3>
                                         <div class="comment-sec">
                                             <ul>
 
@@ -68,19 +88,11 @@
                                                                 </div>
                                                                 <div class="comment">
                                                                     <h3>{{ comment.usr.username }}</h3>
-                                                                    <span><img src="{{ asset('images/clock.png') }}"
-                                                                               alt=""> {{ comment.creatAt ? comment.creatAt|date('Y-m-d H:i:s') : '' }}</span>
                                                                     <div>{{ comment.content|raw }}</div>
                                                                     <br>
-                                                                    <a href="{{ path('clickLikescomment', {'id': comment.id}) }}">❤️
-                                                                        Likes</span>
-                                                                        {% if comment.likes is null %}
-                                                                            0
-                                                                        {% else %}
-                                                                            {{ comment.likes }}
-                                                                        {% endif %}
-                                                                    </a>
                                                                     {% include 'FrontInterface/post/rating.html.twig' with {'rating':comment.rating} %}
+
+                                                                    <span style="margin-left: 470px">{% include 'FrontInterface/comment/FormaDateTime.html.twig' with {'value' : comment.creatAt } %}</span>
                                                                     {% if comment.usr == user %}
                                                                         <div style="width: 100%; display:flex; justify-content: flex-end">
                                                                             <a href="{{ path('comment_edit_front', {'id': comment.id}) }}">
@@ -118,13 +130,15 @@
 
                     <div class="col-lg-4" style="border-radius: 5px; position: sticky; right: 0;">
                         <div class="widget widget-user" style="border-radius: 5px;">
-                            <h3 class="title-wd">Top Forums of the Week</h3>
+                            <h3 class="title-wd"style="font-size: 15px">{{ post.title }}</h3>
                             <ul>
                                 <li>
                                     <div class="usr-msg-details">
                                         <div class="usr-mg-info">
-                                            <h3>Jessica William</h3>
-                                            <p>Graphic Designer </p>
+                                            <h3 style="color: #6a737c; font-size: 14px;">Created At : {{post.creatAt ? post.creatAt|date('Y-m-d') : ''}} <i class="far fa-clock"></i></h3>
+                                            <h3 style="color: #6a737c; font-size: 14px;">Commments : {{ post.comments |length }} <i class="far fa-comment"></i></h3>
+                                            <h3 style="color: #6a737c; font-size: 14px;">Views : {{ post.views }} <i class="far fa-eye"></i></h3>
+                                            <h3 style="color: #6a737c; font-size: 14px;">Likes : {{ post.likes }} <i class="far fa-thumbs-up"></i></h3>
                                         </div><!--usr-mg-info end-->
                                     </div>
                                 </li>
@@ -134,37 +148,38 @@
                         <div class="widget widget-adver">
                             <img src="http://via.placeholder.com/370x270" alt="">
                         </div><!--widget-adver end-->
-                        <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 6px;">
-                            <footer style="border-radius: 5px;">
-                                <div class="footy-sec  no-margin">
-                                    <div class="container">
-                                        <ul>
-                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
-                                                   title="">Help Center</a></li>
-                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
-                                                   title="">Privacy Policy</a></li>
-                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
-                                                   title="">Community Guidelines</a></li>
-                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
-                                                   title="">Cookies Policy</a></li>
-                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
-                                                   title="">Career</a></li>
-                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
-                                                   title="">Forum</a></li>
-                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
-                                                   title="">Language</a></li>
-                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
-                                                   title="">Copyright Policy</a></li>
-                                        </ul>
+                        <div id="sticky">
+                            <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 6px;">
+                                <footer style="border-radius: 5px;">
+                                    <div class="footy-sec  no-margin">
+                                        <div class="container">
+                                            <ul>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Help Center</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Privacy Policy</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Community Guidelines</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Cookies Policy</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Career</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Forum</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Language</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Copyright Policy</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                            </footer><!--footer end-->
+                                </footer><!--footer end-->
+                            </div>
+                            <button style=" width: 128px; font-family: Noto Sans,Arial,sans-serif; border-radius: 15px; text-align:center; margin-left: 35%; position: relative;"
+                                    class="btn btn-success d-none d-sm-inline-block btn-sm btn-primary shadow-sm mt-2 mb-2"
+                                    onclick="topFunction()" id="myBtn" title="Go to top">Back to Top
+                            </button>
                         </div>
-                        <button style=" width: 128px; font-family: Noto Sans,Arial,sans-serif; border-radius: 15px; text-align:center; margin-left: 35%; position: relative;"
-                                class="btn btn-success d-none d-sm-inline-block btn-sm btn-primary shadow-sm mt-2 mb-2"
-                                onclick="topFunction()" id="myBtn" title="Go to top">Back to Top
-                        </button>
-
                     </div>
                 </div>
             </div><!--forum-questions-sec end-->
@@ -194,7 +209,68 @@
         function topFunction() {
             document.body.scrollTop = 0;
             document.documentElement.scrollTop = 0;
-        }</script>
+        }
+    </script>
+
+    <script>
+        window.onscroll = function () {
+            myFunction()
+        };
+
+        var header = document.getElementById("sticky");
+        var sticky = header.offsetTop + 580;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+    </script>
+
+    <script>
+        var string = "{{ strTags }}";
+        var availableTags = string.split('/');
+
+        console.log(availableTags);
+        var array =[];
+
+        for (var i = 0; i < availableTags.length; i++) {
+            if(availableTags[i] != "" )
+            {
+                array.push({ id:i, name:availableTags[i]});
+            }
+
+        }
+
+        console.log(array);
+
+        function split(val) {
+            return val.split(/@\s*/);
+        }
+
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+
+
+        $('#comment_content').mentiony({
+            onDataRequest: function (mode, keyword, onDataRequestCompleteCallback) {
+
+                var data =  array ;
+
+                data = jQuery.grep(data, function( item ) {
+                    return item.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1;
+                });
+                onDataRequestCompleteCallback.call(this, data);
+            },
+            timeOut: 0,
+            debug: 1,
+        });
+    </script>
 
 {% endblock %}
 

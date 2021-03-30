@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210327225233 extends AbstractMigration
+final class Version20210329225515 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -20,14 +20,12 @@ final class Version20210327225233 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE comment ADD rating INT DEFAULT NULL');
         $this->addSql('ALTER TABLE user CHANGE role role ENUM(\'admin\', \'client\', \'prestataire\', \'entreprise\')');
     }
 
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE comment DROP rating');
         $this->addSql('ALTER TABLE user CHANGE role role VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT NULL COLLATE `utf8mb4_unicode_ci`');
     }
 }

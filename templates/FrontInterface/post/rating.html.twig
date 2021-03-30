@@ -2,7 +2,9 @@
        {% for i in 1..5 %}
         {% if i <= rating %}
             <i style="color: goldenrod;" class="fas fa-star"></i>
-        {% else %}
+        {% elseif i<= rating|round(0,'ceil') %}
+            <i style="color: goldenrod;" class="fas fa-star-half-alt"></i>
+            {% else %}
             <i style="color: goldenrod;"  class="far fa-star"></i>
         {% endif %}
        {% endfor %}
