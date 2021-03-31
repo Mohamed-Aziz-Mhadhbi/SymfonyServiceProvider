@@ -15,8 +15,7 @@ class PostulationType extends AbstractType
             ->add('motivation')
             ->add('price')
             ->add('duration')
-            ->add('offre')
-            ->add('postulationUser')
+
         ;
     }
 

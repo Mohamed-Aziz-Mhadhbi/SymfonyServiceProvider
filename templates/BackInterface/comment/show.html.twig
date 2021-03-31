@@ -69,7 +69,7 @@
                                                         </tr>
                                                         <tr>
                                                             <th>Content</th>
-                                                            <td>{{ comment.content }}</td>
+                                                            <td>{{ comment.content | raw }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Likes</th>
@@ -78,9 +78,6 @@
                                                         </tbody>
                                                     </table>
 
-
-
-                                                    <a href="{{ path('comment_edit_back', {'id': comment.id}) }}" class="btn btn-success">edit</a>
 
                                                     {{ include('BackInterface/comment/_delete_form.html.twig') }}
                                                     <a href="{{ path('comment_index_back') }}">Go Back</a>

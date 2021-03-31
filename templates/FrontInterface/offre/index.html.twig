@@ -32,7 +32,7 @@
                                 <img src="http://via.placeholder.com/50x50" alt="">
                                 <div class="usy-name">
                                     <h3>{{ offre.getUser() }}</h3>
-                                    <span><img src="images/clock.png" alt="">3 min ago</span>
+
                                 </div>
                             </div>
 
@@ -43,29 +43,23 @@
                                     <li><span>{{ offre.creatAt ? offre.creatAt|date('Y-m-d') : '' }}</span></li>
                                 </ul>
                                 <p>{{ offre.description }}</p>
-                                <ul class="skill-tags">
-                                    <li><a href="#" title="">HTML</a></li>
-                                    <li><a href="#" title="">PHP</a></li>
-                                    <li><a href="#" title="">CSS</a></li>
-                                    <li><a href="#" title="">Javascript</a></li>
-                                    <li><a href="#" title="">Wordpress</a></li>
-                                    <li><a href="#" title="">Photoshop</a></li>
-                                    <li><a href="#" title="">Illustrator</a></li>
-                                    <li><a href="#" title="">Corel Draw</a></li>
-                                </ul>
+
                             </div>
                             <div class="post-st">
                                 <ul>
                                     {#  <li><a class="post_project" href="{{ path('annonces_delete', {'id': annonce.id}) }}"title="">Delete</a></li>#}
                                     <li><a class="post_project" href="{{ path('offre_show_front', {'id': offre.id}) }}">show</a></li>
+                                    {% if user.username == offre.user%}
                                     <li><a class="post_project" href="{{ path('offre_edit_front', {'id': offre.id}) }}">edit</a></li>
-                                    <li><a href="{{ path('postulation_new_front', {'id': offre.id}) }}" title="" class="com"><img src="images/com.png" alt=""> Comment </a></li>
-
+                                    {% endif %}
+                                    {% if user.username != offre.user and user.salt == "prestataire"%}
+                                    <li><a href="{{ path('postulation_new_front', {'id': offre.id}) }}" title="" class="com"><img src="images/com.png" alt=""> Apply </a></li>
+                                    {% endif %}
                                     <a href="javascript:void(0)"><i class="icon-close"></i></a>
                                     <a href="{{ path('post_like',{'id':offre.id}) }}" class="btn btn-link js-like"><i class="la la-heart"></i> Like
                                         <img src="images/liked-img.png" alt="">
                                         {% if app.user and offre.islikedByUser(app.user) %}
-                                            <i class="fas fa-thumbs-up "></i>
+
 
                                         {% else %}
                                             {#  <i class="far fa-thumbs-up"></i>#}

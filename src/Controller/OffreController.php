@@ -6,6 +6,7 @@ use App\Entity\Offre;
 use App\Form\OffreType;
 use App\Repository\OffreRepository;
 use App\Repository\PostLikeRepository;
+use App\Repository\PostulationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,12 +56,14 @@ class OffreController extends AbstractController
      */
     public function newFront(Request $request): Response
     {
+
         $user = $this->security->getUser();
         $offre = new Offre();
         $form = $this->createForm(OffreType::class, $offre);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $offre->setUser($user);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($offre);
             $entityManager->flush();
@@ -89,11 +92,13 @@ class OffreController extends AbstractController
     /**
      * @Route("/home/offre/{id}", name="offre_show_front", methods={"GET"})
      */
-    public function showFront(Offre $offre): Response
+    public function showFront(Offre $offre,PostulationRepository $postulationRepository): Response
     {
+        $postulations = $postulationRepository->findBy(array('offre' => $offre->getId()));
         $user = $this->security->getUser();
         return $this->render('FrontInterface/offre/show.html.twig', [
             'offre' => $offre,
+            'postulations' =>$postulations,
             'user' => $user
         ]);
     }

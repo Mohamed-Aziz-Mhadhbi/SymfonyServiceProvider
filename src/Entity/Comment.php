@@ -25,12 +25,17 @@ class Comment
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank (message="this field must be full")
+     * @Assert\Length (
+     *     min="10",
+     *     max="10000",
+     *     minMessage="this filed must be at minimum 10 caracters",
+     *     maxMessage="this filed must be at maximum 10000 caracters"
+     *     )
      */
     private $content;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\NotBlank (message="this field must be full")
      */
     private $likes;
 
@@ -44,6 +49,16 @@ class Comment
      * @ORM\JoinColumn(nullable=false)
      */
     private $usr;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $statusLike;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $rating;
 
     public function __construct()
     {
@@ -87,7 +102,7 @@ class Comment
 
     public function setLikes(?int $likes): self
     {
-        $this->likes = $likes;
+        $this->likes=$likes;
 
         return $this;
     }
@@ -112,6 +127,30 @@ class Comment
     public function setUsr(?User $usr): self
     {
         $this->usr = $usr;
+
+        return $this;
+    }
+
+    public function getStatusLike(): ?bool
+    {
+        return $this->statusLike;
+    }
+
+    public function setStatusLike(bool $statusLike): self
+    {
+        $this->statusLike = $statusLike;
+
+        return $this;
+    }
+
+    public function getRating(): ?int
+    {
+        return $this->rating;
+    }
+
+    public function setRating(?int $rating): self
+    {
+        $this->rating = $rating;
 
         return $this;
     }

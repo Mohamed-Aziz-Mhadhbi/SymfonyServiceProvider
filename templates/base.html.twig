@@ -23,6 +23,10 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/responsive.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/profile.css') }}">
+
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+              integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+              crossorigin="anonymous"/>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet">
         <link rel="icon" type="image/png" href="{{ asset('images/2.png') }}" >
@@ -109,7 +113,7 @@ c-198 65 -369 123 -381 130 -42 22 -44 41 -44 485 0 403 1 428 21 486 37 110
                         <ul>
 
                             <li>
-                                <a href="#" title="">
+                                <a href="{{ path('company') }}" title="">
                                     <span><img src="{{ asset('images/icon2.png') }}" alt=""></span>
                                     Companies
                                 </a>
@@ -258,6 +262,10 @@ c-198 65 -369 123 -381 130 -42 22 -44 41 -44 485 0 403 1 428 21 486 37 110
         <script type="text/javascript" src="{{ asset('js/scrollbar.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/particles.min.js') }}"></script>
+        <!-- Load Flashy default JavaScript -->
+        <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+        <!-- Include Flashy default partial -->
+
     {% endblock %}
 </div>
 <script>

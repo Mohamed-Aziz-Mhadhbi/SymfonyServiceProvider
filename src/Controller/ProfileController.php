@@ -35,6 +35,19 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @Route("/home/company", name="company")
+     */
+    public function indexCompany(UserRepository $userRepository): Response
+    {
+        $user = $this->security->getUser();
+        return $this->render('FrontInterface/profile/index.html.twig', [
+            'controller_name' => 'ProfileController',
+            'users' => $userRepository->findByRoleField('entreprise'),
+            'user' => $user
+        ]);
+    }
+
+    /**
      * @Route("/home/profile/{id}", name="user_show_front", methods={"GET"})
      */
     public function showFront(User $user): Response

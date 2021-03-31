@@ -25,7 +25,7 @@ class User implements UserInterface
 
     public function __toString()
     {
-        return $this->email;
+        return $this->username;
     }
 
     /**
@@ -521,7 +521,7 @@ class User implements UserInterface
     }
     public function getSalt()
     {
-        // TODO: Implement getSalt() method.
+        return $this->role;
     }
     public function getUsername()
     {

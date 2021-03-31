@@ -3,16 +3,34 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Post;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
+use App\Repository\PostRepository;
+use App\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 
 class CommentController extends AbstractController
 {
+    /**
+     * @var Security
+     */
+    private $security;
+
+
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
+
+
     /**
      * @Route("/admin/dashboard/comment", name="comment_index_back", methods={"GET"})
      */
@@ -24,12 +42,15 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/home/comment", name="comment_index_front", methods={"GET"})
+     * @Route("/home/comment/", name="comment_index_front", methods={"GET"})
      */
-    public function indexFront(CommentRepository $commentRepository): Response
+    public function indexFront(CommentRepository $commentRepository ,PostRepository $postRepository): Response
     {
+        $user = $this->security->getUser();
         return $this->render('FrontInterface/comment/index.html.twig', [
             'comments' => $commentRepository->findAll(),
+            'user' => $user,
+            'posts' => $postRepository->findAll(),
         ]);
     }
 
@@ -55,11 +76,14 @@ class CommentController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    /**
-     * @Route("/home/comment/new", name="comment_new_front", methods={"GET","POST"})
-     */
+
+
+    /* /**
+      * @Route("/home/comment/new", name="comment_new_front", methods={"GET","POST"})
+      */
     public function newFront(Request $request): Response
     {
+        $user = $this->security->getUser();
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -67,15 +91,29 @@ class CommentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($comment);
+            $comment->setLikes(0);
+            $comment->setCreatAt(new \DateTime('now'));
+            $post = $entityManager->getRepository(Post::class)->find($request->get('id'));
+            $comment->setPost($post);
+
+            $comment->setStatusLike(true);
+
+
+            $comment->setPst();
+            $comment->setLikes(0);
+            $comment->setUsr($this->getUser());
+
+
+
             $entityManager->flush();
 
-            return $this->redirectToRoute('comment_index_front');
         }
-
         return $this->render('FrontInterface/comment/new.html.twig', [
             'comment' => $comment,
             'form' => $form->createView(),
+            'user' => $user,
         ]);
+
     }
 
 
@@ -94,8 +132,10 @@ class CommentController extends AbstractController
      */
     public function showFront(Comment $comment): Response
     {
+        $user = $this->security->getUser();
         return $this->render('FrontInterface/comment/show.html.twig', [
             'comment' => $comment,
+            'user' => $user,
         ]);
     }
 
@@ -124,13 +164,15 @@ class CommentController extends AbstractController
      */
     public function editFront(Request $request, Comment $comment): Response
     {
+        $post = $comment->getPst();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('comment_index_front');
+            return $this->redirectToRoute('post_show_front',array('id'=>$post->getId()));
         }
 
         return $this->render('FrontInterface/comment/edit.html.twig', [
@@ -138,7 +180,6 @@ class CommentController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
 
     /**
      * @Route("/admin/dashboard/comment/{id}", name="comment_delete_back", methods={"DELETE"})
@@ -159,15 +200,16 @@ class CommentController extends AbstractController
      */
     public function deleteFront(Request $request, Comment $comment): Response
     {
+        $post = $comment->getPst();
         if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($comment);
+            $comment->getPst()->setNoc($comment->getPst()->getNoc()-1);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('comment_index_front');
+        return $this->redirectToRoute('post_show_front',array('id'=>$post->getId()));
     }
-
 }
 
 

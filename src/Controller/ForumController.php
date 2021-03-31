@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Forum;
+use App\Entity\Post;
+use App\Form\PostType;
 use App\Form\ForumType;
 use App\Repository\CommentRepository;
 use App\Repository\ForumRepository;
 use App\Repository\PostRepository;
 use App\Repository\TagRepository;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,12 +32,19 @@ class ForumController extends AbstractController
     }
 
     /**
-     * @Route("/admin/dashboard/forum", name="forum_index_back", methods={"GET"})
+     * @Route("/admin/dashboard/forum/{page<\d+>?1}", name="forum_index_back", methods={"GET"})
      */
-    public function indexBack(ForumRepository $forumRepository): Response
+    public function indexBack(ForumRepository $forumRepository,$page): Response
     {
+        $limit = 5;
+        $start = $page * $limit - $limit;
+        $total = count($forumRepository->findAll());
+        $pages = ceil($total / $limit);
+
         return $this->render('BackInterface/forum/index.html.twig', [
-            'forums' => $forumRepository->findAll(),
+            'forums' => $forumRepository->findBy([],[],$limit,$start),
+            'pages' => $pages,
+            'page' => $page,
         ]);
     }
 
@@ -53,14 +62,32 @@ class ForumController extends AbstractController
     }
 
     /**
-     * @Route("/home/forums", name="forums_index_front", methods={"GET"})
+     * @Route("/home/forums", name="forums_index_front", methods={"GET","POST"})
      */
-    public function forumsFront(ForumRepository $forumRepository): Response
+    public function forumsFront(ForumRepository $forumRepository,Request $request): Response
     {
         $user = $this->security->getUser();
+        $forum = new Forum();
+        $form = $this->createForm(ForumType::class, $forum);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($forum);
+
+            $forum->setCreatAt(new \DateTime('now'));
+            $forum->setUs($this->getUser());
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('forums_index_front');
+        }
+
         return $this->render('FrontInterface/forum/forums.html.twig', [
-            'forums' => $forumRepository->findAll(),
+            'forum' => $forum,
+            'form' => $form->createView(),
             'user' => $user,
+            'forums' => $forumRepository->findAll(),
         ]);
     }
 
@@ -76,35 +103,16 @@ class ForumController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($forum);
+
+            $forum->setCreatAt(new \DateTime('now'));
+            $forum->setUs($this->getUser());
+
             $entityManager->flush();
 
             return $this->redirectToRoute('forum_index_back');
         }
 
         return $this->render('BackInterface/forum/new.html.twig', [
-            'forum' => $forum,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/home/forum/new", name="forum_new_front", methods={"GET","POST"})
-     */
-    public function newFront(Request $request): Response
-    {
-        $forum = new Forum();
-        $form = $this->createForm(ForumType::class, $forum);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($forum);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('forum_index_front');
-        }
-
-        return $this->render('FrontInterface/forum/new.html.twig', [
             'forum' => $forum,
             'form' => $form->createView(),
         ]);
@@ -121,12 +129,39 @@ class ForumController extends AbstractController
     }
 
     /**
-     * @Route("/home/forum/{id}", name="forum_show_front", methods={"GET"})
+     * @Route("/home/forum/{id}", name="forum_show_front", methods={"GET","POST"})
      */
-    public function showFront(Forum $forum): Response
+    public function showFront(Request $request,Forum $forum,ForumRepository $forumRepository,PostRepository $postRepository): Response
     {
-        return $this->render('FrontInterface/forum/show.html.twig', [
+        $user = $this->security->getUser();
+        $post = new Post();
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($post);
+
+            $post->setUsr($this->getUser());
+            $forum = $entityManager->getRepository(Forum::class)->find($request->get('id'));
+            $post->setFrm($forum);
+            $post->setLikes(0);
+            $post->setNoc(0);
+            $post->setViews(0);
+            $post->setStatusLike(0);
+            $post->setCreatAt(new \DateTime('now'));
+
+            $entityManager->flush();
+            return $this->redirectToRoute('forum_show_front',array('id'=>$forum->getId()));
+        }
+
+        return $this->render('FrontInterface/forum/forum.html.twig', [
             'forum' => $forum,
+            'forums' => $forumRepository->findAll(),
+            'posts' => $postRepository->findAll(),
+            'user' => $user,
+            'form' => $form->createView(),
+            'post' => $post,
         ]);
     }
 
@@ -151,22 +186,53 @@ class ForumController extends AbstractController
     }
 
     /**
+     * @Route("/home/post/{id}/edit", name="post_edit_front", methods={"GET","POST"})
+     */
+    public function editFrontPost(Request $request,Post $post,Forum $forum,ForumRepository $forumRepository,TagRepository $tagRepository,PostRepository $postRepository): Response
+    {
+        //$Forum = $post->getFrm();
+        $user = $this->security->getUser();
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->getDoctrine()->getManager()->flush();
+
+            //return $this->redirectToRoute('forum_show_front',array('id'=>$Forum->getId()));
+        }
+
+        return $this->render('FrontInterface/forum/forum.html.twig', [
+            'forum' => $forum,
+            'forums' => $forumRepository->findAll(),
+            'tags' => $tagRepository->findAll(),
+            'posts' => $postRepository->findAll(),
+            'user' => $user,
+            'form' => $form->createView(),
+            'post' => $post,
+        ]);
+    }
+
+
+    /**
      * @Route("/home/forum/{id}/edit", name="forum_edit_front", methods={"GET","POST"})
      */
-    public function editFront(Request $request, Forum $forum): Response
+    public function editFront(Request $request, Forum $forum ,ForumRepository $forumRepository): Response
     {
+        $user = $this->security->getUser();
         $form = $this->createForm(ForumType::class, $forum);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('forum_index_front');
+            return $this->redirectToRoute('forums_index_front');
         }
 
         return $this->render('FrontInterface/forum/edit.html.twig', [
             'forum' => $forum,
             'form' => $form->createView(),
+            'user' => $user,
+            'forums' => $forumRepository->findAll(),
         ]);
     }
 
@@ -195,6 +261,7 @@ class ForumController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('forum_index_front');
+        return $this->redirectToRoute('forums_index_front');
     }
+
 }

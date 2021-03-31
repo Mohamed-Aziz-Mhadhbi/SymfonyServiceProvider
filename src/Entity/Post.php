@@ -22,13 +22,23 @@ class Post
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank (message="this field must be full")
+     *  @Assert\Length (
+     *     min="10",
+     *     max="255",
+     *     minMessage="this filed must be at minimum 10 caracters",
+     *     maxMessage="this filed must be at maximum 255 caracters"
+     *     )
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank (message="this field must be full")
+     *  @Assert\Length (
+     *     min="10",
+     *     max="10000",
+     *     minMessage="this filed must be at minimum 10 caracters",
+     *     maxMessage="this filed must be at maximum 10000 caracters"
+     *     )
      */
     private $description;
 
@@ -40,19 +50,16 @@ class Post
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\NotBlank (message="this field must be full")
      */
     private $views;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\NotBlank (message="this field must be full")
      */
     private $likes;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\NotBlank (message="this field must be full")
      */
     private $noc;
 
@@ -79,17 +86,28 @@ class Post
      */
     private $tags;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $statusLike;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $req_user;
+
 
 
     public function __construct()
     {
-        $this->tg = new ArrayCollection();
+
         $this->comments = new ArrayCollection();
         $this->tags = new ArrayCollection();
     }
 
-    public function __toString() {
-        return $this->title;
+    public function __toString()
+    {
+        return $this->id . "__" . $this->title  ;
     }
 
     public function getId(): ?int
@@ -251,4 +269,37 @@ class Post
         return $this;
     }
 
+    public function getStatusLike(): ?bool
+    {
+        return $this->statusLike;
+    }
+
+    public function setStatusLike(?bool $statusLike): self
+    {
+        $this->statusLike = $statusLike;
+
+        return $this;
+    }
+
+    public function getReqUser(): ?string
+    {
+        return $this->req_user;
+    }
+
+    public function setReqUser(?string $req_user): self
+    {
+        $this->req_user = $req_user;
+
+        return $this;
+    }
+    public  function getAvgRating()
+    {
+        $sum = array_reduce($this->comments->toArray(), function($total, $comment) {
+            return $total + $comment->getRating();
+        },0);
+
+        if(count($this->comments)>0) return $sum / count($this->comments);
+
+        return 0;
+    }
 }

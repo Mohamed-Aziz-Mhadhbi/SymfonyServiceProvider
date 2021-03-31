@@ -22,12 +22,24 @@ class Forum
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank (message="this field must be full")
+     * @Assert\Length (
+     *     min="10",
+     *     max="255",
+     *     minMessage="this filed must be at minimum 10 caracters",
+     *     maxMessage="this filed must be at maximum 255 caracters"
+     *     )
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank (message="this field must be full")
+     * @Assert\Length (
+     *     min="10",
+     *     max="10000",
+     *     minMessage="this filed must be at minimum 10 caracters",
+     *     maxMessage="this filed must be at maximum 10000 caracters"
+     *     )
      */
     private $description;
 
@@ -41,6 +53,11 @@ class Forum
      * @ORM\OneToMany(targetEntity=Post::class, mappedBy="frm", orphanRemoval=true)
      */
     private $posts;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $creatAt;
 
     public function __construct()
     {
@@ -118,6 +135,18 @@ class Forum
                 $post->setFrm(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatAt(): ?\DateTimeInterface
+    {
+        return $this->creatAt;
+    }
+
+    public function setCreatAt(\DateTimeInterface $creatAt): self
+    {
+        $this->creatAt = $creatAt;
 
         return $this;
     }

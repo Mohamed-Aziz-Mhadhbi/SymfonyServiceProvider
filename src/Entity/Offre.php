@@ -68,6 +68,7 @@ class Offre
     {
         $this->postulationOffret = new ArrayCollection();
         $this->yes = new ArrayCollection();
+        $this->creatAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -76,6 +77,11 @@ class Offre
     }
 
     public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function __toString():string
     {
         return $this->title;
     }

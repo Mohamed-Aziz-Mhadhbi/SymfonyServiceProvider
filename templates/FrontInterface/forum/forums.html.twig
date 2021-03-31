@@ -3,6 +3,15 @@
 {% block title %}Forums{% endblock %}
 
 {% block content %}
+    <style>
+        .sticky {
+            position: fixed;
+            top: 10px;
+            width: 27%;
+            padding-right: 0px;
+            padding-left: 0px;
+        }
+    </style>
 
     <section class="forum-sec">
         <div class="container">
@@ -29,116 +38,111 @@
             <div class="forum-questions-sec">
                 <div class="row">
                     <div class="col-lg-8">
-                        <div class="forum-questions">
+                        <div class="forum-questions" style="border-radius: 5px;">
                             <div class="post-topbar">
                                 <div>
-                                    <img src="images/cm-logo.png" alt="">
+                                    <img src="{{ asset('images/cm-logo.png') }}" alt="">
                                 </div>
 
                             </div><!--post-topbar end-->
 
 
-
-                            {% for forum in forums %}
-
+                            {% for forum in forums | sort((a,b) => a.posts|length <=> b.posts|length) | reverse %}
                                 <div class="usr-question">
                                     <div class="usr_img">
                                         <img src="http://via.placeholder.com/60x60" alt="">
                                     </div>
                                     <div class="usr_quest">
-                                        <a href="{{ path('forum_index_front', {'id': forum.id}) }}">{{ forum.title }}</a>
+                                        <a style="color: #11a852;"
+                                           href="{{ path('forum_show_front', {'id': forum.id}) }}">{{ forum.title }}</a>
+                                        <p>{{ forum.description }}</p>
+                                        {% if forum.posts |length == 0 %}
+                                            <p> there is <span style="color: #00b44e">no posts</span></p>
+                                            {% else %}
+                                       <p>there is<span style="color: #00b44e"> {{ forum.posts | length }} posts </span></p>
+                                        {% endif %}
+                                        {% if forum.us == user %}
+                                            <div style="width: 100%; display:flex; justify-content: flex-end">
+                                                <a href="{{ path('forum_edit_front', {'id': forum.id}) }}">
+                                                    <button type="button"
+                                                            class="btn-sm shadow-sm btn btn-primary mt-2 mb-2 mr-2">
+                                                        Edit
+                                                    </button>
+                                                </a>
+                                                {{ include('FrontInterface/forum/_delete_form.html.twig') }}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                     <!--usr_quest end-->
                                 </div>
                                 <!--usr-question end-->
-                            {% else %}
-
-                                <p colspan="4">no records found</p>
-
                             {% endfor %}
-
-
-
-
-
                         </div>
                         <!--forum-questions end-->
-                        <nav aria-label="Page navigation example" class="full-pagi">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link pvr" href="#">Previous</a></li>
-                                <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                                <li class="page-item"><a class="page-link pvr" href="#">Next</a></li>
-                            </ul>
-                        </nav>
                     </div>
                     <div class="col-lg-4">
-                        <div class="widget widget-user">
-                            <h3 class="title-wd">Top User of the Week</h3>
+                        <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 5px;">
+
+                            <h3 class="title-wd" style="color: #6a737c; font-size: 16px;">Create New Communities ➕</h3>
                             <ul>
-                                <li>
-                                    <div class="usr-msg-details">
-                                        <div class="usr-ms-img">
-                                            <img src="http://via.placeholder.com/50x50" alt="">
+                                {{ include('FrontInterface/forum/_form.html.twig') }}
+                            </ul>
+
+                        </div>
+
+                        <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 5px;">
+
+                            <h3 class="title-wd" style="color: #6a737c; font-size: 16px;">Top new 5 community 🌐</h3>
+                            <ul>
+                                {% for forum in forums |sort|reverse|slice(0,5) %}
+                                    <li>
+                                        <div class="usr-msg-details">
+                                            <div class="usr-mg-info">
+                                                <h3 style="color: #6a737c; font-size: 14px;">{{ forum.title }}</h3>
+                                            </div>
+                                            <!--usr-mg-info end-->
                                         </div>
-                                        <div class="usr-mg-info">
-                                            <h3>Jessica William</h3>
-                                            <p>Graphic Designer </p>
-                                        </div>
-                                        <!--usr-mg-info end-->
-                                    </div>
-                                    <span><img src="images/price1.png" alt="">1185</span>
-                                </li>
-                                <li>
-                                    <div class="usr-msg-details">
-                                        <div class="usr-ms-img">
-                                            <img src="http://via.placeholder.com/50x50" alt="">
-                                        </div>
-                                        <div class="usr-mg-info">
-                                            <h3>John Doe</h3>
-                                            <p>PHP Developer</p>
-                                        </div>
-                                        <!--usr-mg-info end-->
-                                    </div>
-                                    <span><img src="images/price2.png" alt="">1165</span>
-                                </li>
-                                <li>
-                                    <div class="usr-msg-details">
-                                        <div class="usr-ms-img">
-                                            <img src="http://via.placeholder.com/50x50" alt="">
-                                        </div>
-                                        <div class="usr-mg-info">
-                                            <h3>Poonam</h3>
-                                            <p>Wordpress Developer </p>
-                                        </div>
-                                        <!--usr-mg-info end-->
-                                    </div>
-                                    <span><img src="images/price3.png" alt="">1120</span>
-                                </li>
-                                <li>
-                                    <div class="usr-msg-details">
-                                        <div class="usr-ms-img">
-                                            <img src="http://via.placeholder.com/50x50" alt="">
-                                        </div>
-                                        <div class="usr-mg-info">
-                                            <h3>Bill Gates</h3>
-                                            <p>C & C++ Developer </p>
-                                        </div>
-                                        <!--usr-mg-info end-->
-                                    </div>
-                                    <span><img src="images/price4.png" alt="">1009</span>
-                                </li>
+                                    </li>
+                                {% endfor %}
                             </ul>
                         </div>
                         <!--widget-user end-->
-                        <div class="widget widget-adver">
+                        <!--<div class="widget widget-adver">
                             <img src="http://via.placeholder.com/370x270" alt="">
-                        </div>
+                        </div>-->
                         <!--widget-adver end-->
+                        <div id="sticky">
+                        <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 6px;">
+                            <footer style="border-radius: 5px;">
+                                <div class="footy-sec  no-margin">
+                                    <div class="container">
+                                        <ul>
+                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                   title="">Help Center</a></li>
+                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                   title="">Privacy Policy</a></li>
+                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                   title="">Community Guidelines</a></li>
+                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                   title="">Cookies Policy</a></li>
+                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                   title="">Career</a></li>
+                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                   title="">Forum</a></li>
+                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                   title="">Language</a></li>
+                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                   title="">Copyright Policy</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </footer><!--footer end-->
+                        </div>
+                        <button style=" width: 128px; font-family: Noto Sans,Arial,sans-serif; border-radius: 15px; text-align:center; margin-left: 35%; position: relative;"
+                                class="btn btn-success d-none d-sm-inline-block btn-sm btn-primary shadow-sm mt-2 mb-2"
+                                onclick="topFunction()" id="myBtn" title="Go to top">Back to Top
+                        </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -146,5 +150,49 @@
         </div>
     </section>
     <!--forum-page end-->
+    <script>
+        /*
+          ======================================
+                    BACK TO TOP LINK
+        ======================================
+        */
 
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("myBtn").style.display = "block";
+            } else {
+                document.getElementById("myBtn").style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }</script>
+    <script>
+        window.onscroll = function () {
+            myFunction()
+        };
+
+        var header = document.getElementById("sticky");
+        var sticky = header.offsetTop + 900;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+    </script>
+
+{% endblock %}
+
+{% block footer %}
 {% endblock %}

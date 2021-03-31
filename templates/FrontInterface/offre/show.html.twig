@@ -3,32 +3,80 @@
 {% block title %}Offre{% endblock %}
 
 {% block content %}
-    <h1>Offre</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ offre.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ offre.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ offre.description }}</td>
-            </tr>
-            <tr>
-                <th>CreatAt</th>
-                <td>{{ offre.creatAt ? offre.creatAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <a href="{{ path('offre_index_front') }}">back to list</a>
+<div class="post-bar">
+    <div class="post_topbar">
+        <div class="usy-dt">
+            <img src="http://via.placeholder.com/50x50" alt="">
+            <div class="usy-name">
+                <h3>{{ offre.getUser() }}</h3>
 
-    <a href="{{ path('offre_edit_front', {'id': offre.id}) }}">edit</a>
+            </div>
+        </div>
 
-    {{ include('FrontInterface/offre/_delete_form.html.twig') }}
+        <div class="job_descp">
+            <h3>{{ offre.title }}</h3>
+            <ul class="job-dt">
+
+                <li><span>{{ offre.creatAt ? offre.creatAt|date('Y-m-d') : '' }}</span></li>
+            </ul>
+            <p>{{ offre.description }}</p>
+
+        </div>
+        <div class="post-st">
+            <ul>
+                {#  <li><a class="post_project" href="{{ path('annonces_delete', {'id': annonce.id}) }}"title="">Delete</a></li>#}
+                {% if user.username == offre.user%}
+                <li>{{ include('FrontInterface/offre/_delete_form.html.twig') }}</li>
+                <li><a class="post_project" href="{{ path('offre_edit_front', {'id': offre.id}) }}">edit</a></li>
+                {% endif %}
+                {% if user.username != offre.user and user.salt == "prestataire" %}
+                <li><a href="{{ path('postulation_new_front', {'id': offre.id}) }}" title="" class="com"><img src="images/com.png" alt=""> Apply </a></li>
+                {% endif %}
+                <a href="javascript:void(0)"><i class="icon-close"></i></a>
+                <a href="{{ path('post_like',{'id':offre.id}) }}" class="btn btn-link js-like"><i class="la la-heart"></i> Like
+                    <img src="images/liked-img.png" alt="">
+                    {% if app.user and offre.islikedByUser(app.user) %}
+                        <i class="fas fa-thumbs-up "></i>
+
+                    {% else %}
+                        {#  <i class="far fa-thumbs-up"></i>#}
+                    {% endif %}
+
+                    <span class="js-likes">{{ offre.likes | length }}</span>
+
+                    {#  <span class="js-label">like</span> #}
+
+
+
+                </a>
+            </ul>
+        </div><!--post-st end-->
+
+        {% for postulation in postulations %}
+        <div class="post-bar">
+            <div class="post_topbar">
+                <div class="usy-dt">
+
+                    <div class="usy-name">
+                        <h3>{{ postulation.postulationUser }}</h3>
+
+                    </div>
+                </div>
+                <div class="job_descp">
+                    <h3>price :{{ postulation.price }} DT</h3>
+                    <ul class="job-dt">
+
+                        <li>duration :<span>{{ postulation.duration }} day</span></li>
+                    </ul>
+                    <p>{{ postulation.motivation }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+
+
+
 {% endblock %}
