@@ -23,7 +23,7 @@
                                     <li><a href="#" title="" class="hire-us">Hire</a></li>
                                 </ul>
                             </div>
-                            <a href="#" title="" class="view-more-pro">View Profile</a>
+                            <a href="{{ path('user_show_front', {'id': user.id}) }}" title="" class="view-more-pro">View Profile</a>
                         </div><!--company_profile_info end-->
                     </div>
                     {% else %}

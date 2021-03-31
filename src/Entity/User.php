@@ -185,7 +185,7 @@ class User implements UserInterface
     private $projects;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Skill::class, mappedBy="skillUser")
+     * @ORM\ManyToMany(targetEntity=Skill::class, mappedBy="skillUser", fetch="EAGER")
      */
     private $skills;
 

@@ -40,11 +40,10 @@
 						<div class="card-box">
 							<h4 class="m-t-0 m-b-20 header-title">Skills</h4>
 							<div class="p-b-10">
-								<p></p>
+								{% for skill in skills %}
+								<p>{{ skill }}</p>
+								{% endfor %}
 
-								<p>PHP</p>
-
-								<p>Wordpress</p>
 
 							</div>
 						</div>

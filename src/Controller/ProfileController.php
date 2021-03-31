@@ -33,4 +33,18 @@ class ProfileController extends AbstractController
             'user' => $user
         ]);
     }
+
+    /**
+     * @Route("/home/profile/{id}", name="user_show_front", methods={"GET"})
+     */
+    public function showFront(User $user): Response
+    {
+        $userSession = $this->security->getUser();
+        return $this->render('FrontInterface/profile/show.html.twig', [
+            'userProfile' => $user,
+            'skills' => $user->getSkills(),
+            'user' => $userSession,
+        ]);
+    }
+
 }

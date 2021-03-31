@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Skill;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -66,7 +68,11 @@ class FreelancerFrontType extends AbstractType
 
                 ]])
 
-            ->add('skills')
+            ->add('skills', ChoiceType::class,[
+                'choice_attr' => ChoiceList::attr($this, function (?Skill $skill) {
+                    return $skill ? ['data-uuid' => $skill->getUuid()] : [];
+                }),
+            ])
             ->add('domains')
         ;
     }
