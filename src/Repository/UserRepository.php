@@ -71,6 +71,25 @@ class UserRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @param $data
+     * @return int|mixed|string
+     */
+    public function search($data){
+
+        $query = $this->createQueryBuilder('u');
+        if($data){
+            $query->andWhere('u.id LIKE :data OR
+                 u.nom LIKE :data OR
+                 u.prenom LIKE :data OR
+                 u.specialisation LIKE :data OR
+                 u.username LIKE :data  ')
+                ->setParameter('data','%'.$data.'%');
+        }
+        return $query
+            ->getQuery()
+            ->getResult();
+    }
 
     // /**
     //  * @return User[] Returns an array of User objects

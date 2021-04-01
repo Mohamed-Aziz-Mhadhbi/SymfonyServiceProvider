@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
@@ -57,6 +58,24 @@ class ProfileController extends AbstractController
             'userProfile' => $user,
             'skills' => $user->getSkills(),
             'user' => $userSession,
+        ]);
+    }
+
+    /**
+     * @param UserRepository $repository
+     * @param Request $request
+     * @return Response
+     * @Route("/profile/recherche",name="rechercheProfile")
+     */
+    public function Recherche(UserRepository $repository,Request $request)
+    {
+        $user = $this->security->getUser();
+        $data=$request->get('search');
+        $em=$repository->search($data);
+
+        return $this->render('FrontInterface/profile/index.html.twig',[
+            'users'=>$em,
+            'user' => $user
         ]);
     }
 
