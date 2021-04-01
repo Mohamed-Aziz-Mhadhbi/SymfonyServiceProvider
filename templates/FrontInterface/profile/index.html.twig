@@ -7,6 +7,10 @@
         <div class="container">
             <div class="company-title">
                 <h3>All Profiles</h3>
+                <form method="post" action="{{ path('rechercheProfile') }}">
+
+                    <input type="text"name="search"> <input type="submit" value="Recherche">
+                </form>
             </div><!--company-title end-->
             <div class="companies-list">
                 <div class="row">
