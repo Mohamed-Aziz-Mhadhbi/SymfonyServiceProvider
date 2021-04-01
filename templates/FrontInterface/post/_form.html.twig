@@ -9,7 +9,7 @@
     </div>
     <div class="form-group">
         <label style='line-height: 2;'>Description * :</label>
-        {{ form_widget(form.description,{'attr':{'class':'form-control' , 'id':'inputDescription'}}) }}
+        {{ form_widget(form.description,{'attr':{'class':'ckeditor' , 'id':'inputDescription'}}) }}
         <div style="color :red;">
             {{form_errors(form.description)}}
         </div>

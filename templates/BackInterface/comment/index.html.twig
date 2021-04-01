@@ -50,34 +50,32 @@
                                             <i class="fas fa-user bg-info"></i>
 
                                             <div class="timeline-item">
-                                                <span class="time"><i class="far fa-clock"></i>{{ comment.creatAt ? comment.creatAt|date('g:i a') : '' }}</span>
+                                                <span class="time"><i class="far fa-clock"></i>{% include 'DateTimeForma.html.twig' with {'value' : comment.creatAt} %}</span>
 
-                                                <h3 class="timeline-header"><a href="#">{{ comment.id }}</a> sent a comment</h3>
+                                                <h3 class="timeline-header"><a href="{{ path('user_show', {'id': comment.usr.id}) }}">{{ comment.usr.username }} </a> sent a comment in <a href="#">{{ comment.pst.title }}</a></h3>
 
                                                 <div class="timeline-body">
                                                     {{ comment.content | raw }}
+                                                    <br>
+                                                    {% include 'FrontInterface/post/rating.html.twig' with {'rating' : comment.rating} %}
                                                 </div>
-
-
 
                                                 <div class="timeline-footer">
                                                     <a href="{{ path('comment_show_back', {'id': comment.id}) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
                                                     {{ include('BackInterface/comment/_delete_form.html.twig') }}
 
                                                 </div>
-                                                <span class="float-right">
-                                                <a href="#" class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i> Like({{ comment.likes }})</a>
-                                                </span>
                                             </div>
-                                            </div>
+                                        </div>
 
 
                                     </div>
                                     {% else %}
-                                    <p colspan="5">no records found</p>
+                                        <p colspan="5">no records found</p>
                                     {% endfor %}
 
                                 </div>
+
                                 <!-- END timeline item -->
 
 
@@ -93,8 +91,7 @@
 
 
 
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+            </div><!-- /.row  -->
         </section>
         <!-- /.content -->
     </div>

@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\ClientType;
 use App\Form\CompanyType;
 use App\Form\FreelancerFrontType;
+use App\Repository\DomainRepository;
 use App\Repository\SkillRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -82,7 +83,7 @@ class InscriptionController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function registerFreelancer(Request $request,\Swift_Mailer $mailer,SkillRepository $skillRepository): Response
+    public function registerFreelancer(Request $request,\Swift_Mailer $mailer,SkillRepository $skillRepository,DomainRepository $domainRepository): Response
     {
         $user = new User();
         $form = $this->createForm(FreelancerFrontType::class, $user);
@@ -103,9 +104,11 @@ class InscriptionController extends AbstractController
               $Uploads_directory,
               $filename
             );
-            $idSkill= $form->get("skills")->getData();
-            $skill = $skillRepository->find((int)$idSkill->getValues());
-            $user->addSkill($skill);
+            //$Domain = $domainRepository->findBy(array('title' =>$form->get("domains")->getData()));
+            //$idSkill= $form->get("skills")->getData();
+            //$skill = $skillRepository->find((int)$idSkill->getValues());
+           // $user->addSkill($skill);
+           // $user->addDomain($Domain);
             $user->setToken($this->generateToken());
             $user->setRole('prestataire');
             $user->setRoles(['ROLE_USER']);

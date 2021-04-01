@@ -23,9 +23,9 @@ class Forum
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank (message="this field must be full")
      * @Assert\Length (
-     *     min="10",
+     *     min="3",
      *     max="255",
-     *     minMessage="this filed must be at minimum 10 caracters",
+     *     minMessage="this filed must be at minimum 3 caracters",
      *     maxMessage="this filed must be at maximum 255 caracters"
      *     )
      */
@@ -35,9 +35,9 @@ class Forum
      * @ORM\Column(type="text")
      * @Assert\NotBlank (message="this field must be full")
      * @Assert\Length (
-     *     min="10",
+     *     min="5",
      *     max="10000",
-     *     minMessage="this filed must be at minimum 10 caracters",
+     *     minMessage="this filed must be at minimum 5 caracters",
      *     maxMessage="this filed must be at maximum 10000 caracters"
      *     )
      */

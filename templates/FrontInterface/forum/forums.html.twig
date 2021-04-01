@@ -13,23 +13,7 @@
         }
     </style>
 
-    <section class="forum-sec">
-        <div class="container">
-            <div class="forum-links">
-                <ul>
-                    <li class="active"><a href="#" title="">Latest</a></li>
-                    <li><a href="#" title="">Unanswered</a></li>
-                    <li><a href="#" title="">Treading</a></li>
-                    <li><a href="#" title="">Popular This Week</a></li>
-                    <li><a href="#" title="">Popular of Month</a></li>
-                </ul>
-            </div>
-            <!--forum-links end-->
-            <div class="forum-links-btn">
-                <a href="#" title=""><i class="fa fa-bars"></i></a>
-            </div>
-        </div>
-    </section>
+
 
 
 
@@ -49,17 +33,20 @@
 
                             {% for forum in forums | sort((a,b) => a.posts|length <=> b.posts|length) | reverse %}
                                 <div class="usr-question">
-                                    <div class="usr_img">
-                                        <img src="http://via.placeholder.com/60x60" alt="">
-                                    </div>
+
                                     <div class="usr_quest">
                                         <a style="color: #11a852;"
-                                           href="{{ path('forum_show_front', {'id': forum.id}) }}">{{ forum.title }}</a>
+                                           href="{{ path('forum_show_front', {'id': forum.id}) }}">{{ forum.title }} </a>
+                                        <p>Created by :</p><a
+                                                href="{{ path('user_show_front', {'id': forum.us.id}) }}"> {{ forum.us }}</a>
+
                                         <p>{{ forum.description }}</p>
                                         {% if forum.posts |length == 0 %}
                                             <p> there is <span style="color: #00b44e">no posts</span></p>
-                                            {% else %}
-                                       <p>there is<span style="color: #00b44e"> {{ forum.posts | length }} posts </span></p>
+                                        {% else %}
+                                            <p>there is<span
+                                                        style="color: #00b44e"> {{ forum.posts | length }} posts </span>
+                                            </p>
                                         {% endif %}
                                         {% if forum.us == user %}
                                             <div style="width: 100%; display:flex; justify-content: flex-end">
@@ -112,36 +99,36 @@
                         </div>-->
                         <!--widget-adver end-->
                         <div id="sticky">
-                        <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 6px;">
-                            <footer style="border-radius: 5px;">
-                                <div class="footy-sec  no-margin">
-                                    <div class="container">
-                                        <ul>
-                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
-                                                   title="">Help Center</a></li>
-                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
-                                                   title="">Privacy Policy</a></li>
-                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
-                                                   title="">Community Guidelines</a></li>
-                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
-                                                   title="">Cookies Policy</a></li>
-                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
-                                                   title="">Career</a></li>
-                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
-                                                   title="">Forum</a></li>
-                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
-                                                   title="">Language</a></li>
-                                            <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
-                                                   title="">Copyright Policy</a></li>
-                                        </ul>
+                            <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 6px;">
+                                <footer style="border-radius: 5px;">
+                                    <div class="footy-sec  no-margin">
+                                        <div class="container">
+                                            <ul>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Help Center</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Privacy Policy</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Community Guidelines</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Cookies Policy</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Career</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Forum</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Language</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Copyright Policy</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                            </footer><!--footer end-->
-                        </div>
-                        <button style=" width: 128px; font-family: Noto Sans,Arial,sans-serif; border-radius: 15px; text-align:center; margin-left: 35%; position: relative;"
-                                class="btn btn-success d-none d-sm-inline-block btn-sm btn-primary shadow-sm mt-2 mb-2"
-                                onclick="topFunction()" id="myBtn" title="Go to top">Back to Top
-                        </button>
+                                </footer><!--footer end-->
+                            </div>
+                            <button style=" width: 128px; font-family: Noto Sans,Arial,sans-serif; border-radius: 15px; text-align:center; margin-left: 35%; position: relative;"
+                                    class="btn btn-success d-none d-sm-inline-block btn-sm btn-primary shadow-sm mt-2 mb-2"
+                                    onclick="topFunction()" id="myBtn" title="Go to top">Back to Top
+                            </button>
                         </div>
                     </div>
                 </div>

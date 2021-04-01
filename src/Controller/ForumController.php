@@ -32,7 +32,7 @@ class ForumController extends AbstractController
     }
 
     /**
-     * @Route("/admin/dashboard/forum/{page<\d+>?1}", name="forum_index_back", methods={"GET"})
+     * @Route("/admin/dashboard/forum/page/{page<\d+>?1}", name="forum_index_back", methods={"GET"})
      */
     public function indexBack(ForumRepository $forumRepository,$page): Response
     {

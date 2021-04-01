@@ -26,9 +26,9 @@ class Comment
      * @ORM\Column(type="text")
      * @Assert\NotBlank (message="this field must be full")
      * @Assert\Length (
-     *     min="10",
+     *     min="5",
      *     max="10000",
-     *     minMessage="this filed must be at minimum 10 caracters",
+     *     minMessage="this filed must be at minimum 5 caracters",
      *     maxMessage="this filed must be at maximum 10000 caracters"
      *     )
      */

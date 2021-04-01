@@ -14,6 +14,25 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        admin:
+          anonymous: true
+          provider: users_in_memory
+
+          form_login:
+            login_path: app_login_back
+
+            default_target_path: admin_dashboard
+
+          guard:
+            authenticators:
+              - App\Security\LoginFormAuthenticator
+          logout:
+            path: app_logout
+            # where to redirect after logout
+
+            # target: app_any_route
+
         main:
             anonymous: lazy
             provider: users_in_memory

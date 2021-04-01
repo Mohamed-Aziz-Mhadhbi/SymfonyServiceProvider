@@ -36,7 +36,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/admin/dashboard/post/{page<\d+>?1}", name="post_index_back", methods={"GET"})
+     * @Route("/admin/dashboard/post/page/{page<\d+>?1}", name="post_index_back", methods={"GET"})
      */
     public function indexBack(PostRepository $postRepository,$page): Response
     {
