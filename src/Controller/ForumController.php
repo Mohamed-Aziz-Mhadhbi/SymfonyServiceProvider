@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
-use MercurySeries\FlashyBundle\FlashyNotifier;
 
 class ForumController extends AbstractController
 {
@@ -32,23 +31,20 @@ class ForumController extends AbstractController
         $this->security = $security;
     }
 
-    /*/**
-     * @Route("/admin/dashboard/forum/{page<\d+>?1}", name="forum_index_back", methods={"GET"})
-     */
     /**
-     * @Route ("/admin/dashboard/forum", name="forum_index_back", methods={"GET"})
+     * @Route("/admin/dashboard/forum/page/{page<\d+>?1}", name="forum_index_back", methods={"GET"})
      */
-    public function indexBack(ForumRepository $forumRepository): Response
+    public function indexBack(ForumRepository $forumRepository,$page): Response
     {
-        /*$limit = 5;
+        $limit = 5;
         $start = $page * $limit - $limit;
         $total = count($forumRepository->findAll());
-        $pages = ceil($total / $limit);*/
+        $pages = ceil($total / $limit);
 
         return $this->render('BackInterface/forum/index.html.twig', [
-            /*'forums' => $forumRepository->findBy([],[],$limit,$start),
-            'pages' => $pages,*/
-            'forums' => $forumRepository->findAll(),
+            'forums' => $forumRepository->findBy([],[],$limit,$start),
+            'pages' => $pages,
+            'page' => $page,
         ]);
     }
 
@@ -68,13 +64,12 @@ class ForumController extends AbstractController
     /**
      * @Route("/home/forums", name="forums_index_front", methods={"GET","POST"})
      */
-    public function forumsFront(ForumRepository $forumRepository,Request $request,FlashyNotifier $flashy): Response
+    public function forumsFront(ForumRepository $forumRepository,Request $request): Response
     {
         $user = $this->security->getUser();
         $forum = new Forum();
         $form = $this->createForm(ForumType::class, $forum);
         $form->handleRequest($request);
-        $flashy->success('Forum created!');
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -84,7 +79,7 @@ class ForumController extends AbstractController
             $forum->setUs($this->getUser());
 
             $entityManager->flush();
-            $flashy->success('Forum created!');
+
             return $this->redirectToRoute('forums_index_front');
         }
 
@@ -136,7 +131,7 @@ class ForumController extends AbstractController
     /**
      * @Route("/home/forum/{id}", name="forum_show_front", methods={"GET","POST"})
      */
-    public function showFront(Request $request,Forum $forum,ForumRepository $forumRepository,TagRepository $tagRepository,PostRepository $postRepository): Response
+    public function showFront(Request $request,Forum $forum,ForumRepository $forumRepository,PostRepository $postRepository): Response
     {
         $user = $this->security->getUser();
         $post = new Post();
@@ -163,7 +158,6 @@ class ForumController extends AbstractController
         return $this->render('FrontInterface/forum/forum.html.twig', [
             'forum' => $forum,
             'forums' => $forumRepository->findAll(),
-            'tags' => $tagRepository->findAll(),
             'posts' => $postRepository->findAll(),
             'user' => $user,
             'form' => $form->createView(),
@@ -191,12 +185,12 @@ class ForumController extends AbstractController
         ]);
     }
 
-    /*/**
+    /**
      * @Route("/home/post/{id}/edit", name="post_edit_front", methods={"GET","POST"})
      */
-   /* public function editFrontPost(Request $request,Post $post,Forum $forum,ForumRepository $forumRepository,TagRepository $tagRepository,PostRepository $postRepository): Response
+    public function editFrontPost(Request $request,Post $post,Forum $forum,ForumRepository $forumRepository,TagRepository $tagRepository,PostRepository $postRepository): Response
     {
-        //$Forum = $post->getFrm();
+        $Forum = $post->getFrm();
         $user = $this->security->getUser();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
@@ -205,7 +199,7 @@ class ForumController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            //return $this->redirectToRoute('forum_show_front',array('id'=>$Forum->getId()));
+            return $this->redirectToRoute('forum_show_front',array('id'=>$Forum->getId()));
         }
 
         return $this->render('FrontInterface/forum/forum.html.twig', [
@@ -217,7 +211,9 @@ class ForumController extends AbstractController
             'form' => $form->createView(),
             'post' => $post,
         ]);
-    }       */
+    }
+
+
     /**
      * @Route("/home/forum/{id}/edit", name="forum_edit_front", methods={"GET","POST"})
      */
@@ -257,14 +253,12 @@ class ForumController extends AbstractController
     /**
      * @Route("/home/forum/{id}", name="forum_delete_front", methods={"DELETE"})
      */
-    public function deleteFront(Request $request, Forum $forum,FlashyNotifier $flashy): Response
+    public function deleteFront(Request $request, Forum $forum): Response
     {
         if ($this->isCsrfTokenValid('delete'.$forum->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($forum);
-            $flashy->success('Forum deleted!');
             $entityManager->flush();
-
         }
 
         return $this->redirectToRoute('forums_index_front');

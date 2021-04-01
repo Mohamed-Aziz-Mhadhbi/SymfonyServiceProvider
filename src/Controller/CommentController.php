@@ -7,6 +7,7 @@ use App\Entity\Post;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
+use App\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -163,23 +164,22 @@ class CommentController extends AbstractController
      */
     public function editFront(Request $request, Comment $comment): Response
     {
-        $user = $this->security->getUser();
+        $post = $comment->getPst();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('comment_index_front');
+            return $this->redirectToRoute('post_show_front',array('id'=>$post->getId()));
         }
 
         return $this->render('FrontInterface/comment/edit.html.twig', [
             'comment' => $comment,
             'form' => $form->createView(),
-            'user' => $user,
         ]);
     }
-
 
     /**
      * @Route("/admin/dashboard/comment/{id}", name="comment_delete_back", methods={"DELETE"})
@@ -200,15 +200,16 @@ class CommentController extends AbstractController
      */
     public function deleteFront(Request $request, Comment $comment): Response
     {
+        $post = $comment->getPst();
         if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($comment);
+            $comment->getPst()->setNoc($comment->getPst()->getNoc()-1);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('post_show_front',array('id'=>$post->getId()));
     }
-
 }
 
 

@@ -3,7 +3,7 @@
 {% block title %}Post{% endblock %}
 {% block content %}
     <!-- summernote -->
-    <style xmlns="http://www.w3.org/1999/html">
+    <style>
         .sticky {
             position: fixed;
             top: 10px;
@@ -28,8 +28,9 @@
                                                 comments!</small>
                                         </div>
                                         <div class="col">
-                                            {{ post.avgRating | round(1,'floor') }}<br>
-                                            {% include 'FrontInterface/post/rating.html.twig' with {'rating': post.avgRating |round(1,'floor') } %}
+                                            {{ post.avgRating | round(1, 'floor') }}
+                                            <br>
+                                            {% include 'FrontInterface/post/rating.html.twig' with {'rating': post.avgRating } %}
                                         </div>
                                     </div>
                                 </h4>
@@ -43,10 +44,9 @@
                                 </div>
                                 <p title="{{ post.creatAt ? post.creatAt|date('Y-m-d H:i') : '' }}"
                                    style="text-align: right; line-height: 2;">
-                                        {% include 'FrontInterface/comment/FormaDateTime.html.twig' with {'value' : post.creatAt } %}
+                                   {% include 'DateTimeForma.html.twig' with{'value' : post.creatAt} %}
                                 </p>
                                 <div class="usr_quest">
-
                                     <h3 style="line-height: 1.4;">{{ post.title }}</h3>
                                     {{ post.description | raw }}
                                     <ul class="react-links">
@@ -56,7 +56,8 @@
                                                 {% else %}
                                                     {{ post.likes }}
                                                 {% endif %}
-                                            </a></li>
+                                            </a>
+                                        </li>
                                         <li><a title="View"> 👁️ Views
                                                 {% if post.views is null %}
                                                     0
@@ -88,19 +89,54 @@
                                                                 </div>
                                                                 <div class="comment">
                                                                     <h3>{{ comment.usr.username }}</h3>
+                                                                    <span><img src="{{ asset('images/clock.png') }}"
+                                                                               alt=""> {% include 'DateTimeForma.html.twig' with{'value' : comment.creatAt} %}</span>
                                                                     <div>{{ comment.content|raw }}</div>
                                                                     <br>
                                                                     {% include 'FrontInterface/post/rating.html.twig' with {'rating':comment.rating} %}
-
-                                                                    <span style="margin-left: 470px">{% include 'FrontInterface/comment/FormaDateTime.html.twig' with {'value' : comment.creatAt } %}</span>
                                                                     {% if comment.usr == user %}
                                                                         <div style="width: 100%; display:flex; justify-content: flex-end">
-                                                                            <a href="{{ path('comment_edit_front', {'id': comment.id}) }}">
+                                                                            <a href="#" data-toggle="modal"
+                                                                               data-target="#edit-comment-modal-{{ comment.id }}">
                                                                                 <button type="button"
                                                                                         class="btn-sm shadow-sm btn btn-primary mt-2 mb-2 mr-2">
                                                                                     Edit
                                                                                 </button>
                                                                             </a>
+                                                                            <!-- Modal edit comment -->
+                                                                            <div class="modal fade"
+                                                                                 id="edit-comment-modal-{{ comment.id }}"
+                                                                                 tabindex="-1" role="dialog"
+                                                                                 aria-labelledby="exampleModalLabel"
+                                                                                 aria-hidden="true">
+                                                                                <div class="modal-dialog" role="document">
+                                                                                    <div class="modal-content">
+                                                                                        <div class="modal-header">
+                                                                                            <h5 class="modal-title">
+                                                                                                Edit comment</h5>
+                                                                                            <button type="button"
+                                                                                                    class="close"
+                                                                                                    data-dismiss="modal"
+                                                                                                    aria-label="Close">
+                                                                                                <span aria-hidden="true">&times;</span>
+                                                                                            </button>
+                                                                                        </div>
+                                                                                        <div class="modal-body">
+                                                                                            {{ render(controller(
+                                                                                                'App\\Controller\\CommentController::editFront',
+                                                                                                { 'id': comment }
+                                                                                            )) }}
+
+                                                                                            <!--{ include('frontoffice/forum/edit.html.twig', {'forum':forum}) }}-->
+                                                                                            <button type="button"
+                                                                                                    class="btn btn-secondary"
+                                                                                                    data-dismiss="modal">
+                                                                                                Close
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                             {{ include('FrontInterface/comment/_delete_form.html.twig') }}
                                                                         </div>
                                                                     {% endif %}
@@ -130,21 +166,20 @@
 
                     <div class="col-lg-4" style="border-radius: 5px; position: sticky; right: 0;">
                         <div class="widget widget-user" style="border-radius: 5px;">
-                            <h3 class="title-wd"style="font-size: 15px">{{ post.title }}</h3>
+                            <h3 class="title-wd">{{ post.title }} created by <a style="color: #00b44e;">{{ post.usr.username }}</a></h3>
                             <ul>
                                 <li>
                                     <div class="usr-msg-details">
                                         <div class="usr-mg-info">
-                                            <h3 style="color: #6a737c; font-size: 14px;">Created At : {{post.creatAt ? post.creatAt|date('Y-m-d') : ''}} <i class="far fa-clock"></i></h3>
-                                            <h3 style="color: #6a737c; font-size: 14px;">Commments : {{ post.comments |length }} <i class="far fa-comment"></i></h3>
-                                            <h3 style="color: #6a737c; font-size: 14px;">Views : {{ post.views }} <i class="far fa-eye"></i></h3>
-                                            <h3 style="color: #6a737c; font-size: 14px;">Likes : {{ post.likes }} <i class="far fa-thumbs-up"></i></h3>
+                                            <h3>created At : {{ post.creatAt ? post.creatAt|date('Y-m-d') : '' }} <i style=" color: #4f4f4f;" class="far fa-clock"></i></h3>
+                                            <h3>comments : {{ post.comments |length }} <i style="color: #0c525d;" class="far fa-comment"></i></h3>
+                                            <h3>views : {{ post.views }} <i style="color: #1da1f2;" class="far fa-eye"></i></h3>
+                                            <h3>likes : {{ post.likes }} <i style="color: #00b44e;" class="far fa-thumbs-up"></i></h3>
                                         </div><!--usr-mg-info end-->
                                     </div>
                                 </li>
                             </ul>
                         </div><!--widget-user end-->
-
                         <div class="widget widget-adver">
                             <img src="http://via.placeholder.com/370x270" alt="">
                         </div><!--widget-adver end-->
@@ -218,7 +253,7 @@
         };
 
         var header = document.getElementById("sticky");
-        var sticky = header.offsetTop + 580;
+        var sticky = header.offsetTop + 600;
 
         function myFunction() {
             if (window.pageYOffset > sticky) {
@@ -227,49 +262,6 @@
                 header.classList.remove("sticky");
             }
         }
-    </script>
-
-    <script>
-        var string = "{{ strTags }}";
-        var availableTags = string.split('/');
-
-        console.log(availableTags);
-        var array =[];
-
-        for (var i = 0; i < availableTags.length; i++) {
-            if(availableTags[i] != "" )
-            {
-                array.push({ id:i, name:availableTags[i]});
-            }
-
-        }
-
-        console.log(array);
-
-        function split(val) {
-            return val.split(/@\s*/);
-        }
-
-
-        function extractLast(term) {
-            return split(term).pop();
-        }
-
-
-
-        $('#comment_content').mentiony({
-            onDataRequest: function (mode, keyword, onDataRequestCompleteCallback) {
-
-                var data =  array ;
-
-                data = jQuery.grep(data, function( item ) {
-                    return item.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1;
-                });
-                onDataRequestCompleteCallback.call(this, data);
-            },
-            timeOut: 0,
-            debug: 1,
-        });
     </script>
 
 {% endblock %}

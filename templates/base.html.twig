@@ -25,14 +25,10 @@
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
               integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
               crossorigin="anonymous"/>
-        <link rel="stylesheet" href="{{ asset("css/jquery.mentiony.css")}}">
-        <script src="{{ asset("js/jquery.mentiony.js")}}"></script>
 
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet">
         <link rel="icon" type="image/png" href="{{ asset('images/2.png') }}">
-        <!-- Load Flashy default CSS -->
-        <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
     {% endblock %}
 
 
@@ -253,10 +249,11 @@
         <script type="text/javascript" src="{{ asset('js/scrollbar.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/particles.min.js') }}"></script>
-        <!-- Load Flashy default CSS -->
-        <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
-        <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
+        <script src="//code.jquery.com/jquery.js"></script>
+        <!-- Load Flashy default JavaScript -->
+        <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+        <!-- Include Flashy default partial -->
+        {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
     {% endblock %}
 
 </div>

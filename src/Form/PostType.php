@@ -21,7 +21,6 @@ class PostType extends AbstractType
             ->add('noc')
             ->add('frm')
             ->add('usr')
-            ->add('tg')
             ->add('statusLike')
         ;
     }

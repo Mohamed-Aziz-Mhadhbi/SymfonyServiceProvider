@@ -12,7 +12,6 @@ use App\Repository\CommentRepository;
 use App\Repository\ForumRepository;
 use App\Repository\PostRepository;
 use App\Repository\TagRepository;
-use MercurySeries\FlashyBundle\FlashyNotifier;
 use phpDocumentor\Reflection\DocBlock\Tags\Uses;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,13 +36,19 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/admin/dashboard/post}", name="post_index_back", methods={"GET"})
+     * @Route("/admin/dashboard/post/page/{page<\d+>?1}", name="post_index_back", methods={"GET"})
      */
-    public function indexBack(PostRepository $postRepository): Response
+    public function indexBack(PostRepository $postRepository,$page): Response
     {
+        $limit = 5;
+        $start = $page * $limit - $limit;
+        $total = count($postRepository->findAll());
+        $pages = ceil($total / $limit);
 
         return $this->render('BackInterface/post/index.html.twig', [
-            'posts'=> $postRepository->findAll(),
+            'posts' => $postRepository->findBy([],[],$limit,$start),
+            'pages' => $pages,
+            'page' => $page,
         ]);
     }
 
@@ -92,7 +97,7 @@ class PostController extends AbstractController
     /**
      * @Route("/home/post/new", name="post_new_front", methods={"GET","POST"})
      */
-    public function newFront(Request $request ,User $usr,FlashyNotifier $flashy): Response
+    public function newFront(Request $request ,User $usr): Response
     {
         $user = $this->security->getUser();
         $post = new Post();
@@ -107,7 +112,7 @@ class PostController extends AbstractController
             $post->setViews(0);
             $post->setCreatAt(new \DateTime('now'));
             $entityManager->flush();
-            $flashy->success('Post Add!');
+
             return $this->redirectToRoute('post_index_front');
         }
 
@@ -123,16 +128,6 @@ class PostController extends AbstractController
      */
     public function showFront(Request $request , Post $post,TagRepository $tagRepository,CommentRepository $commentRepository ): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $arrayUsers = $entityManager->getRepository(User::class)->findAll();
-        foreach ($arrayUsers as $item) {
-            $arrayTags[] = $item->getUsername();
-        }
-        $str = "";
-        foreach ($arrayTags as $tag){
-            $str .= $tag . '/';
-
-        }
         $post->setViews($post->getViews() + 1);
         $user = $this->security->getUser();
         $comment = new Comment();
@@ -171,37 +166,6 @@ class PostController extends AbstractController
             'comments' => $commentRepository->findAll(),
             'user' => $user,
             'form' => $form->createView(),
-            'strTags' => $str,
-        ]);
-    }
-
-
-    /**
-     * @Route("/home/post/{id}/edit", name="post_edit_front", methods={"GET","POST"})
-     */
-    public function editFront(Request $request, Post $post, TagRepository $tagRepository,Forum $forum,ForumRepository $forumRepository,PostRepository $postRepository): Response
-    {
-        $user = $this->security->getUser();
-        $forum = $post->getFrm();
-        $form = $this->createForm(PostType::class, $post);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('forum_show_front',array('id'=>$forum->getId()));
-        }
-
-        return $this->render('FrontInterface/forum/edit.html.twig', [
-            'post' => $post,
-            'form' => $form->createView(),
-            'forum' => $forum,
-            'forums' => $forumRepository->findAll(),
-            'tags' => $tagRepository->findAll(),
-            'posts' => $postRepository->findAll(),
-            'user' => $user,
-            'form' => $form->createView(),
-            'post' => $post,
         ]);
     }
 
@@ -231,75 +195,39 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/home/post/{id}/like/comment", name="clickLikescomment", methods={"GET","POST"})
-     */
-    public function clickLikescomment(Comment $comment,Post $post)
-    {
-        if ($comment->getStatusLike() == true)
-        {
-            $comment->setLikes($comment->getLikes()-1);
-            $comment->setStatusLike(false);
-            $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('post_show_front',array('id'=>$post->getId()));
-        }else
-        {
-            return $this->redirectToRoute('post_show_front',array('id'=>$post->getId()));
-        }
-    }
-
-    /**
      * @Route("/home/post/{id}", name="post_delete_font", methods={"DELETE"})
      */
-    public function deleteFront(Request $request, Post $post,FlashyNotifier $flashy): Response
+    public function deleteFront(Request $request, Post $post): Response
     {
         $Forum =$post->getFrm();
         if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($post);
             $entityManager->flush();
-            $flashy->error('Post Deleted');
         }
 
         return $this->redirectToRoute('forum_show_front',array('id'=>$Forum->getId()));
     }
-    /**
-     * @Route("/home/comment/{id}", name="comment_delete_front", methods={"DELETE"})
-     */
-    public function deleteFrontComment(Request $request, Comment $comment): Response
-    {
-        $post = $comment->getPst();
-        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($comment);
-            $post->setNoc($post->getNOC()-1);
-            $entityManager->flush();
-        }
-        return $this->redirectToRoute('post_show_front',array('id'=>$post->getId()));
-    }
 
     /**
-     * @Route("/home/comment/{id}/edit", name="comment_edit_front", methods={"GET","POST"})
+     * @Route("/home/post/{id}/edit", name="post_edit_front", methods={"GET","POST"})
      */
-    public function editFrontComment(Request $request, Comment $comment ,TagRepository $tagRepository,CommentRepository $commentRepository): Response
+    public function editFront(Request $request, Post $post): Response
     {
-        $post = $comment->getPst();
-        $user = $this->security->getUser();
-        $form = $this->createForm(CommentType::class, $comment);
+        $forum=$post->getFrm();
+        $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            echo'ffffffffffffffffffffffffffffffffffsdfsdfqds';
-            return $this->redirectToRoute('post_show_front',array('id'=>$post->getId()));
+
+            return $this->redirectToRoute('forum_show_front',array('id'=>$forum->getId()));
         }
 
-        return $this->render('FrontInterface/comment/edit.html.twig', [
-            'comment' => $comment,
-            'form' => $form->createView(),
-            'user' => $user,
+        return $this->render('FrontInterface/post/_formedit.html.twig', [
             'post' => $post,
-            'tags' => $tagRepository->findAll(),
-            'comments' => $commentRepository->findAll(),
+            'form' => $form->createView(),
         ]);
     }
+
 }
