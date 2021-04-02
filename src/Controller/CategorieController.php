@@ -52,7 +52,7 @@ class CategorieController extends AbstractController
             }
             $em->persist($categorie);
             $em->flush();
-            $this->addFlash('success', 'Categorie ajouté avec succés!');
+            $this->addFlash('success', 'Catégorie ajoutée avec succés!');
                  $this->redirectToRoute('categories');
         }
         return $this->render('categorie/new.html.twig', [
@@ -71,7 +71,7 @@ class CategorieController extends AbstractController
         if($form->isSubmitted()){
             $categorie = $form->getData();
             $em->flush();
-            $this->addFlash('success', 'Categorie modifié avec succés!');
+            $this->addFlash('success', 'Catégorie modifiée avec succés!');
             return $this->redirectToRoute('categories');
         }
         return $this->render('categorie/edit.html.twig', [
@@ -86,7 +86,7 @@ class CategorieController extends AbstractController
         $categorie = $cr->findOneCategorieById($id);
         $em->remove($categorie);
         $em->flush();
-        $this->addFlash('success', 'Categorie supprimé avec succés!');
+        $this->addFlash('success', 'Catégorie supprimée avec succés!');
         return $this->redirectToRoute('categories');
     }
     protected function forward(string $controller, array $path = [], array $query = []): Response

@@ -26,10 +26,10 @@ class QuizController extends AbstractController
     /**
      * @Route("/admin/dashboard/quiz", name="quiz")
      */
-    public function index(QuestionQuizRepository $qz): Response
+    public function index(QuizRepository $qz): Response
     {
         $quizes = $qz->findAll();
-        return $this->render('quiz/quiz.html.twig', [
+        return $this->render('quiz/index.html.twig', [
             'quizes'=> $quizes
         ]);
     }
@@ -41,20 +41,33 @@ class QuizController extends AbstractController
     {
 
         $quiz = new Quiz();
-        $form = $this->createForm(QuizType::class, $quiz);
+        $form = $this->createForm(QuizType::class, $quiz,['allow_extra_fields'=>true]);
         
        
       $form->handleRequest($request);
         if($form->isSubmitted()){
-
-            dump($form);
-        }/*
+            $quiz= $form->getData();
+            $errors = $validator->validate($quiz);
+            if (count($errors) > 0) {
+                $errorsString = (string) $errors;
+                return $this->render('quiz/new.html.twig', [
+                    "form"=> $form->createView(),
+                    "errors"=> $errors
+                ]);
+            }
+            $em->persist($quiz);
+            $em->flush();
+            $this->addFlash('success', 'quiz ajouté avec succés!');
+            dump($form->getExtraData());
+            return $this->redirectToRoute('quiz');
+        }
+        /*
             $quiz->setDifficulte($form["difficulte"]->getData());
             $quiz->setNbrQuestion($form["nbr_question"]->getData());
             $quiz->setNoteMax($form["note_max"]->getData());
             $quiz->setCategorie($form["categorie"]->getData());
 
-        /   $errors = $validator->validate($quiz);
+            $errors = $validator->validate($quiz);
             if (count($errors) > 0) {
                 
                 $errorsString = (string) $errors;
@@ -103,23 +116,35 @@ class QuizController extends AbstractController
      * @Route("/quiz/select", name="select_quiz")
      */
     public function selectQuiz(Request $request):Response{
-        $categorie = new Categorie();
-
-
-
-//        $form = $this->createFormBuilder()
-//            ->add('categorie',EntityType::class,[
-//                'class'=>Categorie::class
-//            ])
-//            ->add('save' ,SubmitType::class)
-//            ->getForm();
-        $quiz = new Quiz();
-        $form=$this->createForm(CompleteQuizType::class,$quiz);
+        $form = $this->createFormBuilder()
+        ->add('categorie',EntityType::class,[
+            'class'=>Categorie::class
+        ])
+        ->add('Selectionner' ,SubmitType::class)
+        ->getForm();
         $form->handleRequest($request);
-
         if ($form->isSubmitted()){
+                $data = $form->getData();
+                $categorie = $data['categorie'];
+                $quiz = new Quiz();
+                $formQuiz=$this->createForm(CompleteQuizType::class, $quiz, [
+                    'data'=>[
+                        'categorie'=>$categorie,
+                        'difficulte'=>'facile'
+                    ],
+                    'data_class'=>null
+                    ]);
+                $formQuiz->handleRequest($request);
+                if($formQuiz->isSubmitted()){
+                    $data = $formQuiz->getData();
+                    dump($data);
+                }
+                return $this->render('quiz/selectQuiz.html.twig', [
+                    "form"=> $formQuiz->createView()
+                ]);
 
         }
+        
 
         return $this->render('quiz/selectQuiz.html.twig', [
             "form"=> $form->createView()

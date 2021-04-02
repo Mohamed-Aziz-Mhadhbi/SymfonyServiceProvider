@@ -45,7 +45,7 @@
                         <a href={{ path('home')}} title=""><img src="{{ asset('images/logo.png') }}" alt=""></a>
                     </div><!--logo end-->
                     <div class="search-bar">
-                        <form>
+                        <form action="#">
                             <input type="text" name="search" placeholder="Search...">
                             <button type="submit"><i class="la la-search"></i></button>
                         </form>
@@ -54,35 +54,36 @@
                         <ul>
 
                             <li>
-                                <a href="#" title="">
+                                <a href="{{ path('admin_dashboard') }}" title="">
                                     <span><img src="{{ asset('images/icon2.png') }}" alt=""></span>
-                                    Companies
+                                    Administration
                                 </a>
 
 
+                            </li>
+                            <li>
+                                <a href="{{ path('select_quiz') }}" title="">
+                                    <span><img src="{{ asset('images/icon3.png') }}" alt=""></span>
+                                    Commencer votre QUIZ
+                                </a>
                             </li>
                             <li>
                                 <a href="{{ path('annonces') }}" title="">
                                     <span><img src="{{ asset('images/icon3.png') }}" alt=""></span>
-                                    offerts
+                                    Annonces
                                 </a>
                             </li>
-                            <li>
-                                <a href="#" title="">
-                                    <span><img src="{{ asset('images/icon3.png') }}" alt=""></span>
-                                    Projects
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('services') }}" title="">
-                                    <span><img src="{{ asset('images/icon3.png') }}" alt=""></span>
-                                    Services
-                                </a>
-                            </li>
+                            <!--
                             <li>
                                 <a href="#" title="">
                                     <span><img src="{{ asset('images/icon4.png') }}" alt=""></span>
                                     Profiles
+                                </a>
+                            </li>-->
+                            <li>
+                                <a href="{{ path('services') }}" title="">
+                                    <span><img src="{{ asset('images/icon3.png') }}" alt=""></span>
+                                    Services
                                 </a>
                             </li>
                             <li>
@@ -95,7 +96,7 @@
                             <li>
                                 <a href="#" title="" class="not-box-open">
                                     <span><img src="{{ asset('images/icon7.png') }}" alt=""></span>
-                                    Notification
+                                    Notifications
                                 </a>
                                 <div class="notification-box">
                                     <div class="nt-title">

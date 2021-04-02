@@ -21,46 +21,48 @@ class CompleteQuizType extends AbstractType
 {
     public function __construct(EntityManagerInterface $em) {
         $this->em = $em;
+        $this->categorie = null;
+        $this->difficulte = null;
     }
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    { 
+        $data = $options['data'];
+        $this->categorie = $data['categorie'];
+        $this->difficulte =  $data['difficulte'];
         $builder
-            ->add('categorie',EntityType::class,[
-                'class'=>Categorie::class
-            ])
-
-            ->addEventListener(FormEvents::SUBMIT, function(FormEvent $event){
+            
+            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event ){
                 $form = $event->getForm();
-                $data =$form->getData();
 
-               $category = $data->getCategorie();
-               $diff = 'facile';
+                $quizes =$this->em->getRepository(Quiz::class)->findByCatAndDiff($this->categorie,$this->difficulte);
+                if(count($quizes) > 0){
+                    $r= rand(0, count($quizes)-1);
+                    $quiz = $quizes[$r];
+                    $quizquestions = $this->em->getRepository(QuestionQuiz::class)->findByQuiz($quiz->getId());
+                    $questions=[];
+                    foreach ($quizquestions as $q){
+                        array_push($questions,$this->em->getRepository(Question::class)->findOneById($q->getQuestion()));
+                    }
+                    dump($questions);
 
-
-
-                $quizes =$this->em->getRepository(Quiz::class)->findByCatAndDiff($category->getId(),$diff);
-                $r= rand(0, count($quizes)-1);
-                $quiz = $quizes[$r];
-                $quizquestions = $this->em->getRepository(QuestionQuiz::class)->findByQuiz($quiz->getId());
-
-                $questions=[];
-                foreach ($quizquestions as $q){
-                    array_push($questions,$this->em->getRepository(Question::class)->findOneById($q->getQuestion()));
+                    foreach ($questions as $question){
+                        $form->add($question->getEnonce(),ChoiceType::class,[
+                            'choices'=>[
+                                $question->getPropositionA()=>$question->getPropositionA(),
+                                $question->getPropositionB()=>$question->getPropositionB(),
+                            ],
+                            'mapped'=>false
+                        ]);
+                    }
+                    $form->add('Enregistrer',submitType::class);
+                }else{
+                    //return $this->redirectToRoute('categories');
+                    //return redirect()->back();
+                    //->withInput();('select_quiz');
+                    //'select_quiz'
                 }
-                dump($questions);
-
-                foreach ($questions as $question){
-                    $form->add($question->getEnonce(),ChoiceType::class,[
-                        'choices'=>[
-                            $question->getPropositionA()=>$question->getPropositionA(),
-                            $question->getPropositionB()=>$question->getPropositionB(),
-                        ],
-                        'mapped'=>false
-                    ]);
-                }
-                $form->add('terminer',submitType::class);
             })
-            ->add('créer' ,SubmitType::class)
+            //->add('envoyer' ,SubmitType::class)
         ;
     }
 

@@ -35,7 +35,7 @@ class QuestionController extends AbstractController
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
        
-      $form->handleRequest($request);
+        $form->handleRequest($request);
         if($form->isSubmitted()){
 
             $question = new Question();
@@ -52,7 +52,7 @@ class QuestionController extends AbstractController
             }
             $em->persist($question);
             $em->flush();
-            $this->addFlash('success', 'Question ajouté avec succés!');
+            $this->addFlash('success', 'Question ajoutée avec succés!');
             return $this->redirectToRoute('questions');
         }
         return $this->render('question/new.html.twig', [
@@ -71,7 +71,7 @@ class QuestionController extends AbstractController
         if($form->isSubmitted()){
             $question = $form->getData();
             $em->flush();
-            $this->addFlash('success', 'Question modifié avec succés!');
+            $this->addFlash('success', 'Question modifiée avec succés!');
             return $this->redirectToRoute('questions');   
         }
         return $this->render('question/edit.html.twig', [
@@ -86,7 +86,7 @@ class QuestionController extends AbstractController
         $question = $qr->findOneQuestionById($id);
         $em->remove($question);
         $em->flush();
-        $this->addFlash('success', 'Question supprimé avec succés!');
+        $this->addFlash('success', 'Question supprimée avec succés!');
         return $this->redirectToRoute('questions');
     }
     protected function forward(string $controller, array $path = [], array $query = []): Response
