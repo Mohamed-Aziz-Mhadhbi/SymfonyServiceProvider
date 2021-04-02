@@ -27,6 +27,13 @@ class QuestionRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
             ;
     }
+    public function findSQuestionByEnonce($enonce){
+        return $this->createQueryBuilder('q')
+            ->where('q.enonce LIKE :enonce')
+            ->setParameter('enonce', '%'.$enonce.'%')
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return Question[] Returns an array of Question objects
     //  */
