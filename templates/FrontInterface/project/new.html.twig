@@ -3,9 +3,25 @@
 {% block title %}New Project{% endblock %}
 
 {% block content %}
-    <h1>Create new Project</h1>
+<br><br><br><br><br><br>
+<div class="col-12">
+    <div class="main-ws-sec">
+        <div class="posts-section">
+            <div class="post-bar">
+                <div class="post-project">
 
-    {{ include('FrontInterface/project/_form.html.twig') }}
 
-    <a href="{{ path('project_index_front') }}">back to list</a>
-{% endblock %}
+                    <h3> Send this Project to John Doe</h3>
+                </div>
+                <div class="post-project-fields">
+
+
+
+                    {{ include('FrontInterface/project/_form.html.twig') }}
+
+                    <a href="{{ path('project_index_front') }}">back to list</a>
+
+                </div></div></div>
+    </div>
+
+    {% endblock %}

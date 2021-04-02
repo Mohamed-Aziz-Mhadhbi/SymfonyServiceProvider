@@ -8,6 +8,9 @@
     "captcha-com/symfony-captcha-bundle": {
         "version": "4.2.12"
     },
+    "cmen/google-charts-bundle": {
+        "version": "4.0.0"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.1"
     },
@@ -34,6 +37,9 @@
     },
     "doctrine/dbal": {
         "version": "2.12.1"
+    },
+    "doctrine/deprecations": {
+        "version": "v0.5.3"
     },
     "doctrine/doctrine-bundle": {
         "version": "2.0",
@@ -639,6 +645,9 @@
     },
     "twig/twig": {
         "version": "v3.3.0"
+    },
+    "twilio/sdk": {
+        "version": "6.20.0"
     },
     "webmozart/assert": {
         "version": "1.9.1"

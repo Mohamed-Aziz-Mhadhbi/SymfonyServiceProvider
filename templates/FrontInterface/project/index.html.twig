@@ -23,10 +23,10 @@
                 <td>{{ project.title }}</td>
                 <td>{{ project.description }}</td>
                 <td>{{ project.creatAt ? project.creatAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ project.status ? 'Yes' : 'No' }}</td>
+                <td>{{ project.status ? 'Validated' : 'not Validated' }}</td>
                 <td>
-                    <a href="{{ path('project_show_front', {'id': project.id}) }}">show</a>
-                    <a href="{{ path('project_edit_front', {'id': project.id}) }}">edit</a>
+                    <a href="{{ path('project_show_front', {'id': project.id}) }}">details</a>
+                    <a href="{{ path('project_edit_front', {'id': project.id}) }}">Validate</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +37,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('project_new_front') }}">Create new</a>
+    <a href="{{ path('profile') }}">Create new Proposal</a>
 {% endblock %}

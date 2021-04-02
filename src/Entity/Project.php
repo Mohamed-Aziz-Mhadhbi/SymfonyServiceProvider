@@ -42,6 +42,26 @@ class Project
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="projects")
      */
     private $projectUser;
+    /**
+     * @ORM\ManyToOne(targetEntity=Domain::class, inversedBy="projects")
+     */
+    private $Domain_id;
+
+    /**
+     * @return mixed
+     */
+    public function getDomainId()
+    {
+        return $this->Domain_id;
+    }
+
+    /**
+     * @param mixed $Domain_id
+     */
+    public function setDomainId($Domain_id): void
+    {
+        $this->Domain_id = $Domain_id;
+    }
 
     public function getId(): ?int
     {

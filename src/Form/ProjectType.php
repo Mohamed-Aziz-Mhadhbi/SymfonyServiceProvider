@@ -15,8 +15,7 @@ class ProjectType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('creatAt')
-            ->add('status')
-            ->add('projectUser')
+            ->add('Domain_id')
         ;
     }
 

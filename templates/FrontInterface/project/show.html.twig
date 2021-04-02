@@ -7,26 +7,26 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ project.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ project.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ project.description }}</td>
-            </tr>
-            <tr>
-                <th>CreatAt</th>
-                <td>{{ project.creatAt ? project.creatAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ project.status ? 'Yes' : 'No' }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ project.id }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ project.title }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ project.description }}</td>
+        </tr>
+        <tr>
+            <th>CreatAt</th>
+            <td>{{ project.creatAt ? project.creatAt|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{{ project.status ? 'Validated' : 'Pending' }}</td>
+        </tr>
         </tbody>
     </table>
 
