@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=OrderRepository::class)
@@ -20,6 +21,11 @@ class Order
 
     /**
      * @ORM\Column(type="text")
+     *     @Assert\Length (
+     *     min = "10",
+     *     max = "1250",
+     *     minMessage ="this fild ",
+     *     maxMessage = "you passed the max of length of message is 1250 carect")
      */
     private $message;
 

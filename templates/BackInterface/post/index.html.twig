@@ -79,7 +79,7 @@
                                                                 <td>{{ post.creatAt ? post.creatAt|date('Y-m-d H:i:s') : '' }}</td>
                                                                 <td>{{ post.views }}</td>
                                                                 <td>{{ post.likes }}</td>
-                                                                <td>{{ post.noc }}</td>
+                                                                <td>{{ post.comments|length }}</td>
                                                                 <td>
                                                                     <div class="btn-group btn-group-sm">
                                                                         <a href="{{ path('post_show_back', {'id': post.id}) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>

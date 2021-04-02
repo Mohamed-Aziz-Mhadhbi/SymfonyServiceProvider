@@ -1,4 +1,32 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+<div class="content">
+    <div class="container">
+<div class="card-body">
+    <div class="form-group">
+
+        <label style=" color: #6a737c;">Message * :</label>
+        <br>
+        <br>
+
+        {{ form_widget(form.message,{'attr':{'class':'order' , 'id':'inputorder'}}) }}
+        <div style="color :red;" >
+            {{form_errors(form.message)}}
+        </div>
+    </div>
+    <div class="form-group">
+
+        <label style=" color: #6a737c;">Status * :</label>
+        <br>
+        <br>
+
+        {{ form_widget(form.status,{'attr':{'class':'order' , 'id':'inputstatus'}}) }}
+        <div style="color :red;" >
+            {{form_errors(form.status)}}
+        </div>
+    </div>
+
+    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+
+</div></div></div>
+
 {{ form_end(form) }}

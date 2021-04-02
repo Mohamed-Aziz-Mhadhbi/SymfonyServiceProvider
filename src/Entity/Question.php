@@ -4,6 +4,9 @@ namespace App\Entity;
 
 use App\Repository\QuestionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Integer;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=QuestionRepository::class)
@@ -17,111 +20,94 @@ class Question
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $statement;
+    /** 
+    * @ORM\Column(type="string", length=255)
+    * @Assert\NotBlank
+    */
+    private $enonce;
+
+
+
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank
+     * @Assert\Choice(choices={1,2},message="La valeur doit etre soit 1 ou 2")
      */
-    private $answerA;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $answerB;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $answerC;
+    private $proposition_correcte;
 
     /**
      * @ORM\Column(type="string", length=255)
+    * @Assert\NotBlank
      */
-    private $rightAnswer;
+    private $proposition_A;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Quiz::class, inversedBy="quizQuestion")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=255)
+    * @Assert\NotBlank
      */
-    private $quiz;
+    private $proposition_B;
+
+   
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getStatement(): ?string
+    public function getEnonce(): ?string
     {
-        return $this->statement;
+        return $this->enonce;
     }
 
-    public function setStatement(string $statement): self
+    public function setEnonce(string $enonce): self
     {
-        $this->statement = $statement;
+        $this->enonce = $enonce;
+        
 
         return $this;
     }
 
-    public function getAnswerA(): ?string
+   
+
+    public function getPropositionCorrecte(): ?int
     {
-        return $this->answerA;
+        return $this->proposition_correcte;
     }
 
-    public function setAnswerA(?string $answerA): self
+    public function setPropositionCorrecte(int $proposition_correcte): self
     {
-        $this->answerA = $answerA;
+        $this->proposition_correcte = $proposition_correcte;
 
         return $this;
     }
 
-    public function getAnswerB(): ?string
+    public function getPropositionA(): ?string
     {
-        return $this->answerB;
+        return $this->proposition_A;
     }
 
-    public function setAnswerB(?string $answerB): self
+    public function setPropositionA(string $proposition_A): self
     {
-        $this->answerB = $answerB;
+        $this->proposition_A = $proposition_A;
 
         return $this;
     }
 
-    public function getAnswerC(): ?string
+    public function getPropositionB(): ?string
     {
-        return $this->answerC;
+        return $this->proposition_B;
     }
 
-    public function setAnswerC(?string $answerC): self
+    public function setPropositionB(string $proposition_B): self
     {
-        $this->answerC = $answerC;
+        $this->proposition_B = $proposition_B;
 
         return $this;
     }
-
-    public function getRightAnswer(): ?string
+    public function __toString()
     {
-        return $this->rightAnswer;
+        return $this->enonce;
     }
 
-    public function setRightAnswer(string $rightAnswer): self
-    {
-        $this->rightAnswer = $rightAnswer;
-
-        return $this;
-    }
-
-    public function getQuiz(): ?Quiz
-    {
-        return $this->quiz;
-    }
-
-    public function setQuiz(?Quiz $quiz): self
-    {
-        $this->quiz = $quiz;
-
-        return $this;
-    }
 }

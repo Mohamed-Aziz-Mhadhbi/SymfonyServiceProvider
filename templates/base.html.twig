@@ -23,7 +23,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/responsive.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/profile.css') }}">
-
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/svgstyle.css') }}">
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
               integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
               crossorigin="anonymous"/>
@@ -93,7 +93,7 @@ c-198 65 -369 123 -381 130 -42 22 -44 41 -44 485 0 403 1 428 21 486 37 110
 
 </div>
 
-<div class="wrapper" id="myDiv">
+<div style="display: none;" class="wrapper" id="myDiv">
     {% block header %}
 
 
@@ -252,7 +252,7 @@ c-198 65 -369 123 -381 130 -42 22 -44 41 -44 485 0 403 1 428 21 486 37 110
             </div>
         </footer><!--footer end-->
     {% endblock %}
-
+</div>
     {% block js %}
         <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/popper.js') }}"></script>
@@ -266,20 +266,21 @@ c-198 65 -369 123 -381 130 -42 22 -44 41 -44 485 0 403 1 428 21 486 37 110
         <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
         <!-- Include Flashy default partial -->
 
+        <script>
+            var myVar;
+
+            function myFunction() {
+                myVar = setTimeout(showPage, 600);
+            }
+
+            function showPage() {
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("myDiv").style.display = "block";
+            }
+        </script>
     {% endblock %}
-</div>
-<script>
-        var myVar;
 
-        function myFunction() {
-            myVar = setTimeout(showPage, 600);
-        }
 
-        function showPage() {
-            document.getElementById("loader").style.display = "none";
-            document.getElementById("myDiv").style.display = "block";
-        }
-    </script>
 
 </body>
 </html>

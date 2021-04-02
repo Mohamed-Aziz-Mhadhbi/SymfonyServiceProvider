@@ -71,6 +71,7 @@ class ServiceController extends AbstractController
             $filename= md5(uniqid()) . '.' . $file->guessExtension();
             $file->move($this->getParameter('images_directory'), $filename);
             $service->setImage($filename);
+            $service->addServiceUser($user);
             $entityManager->persist($service);
             $entityManager->flush();
 
@@ -111,6 +112,7 @@ class ServiceController extends AbstractController
      */
     public function editFront(Request $request, Service $service): Response
     {
+        $user = $this->security->getUser();
         $form = $this->createForm(ServiceType::class, $service);
         $form->handleRequest($request);
 
@@ -123,6 +125,7 @@ class ServiceController extends AbstractController
         return $this->render('FrontInterface/service/edit.html.twig', [
             'service' => $service,
             'form' => $form->createView(),
+            'user' => $user,
         ]);
     }
 
@@ -175,6 +178,24 @@ class ServiceController extends AbstractController
 
         }
         return $realEntities;
+    }
+
+    /**
+     * @param ServiceRepository $repository
+     * @param Request $request
+     * @return Response
+     * @Route("/service/recherche",name="recherche")
+     */
+    public function Recherche(ServiceRepository $repository,Request $request,PaginatorInterface $paginator){
+        $data=$request->get('search');
+        $donnees=$repository->search($data);
+        $user = $this->security->getUser();
+        $services = $paginator->paginate(
+            $donnees, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            2// Nombre de résultats par page
+        );
+        return $this->render('FrontInterface/service/index.html.twig',['services'=>$services,'user' => $user]);
     }
 }
 

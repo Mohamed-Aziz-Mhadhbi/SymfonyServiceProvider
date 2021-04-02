@@ -38,10 +38,16 @@
             </div>
         </div>
     </div>
-    <a href="{{ path('service_index_front') }}">back to list</a>
 
-    <a href="{{ path('service_edit_front', {'id': service.id}) }}">edit</a>
-    <a href="{{ path('order_new_front', {'id': service.id}) }}">order</a>
+    <div class="save-stngs">
+        <ul>
+            <li><button type="submit" ><a href="{{ path('service_index_front') }}">Back to list</a></button></li>
+            <li><button type="submit" ><a href="{{ path('service_edit_front', {'id': service.id}) }}">Edit</a></button></li>
+            <li><button type="submit" ><a href="{{ path('order_new_front', {'id': service.id}) }}">Order</a></button></li>
+        </ul>
+    </div><!--save-stngs end-->
+
+
 
     {{ include('FrontInterface/service/_delete_form.html.twig') }}
 {% endblock %}

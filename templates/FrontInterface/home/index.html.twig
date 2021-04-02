@@ -12,9 +12,9 @@
                 <h3>Our website is being used by these formidable professionals !</h3>
             </div><!--company-title end-->
 
-            {% for user in users |sort | reverse|slice(0,5)%}
+            {% for user in users |sort | reverse|slice(0,4)%}
                 {% if user.role == "prestataire" %}
-                <div class=" col-lg-3">
+                <div class=" col-lg-3 float-right">
                     <div class="company_profile_info">
                         <div class="company-up-info">
                             <img src="http://via.placeholder.com/91x91" alt="">

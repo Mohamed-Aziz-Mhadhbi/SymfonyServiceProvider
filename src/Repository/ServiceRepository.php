@@ -19,6 +19,37 @@ class ServiceRepository extends ServiceEntityRepository
         parent::__construct($registry, Service::class);
     }
 
+    /**
+     * @param $title
+     * @return int|mixed|string
+     */
+    function searchtitle($title){
+        return $this->createQueryBuilder('s')
+            ->where('.title LIKE :title')
+            ->setParameter('title','%' . $title . '%')
+            ->getQuery()->getResult();
+    }
+
+    /**
+     * @param $data
+     * @return int|mixed|string
+     */
+    public function search($data){
+
+        $query = $this->createQueryBuilder('s');
+        if($data){
+            $query->andWhere('s.id LIKE :data OR
+                 s.title LIKE :data OR
+                 s.description LIKE :data OR
+                 s.creatAt LIKE :data  ')
+                ->setParameter('data','%'.$data.'%');
+        }
+        return $query
+            ->getQuery()
+            ->getResult();
+    }
+
+
     // /**
     //  * @return Service[] Returns an array of Service objects
     //  */

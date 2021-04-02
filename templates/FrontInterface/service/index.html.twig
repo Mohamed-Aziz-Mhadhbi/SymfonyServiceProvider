@@ -5,67 +5,22 @@
 {% block content %}
 
     <section class="wrapper">
+        <div class="search-sec">
+            <div class="container">
+                <div class="search-box">
+                    <form method="post" action="{{ path('recherche') }}">
+                        <input type="text" name="search" placeholder="Search keywords">
+                        <button type="submit" value="Recherche">Search</button>
+                    </form>
+                </div><!--search-box end-->
+            </div>
+        </div><!--search-sec end-->
+
+
+
         <div class="container-fostrap">
 
-            <div class="sidebar-search">
 
-                <div class="input-group custom-search-form">
-
-                    <input type="text" id="search" class="form-control" placeholder="Search here">
-                </div>
-                <!-- /input-group -->
-            </div>
-            <ul class="nav" id="side-menu">
-                <li>
-                    <a href="search"> Entities<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level" id="entitiesNav">
-                    </ul>
-                </li>
-            </ul><br><br><br><br>
-
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-            <script type="text/javascript">
-                jQuery(document).ready(function() {
-                    var searchRequest = null;
-                    $("#search").keyup(function() {
-                        var minlength = 1;
-                        var that = this;
-                        var value = $(this).val();
-                        var entitySelector = $("#entitiesNav").html('');
-                        if (value.length >= minlength ) {
-                            if (searchRequest != null)
-                                searchRequest.abort();
-                            searchRequest = $.ajax({
-                                type: "GET",
-                                url: "{{ path('search') }}",
-                                data: {
-                                    'q' : value
-                                },
-                                dataType: "text",
-                                success: function(msg){
-                                    //we need to check if the value is the same
-                                    if (value===$(that).val()) {
-                                        var result = JSON.parse(msg);
-                                        $.each(result, function(key, arr) {
-                                            $.each(arr, function(id, value) {
-                                                if (key === 'services') {
-                                                    if (id !== 'error') {
-                                                        console.log(value[1]);
-                                                        entitySelector.append('<li><b>'+value[1]+'</b><a href="service_show_front/'+id+'">'+'<img src="images/'+value[0]+'" style="width: 50px; height: 50px"/>'+'</a></li>');
-                                                    } else {
-                                                        entitySelector.append('<li class="errorLi">'+value+'</li>');
-                                                    }
-                                                }
-                                            });
-                                        });
-                                    }
-                                }
-                            });
-                        }
-                    });
-                });
-            </script>
 
             <div class="content">
                 <div class="container">
@@ -108,9 +63,19 @@
             </div>
         </div>
     </section>
+    <div class="save-stngs">
+        <ul>
+            <li><button type="submit" ><a href="{{ path('service_new_front') }}">Create new</a></button></li>
+        </ul>
+    </div><!--save-stngs end-->
 
-    <a href="{{ path('service_new_front') }}">Create new</a>
-    <div class="navigation">
-        {{ knp_pagination_render(services) }}
-    </div>
+
+
+
+        <div class="pagination " >
+            <ul class="pagination pagination-sm" text-align: center;>{{ knp_pagination_render(services) }}</ul>
+        </div>
+
+
+
 {% endblock %}

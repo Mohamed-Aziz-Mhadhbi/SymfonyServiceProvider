@@ -38,6 +38,7 @@ class OffreRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('o');
         if($data){
             $query->andWhere('o.id LIKE :data OR
+                
                  o.title LIKE :data OR
                  o.description LIKE :data OR
                  o.creatAt LIKE :data  ')

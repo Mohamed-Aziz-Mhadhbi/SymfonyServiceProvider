@@ -13,10 +13,9 @@ class OrderType extends AbstractType
     {
         $builder
             ->add('message')
-            ->add('creatAt')
             ->add('status')
-            ->add('service')
-            ->add('orderUser')
+
+
         ;
     }
 

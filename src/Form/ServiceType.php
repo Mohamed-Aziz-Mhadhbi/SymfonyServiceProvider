@@ -17,7 +17,6 @@ class ServiceType extends AbstractType
             ->add('description')
             ->add('price')
             ->add('image', FileType::class , array('data_class'=>null, 'required'=>false))
-            ->add('serviceUser')
             ->add('serviceDomain')
         ;
     }

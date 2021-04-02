@@ -7,7 +7,11 @@
 
     {{ include('FrontInterface/service/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('service_index_front') }}">back to list</a>
+    <div class="save-stngs">
+        <ul>
+            <li><button type="submit" ><a href="{{ path('service_index_front') }}">Back to list</a></button></li>
+        </ul>
+    </div><!--save-stngs end-->
 
     {{ include('FrontInterface/service/_delete_form.html.twig') }}
 {% endblock %}

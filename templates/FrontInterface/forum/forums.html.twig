@@ -3,6 +3,7 @@
 {% block title %}Forums{% endblock %}
 
 {% block content %}
+
     <style>
         .sticky {
             position: fixed;
@@ -11,10 +12,13 @@
             padding-right: 0px;
             padding-left: 0px;
         }
+
+        {% for forum in forums | sort((a,b) => a.posts|length <=> b.posts|length) | reverse %}
+        #more{{ forum.id }} {
+            display: none;
+        }
+        {% endfor %}
     </style>
-
-
-
 
 
     <section class="forum-page">
@@ -32,18 +36,19 @@
 
 
                             {% for forum in forums | sort((a,b) => a.posts|length <=> b.posts|length) | reverse %}
-
                                 <div class="usr-question">
-
+                                    <div class="usr_img">
+                                        <img src="http://via.placeholder.com/60x60" alt="">
+                                    </div>
                                     <div class="usr_quest">
                                         <a style="color: #11a852;"
                                            href="{{ path('forum_show_front', {'id': forum.id }) }}">{{ forum.title }} </a>
                                         <p>Created by :</p><a
                                                 href="{{ path('user_show_front', {'id': forum.us.id}) }}"> {{ forum.us }}</a>
-
-                                       <!-- % include 'ViewMoreOrLess.html.twig' with [{'id': forum.id }, {'desc': forum.description }] %}-->
-
                                         <!--<p>{ forum.description }}</p>-->
+                                        <p id="output{{ forum.id }}"></p>
+                                        <a style="cursor: pointer; color: #11a852; font-weight: 600;"
+                                           onclick="viewMore{{ forum.id }}()" id="myBtn{{ forum.id }}">view more</a>
                                         {% if forum.posts |length == 0 %}
                                             <p> there is <span style="color: #00b44e">no posts</span></p>
                                         {% else %}
@@ -179,6 +184,53 @@
             } else {
                 header.classList.remove("sticky");
             }
+        }
+    </script>
+
+    <script>
+        {% for forum in forums | sort((a,b) => a.posts|length <=> b.posts|length) | reverse %}
+        function viewMore{{ forum.id }}() {
+
+            var dots{{ forum.id }} = document.getElementById("dots{{ forum.id }}");
+            var moreText{{ forum.id }} = document.getElementById("more{{ forum.id }}");
+            var btnText{{ forum.id }} = document.getElementById("myBtn{{ forum.id }}");
+
+            if (dots{{ forum.id }}.style.display === "none") {
+                dots{{ forum.id }}.style.display = "inline";
+                btnText{{ forum.id }}.innerHTML = "view more";
+                moreText{{ forum.id }}.style.display = "none";
+            } else {
+                dots{{ forum.id }}.style.display = "none";
+                btnText{{ forum.id }}.innerHTML = "view less";
+                moreText{{ forum.id }}.style.display = "inline";
+            }
+        }
+        {% endfor %}
+    </script>
+
+    <script>
+        function loadViewMore() {
+
+            var showChar = 133;
+            var ellipsestext = "...";
+            var moretext = "view more";
+            var lestext = "view less";
+            {% for forum in forums | sort((a,b) => a.posts|length <=> b.posts|length) | reverse %}
+            var str{{ forum.id }} = "{{ forum.description }}";
+
+            if (str{{ forum.id }}.length > showChar) {
+                var c = str{{ forum.id }}.substr(0, showChar);
+                var h = str{{ forum.id }}.substr(showChar, str{{ forum.id }}.length - showChar);
+
+                var html = c + '<span id="dots{{ forum.id }}">' + ellipsestext + '</span><span id="more{{ forum.id }}">' + h + '</span>';
+
+                document.getElementById("output{{ forum.id }}").innerHTML = html;
+            } else {
+                document.getElementById("output{{ forum.id }}").innerHTML = str{{ forum.id }} ;
+                document.getElementById("myBtn{{ forum.id }}").style.display = "none";
+
+            }
+            {% endfor %}
         }
     </script>
 

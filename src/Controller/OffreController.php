@@ -157,7 +157,7 @@ class OffreController extends AbstractController
      * @param OffreRepository $repository
      * @param Request $request
      * @return Response
-     * @Route("/offre/recherche",name="recherche")
+     * @Route("/offre/recherche",name="rechercheOffre")
      */
     public function Recherche(OffreRepository $repository,Request $request)
     {
@@ -179,7 +179,7 @@ class OffreController extends AbstractController
     {
         $ob = new Highchart();
         $ob->chart->renderTo('linechart');
-        $ob->title->text('Browser market shares at a specific website in 2010');
+        $ob->title->text('statistique offres selon domaine');
         $ob->plotOptions->pie(array(
             'allowPointSelect'  => true,
             'cursor'    => 'pointer',
@@ -194,7 +194,7 @@ class OffreController extends AbstractController
             array_push($data,$a);
         }
 
-        $ob->series(array(array('type' => 'pie','name' => 'Browser share', 'data' => $data)));
+        $ob->series(array(array('type' => 'pie','name' => '', 'data' => $data)));
         return $this->render('BackInterface/offre/statitstique.html.twig', array(
             'chart' => $ob
         ));

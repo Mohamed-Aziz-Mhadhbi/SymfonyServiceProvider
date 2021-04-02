@@ -3,9 +3,13 @@
 {% block title %}New Service{% endblock %}
 
 {% block content %}
-    <h1>Create new Service</h1>
+    <h1>             </h1> <br>
 
     {{ include('FrontInterface/service/_form.html.twig') }}
 
-    <a href="{{ path('service_index_front') }}">back to list</a>
+    <div class="save-stngs">
+        <ul>
+            <li><button type="submit" ><a href="{{ path('service_index_front') }}">Back to list</a></button></li>
+        </ul>
+    </div><!--save-stngs end-->
 {% endblock %}

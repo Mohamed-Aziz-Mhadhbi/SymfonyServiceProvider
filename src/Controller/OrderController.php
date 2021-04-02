@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use App\Repository\ServiceRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 
 class OrderController extends AbstractController
@@ -51,10 +52,11 @@ class OrderController extends AbstractController
     /**
      * @Route("/home/order/new", name="order_new_front", methods={"GET","POST"})
      */
-    public function newFront(Request $request, \Swift_Mailer $mailer, ServiceRepository $serviceRepository): Response
+    public function newFront(Request $request, \Swift_Mailer $mailer, ServiceRepository $serviceRepository, UserInterface $user): Response
     {
-        $service = $serviceRepository->find($_GET["id"]);
         $user = $this->security->getUser();
+
+        $service = $serviceRepository->find($_GET["id"]);
         $order = new Order();
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
@@ -71,12 +73,15 @@ class OrderController extends AbstractController
                 ->setBody(
                     $this->renderView(
 
-                        'FrontInterface/order/mail.html.twig',
+                        'FrontInterface/order/show.html.twig',
 
                     ),
                     'text/html'
                 );
             $mailer->send($message);
+            $order->setCreatAt(new \DateTime('now'));
+            $order->setOrderUser($user);
+            $order->setService($service);
             $entityManager->persist($order);
             $entityManager->flush();
 
@@ -92,23 +97,16 @@ class OrderController extends AbstractController
     }
 
 
-    /**
-     * @Route("/admin/dashboard/order/{id}", name="order_show_back", methods={"GET"})
-     */
-    public function showBack(Order $order): Response
-    {
-        return $this->render('BackInterface/order/show.html.twig', [
-            'order' => $order,
-        ]);
-    }
 
     /**
      * @Route("/home/order/{id}", name="order_show_front", methods={"GET"})
      */
     public function showFront(Order $order): Response
     {
+        $user = $this->security->getUser();
         return $this->render('FrontInterface/order/show.html.twig', [
             'order' => $order,
+            'user' => $user,
         ]);
     }
 
