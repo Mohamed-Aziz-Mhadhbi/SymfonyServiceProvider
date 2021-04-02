@@ -32,15 +32,18 @@
 
 
                             {% for forum in forums | sort((a,b) => a.posts|length <=> b.posts|length) | reverse %}
+
                                 <div class="usr-question">
 
                                     <div class="usr_quest">
                                         <a style="color: #11a852;"
-                                           href="{{ path('forum_show_front', {'id': forum.id}) }}">{{ forum.title }} </a>
+                                           href="{{ path('forum_show_front', {'id': forum.id }) }}">{{ forum.title }} </a>
                                         <p>Created by :</p><a
                                                 href="{{ path('user_show_front', {'id': forum.us.id}) }}"> {{ forum.us }}</a>
 
-                                        <p>{{ forum.description }}</p>
+                                       <!-- % include 'ViewMoreOrLess.html.twig' with [{'id': forum.id }, {'desc': forum.description }] %}-->
+
+                                        <!--<p>{ forum.description }}</p>-->
                                         {% if forum.posts |length == 0 %}
                                             <p> there is <span style="color: #00b44e">no posts</span></p>
                                         {% else %}

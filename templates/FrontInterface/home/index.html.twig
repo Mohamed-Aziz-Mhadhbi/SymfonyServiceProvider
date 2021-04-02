@@ -3,6 +3,135 @@
 {% block title %}{% endblock %}
 
 {% block content %}
+    <section class="cover-sec">
+        <img src="http://via.placeholder.com/1600x400" alt="">
+    </section>
+    <section class="companies-info">
+        <div class="container">
+            <div class="company-title">
+                <h3>Our website is being used by these formidable professionals !</h3>
+            </div><!--company-title end-->
+
+            {% for user in users |sort | reverse|slice(0,5)%}
+                {% if user.role == "prestataire" %}
+                <div class=" col-lg-3">
+                    <div class="company_profile_info">
+                        <div class="company-up-info">
+                            <img src="http://via.placeholder.com/91x91" alt="">
+                            <h3>{{ user.prenom }} {{ user.nom }}</h3>
+                            <h4>{{ user.specialisation }}</h4>
+                            <ul>
+                                <li><a href="#" title="" class="follow">Follow</a></li>
+                                <li><a href="{{ path('project_new_front') }}" title="" class="message-us"><i class="fa fa-envelope"></i></a></li>
+                                <li><a href="#" title="" class="hire-us">Hire</a></li>
+                            </ul>
+                        </div>
+                        <a href="{{ path('user_show_front', {'id': user.id}) }}" title="" class="view-more-pro">View Profile</a>
+                    </div><!--company_profile_info end-->
+                </div>
+                {% endif %}
+        {% endfor %}
+        </div>
+    </section>
+    <section class="companies-info">
+        <div class="container">
+            <div class="company-title">
+                <h3>Dynamic domains for our job offers !</h3>
+            </div><!--company-title end-->
+            {% for offre in offers |sort | reverse|slice(0,5)%}
+            <div class="companies-list">
+                <div class="row">
+                    <div class="post-bar">
+                        <div class="post_topbar">
+                            <div class="usy-dt">
+                                <img src="http://via.placeholder.com/50x50" alt="">
+                                <div class="usy-name">
+                                    <h3>{{ offre.getUser() }}</h3>
+
+                                </div>
+                            </div>
+
+                            <div class="job_descp">
+                                <h3>{{ offre.title }}</h3>
+                                <ul class="job-dt">
+                                    {#  $comment->setCreatAt(new \DateTime('now'));#}
+                                    <li><span>{{ offre.creatAt ? offre.creatAt|date('Y-m-d') : '' }}</span></li>
+                                </ul>
+                                <p>{{ offre.description }}</p>
+
+                            </div>
+                </div>
+                        <div class="post-st">
+                            <ul>
+                                {#  <li><a class="post_project" href="{{ path('annonces_delete', {'id': annonce.id}) }}"title="">Delete</a></li>#}
+                                <li><a class="post_project" href="{{ path('offre_show_front', {'id': offre.id}) }}">show</a></li>
+                                {% if user.username == offre.user%}
+                                    <li><a class="post_project" href="{{ path('offre_edit_front', {'id': offre.id}) }}">edit</a></li>
+                                {% endif %}
+                                {% if user.username != offre.user and user.salt == "prestataire"%}
+                                    <li><a href="{{ path('postulation_new_front', {'id': offre.id}) }}" title="" class="com"><img src="images/com.png" alt=""> Apply </a></li>
+                                {% endif %}
+                                <a href="javascript:void(0)"><i class="icon-close"></i></a>
+                                <a href="{{ path('post_like',{'id':offre.id}) }}" class="btn btn-link js-like"><i class="la la-heart"></i> Like
+                                    <img src="images/liked-img.png" alt="">
+                                    {% if app.user and offre.islikedByUser(app.user) %}
+
+
+                                    {% else %}
+                                        {#  <i class="far fa-thumbs-up"></i>#}
+                                    {% endif %}
+
+                                    <span class="js-likes">{{ offre.likes | length }}</span>
+
+                                    {#  <span class="js-label">like</span> #}
+
+
+
+                                </a>
+                            </ul>
+                        </div><!--post-st end-->
+            </div><!--companies-list end-->
+        {% endfor %}
+        </div>
+    </section>
+
+    <section class="companies-info">
+        <div class="container">
+
+
+
+        </div>
+    </section>
+    <section>
+        <div class="col-lg-12">
+            <div class="container">
+                <div class="company-title text-center">
+                    <h3>Some Statistics</h3>
+                    <h3 class="row align-items-center" style="">
+                        <i class="far fa-users"></i><br>
+
+                        <i class="far fa-building"></i>
+
+                        <i class="far fa-comments"></i><br>
+
+                        <i class="far fa-newspaper"></i><br>
+
+                        <i class="far fa-concierge-bell"></i><br>
+
+                    </h3>
+                    <h3 class="row" style="">
+                        <p>USERS</p>
+                        <p>COMPANYS</p>
+                        <p>FORUMS</p>
+                        <p>POSTS</p>
+                        <p>SERVICES</p>
+                    </h3>
+                </div><!--company-title end-->
+            </div>
+        </div>
+    </section>
+    <br>
 
 
 {% endblock %}
+

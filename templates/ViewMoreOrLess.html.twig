@@ -1,0 +1,49 @@
+<Style>
+    #more {% id %}   {
+        display: none;
+    }
+</style>
+<p id="output{{ id }}"></p>
+<a style="cursor: pointer ; color: #11a852; font-weight: 600;"
+   onclick="viewMore{{ id }}()" id="myBtn{{ id }}">view more</a>
+<script>
+    function viewMore{{ id }}() {
+
+        var dots{{ id }} = document.getElementById("dots{{ id }}");
+        var moreText{{ id }} = document.getElementById("more{{ id }}");
+        var btnText{{ id }} = document.getElementById("myBtn{{ id }}");
+
+        if (dots{{ id }}.style.display === "none") {
+            dots{{ id }}.style.display = "inline";
+            btnText{{ id }}.innerHTML = "view more";
+            moreText{{ id }}.style.display = "none";
+        } else {
+            dots{{ id }}.style.display = "none";
+            btnText{{ id }}.innerHTML = "view less";
+            moreText{{ id }}.style.display = "inline";
+        }
+    }
+</script>
+
+<script>
+    function loadViewMore() {
+        var showChar = 133;
+        var ellipsestext = "...";
+        var moretext = "view more";
+        var lestext = "view less";
+
+        var str{{ id }} = "{{ desc }}";
+
+        if (str{{ id }}.length > showChar) {
+            var c = str{{ id }}.substr(0, showChar);
+            var h = str{{ id }}.substr(showChar, str{{ id }}.length - showChar);
+
+            var html = c + '<span id="dots{{ id }}">' + ellipsestext + '</span><span id="more{{ id }}">' + h + '</span>';
+
+            document.getElementById("output{{ id }}").innerHTML = html;
+        } else {
+            document.getElementById("output{{ id }}").innerHTML = str{{ id }} ;
+            document.getElementById("myBtn{{ id }}").style.display = "none";
+        }
+    }
+</script>

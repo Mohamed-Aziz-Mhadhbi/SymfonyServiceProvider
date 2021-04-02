@@ -121,7 +121,7 @@ class User implements UserInterface
     private $type;
 
     /**
-     * @Assert\Length(min="3",max="25")
+     * @Assert\Length(min="3",max="50")
      * @ORM\Column (type="string", length=255, nullable=true)
      */
     private $specialisation;
