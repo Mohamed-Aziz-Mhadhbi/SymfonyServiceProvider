@@ -1,0 +1,185 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Forums{% endblock %}
+
+{% block content %}
+    <style>
+        .sticky {
+            position: fixed;
+            top: 10px;
+            width: 27%;
+            padding-right: 0px;
+            padding-left: 0px;
+        }
+    </style>
+
+
+
+
+
+    <section class="forum-page">
+        <div class="container">
+            <div class="forum-questions-sec">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="forum-questions" style="border-radius: 5px;">
+                            <div class="post-topbar">
+                                <div>
+                                    <img src="{{ asset('images/cm-logo.png') }}" alt="">
+                                </div>
+
+                            </div><!--post-topbar end-->
+
+
+                            {% for forum in forums | sort((a,b) => a.posts|length <=> b.posts|length) | reverse %}
+                                <div class="usr-question">
+
+                                    <div class="usr_quest">
+                                        <a style="color: #11a852;"
+                                           href="{{ path('forum_show_front', {'id': forum.id}) }}">{{ forum.title }} </a>
+                                        <p>Created by :</p><a
+                                                href="{{ path('user_show_front', {'id': forum.us.id}) }}"> {{ forum.us }}</a>
+
+                                        <p>{{ forum.description }}</p>
+                                        {% if forum.posts |length == 0 %}
+                                            <p> there is <span style="color: #00b44e">no posts</span></p>
+                                        {% else %}
+                                            <p>there is<span
+                                                        style="color: #00b44e"> {{ forum.posts | length }} posts </span>
+                                            </p>
+                                        {% endif %}
+                                        {% if forum.us == user %}
+                                            <div style="width: 100%; display:flex; justify-content: flex-end">
+                                                <a href="{{ path('forum_edit_front', {'id': forum.id}) }}">
+                                                    <button type="button"
+                                                            class="btn-sm shadow-sm btn btn-primary mt-2 mb-2 mr-2">
+                                                        Edit
+                                                    </button>
+                                                </a>
+                                                {{ include('FrontInterface/forum/_delete_form.html.twig') }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <!--usr_quest end-->
+                                </div>
+                                <!--usr-question end-->
+                            {% endfor %}
+                        </div>
+                        <!--forum-questions end-->
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 5px;">
+
+                            <h3 class="title-wd" style="color: #6a737c; font-size: 16px;">Create New Communities ➕</h3>
+                            <ul>
+                                {{ include('FrontInterface/forum/_form.html.twig') }}
+                            </ul>
+
+                        </div>
+
+                        <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 5px;">
+
+                            <h3 class="title-wd" style="color: #6a737c; font-size: 16px;">Top new 5 community 🌐</h3>
+                            <ul>
+                                {% for forum in forums |sort|reverse|slice(0,5) %}
+                                    <li>
+                                        <div class="usr-msg-details">
+                                            <div class="usr-mg-info">
+                                                <h3 style="color: #6a737c; font-size: 14px;">{{ forum.title }}</h3>
+                                            </div>
+                                            <!--usr-mg-info end-->
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <!--widget-user end-->
+                        <!--<div class="widget widget-adver">
+                            <img src="http://via.placeholder.com/370x270" alt="">
+                        </div>-->
+                        <!--widget-adver end-->
+                        <div id="sticky">
+                            <div class="widget widget-user" style="background-color: #11a85236;  border-radius: 6px;">
+                                <footer style="border-radius: 5px;">
+                                    <div class="footy-sec  no-margin">
+                                        <div class="container">
+                                            <ul>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Help Center</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Privacy Policy</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Community Guidelines</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Cookies Policy</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Career</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Forum</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Language</a></li>
+                                                <li><a style="color: #6a737c; font-size: 12px; line-height: 0;" href="#"
+                                                       title="">Copyright Policy</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </footer><!--footer end-->
+                            </div>
+                            <button style=" width: 128px; font-family: Noto Sans,Arial,sans-serif; border-radius: 15px; text-align:center; margin-left: 35%; position: relative;"
+                                    class="btn btn-success d-none d-sm-inline-block btn-sm btn-primary shadow-sm mt-2 mb-2"
+                                    onclick="topFunction()" id="myBtn" title="Go to top">Back to Top
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--forum-questions-sec end-->
+        </div>
+    </section>
+    <!--forum-page end-->
+    <script>
+        /*
+          ======================================
+                    BACK TO TOP LINK
+        ======================================
+        */
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("myBtn").style.display = "block";
+            } else {
+                document.getElementById("myBtn").style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }</script>
+    <script>
+        window.onscroll = function () {
+            myFunction()
+        };
+
+        var header = document.getElementById("sticky");
+        var sticky = header.offsetTop + 900;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+    </script>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

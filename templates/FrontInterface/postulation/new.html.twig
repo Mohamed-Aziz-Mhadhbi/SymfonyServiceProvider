@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Postulation{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="col-md-10">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h2 class="card-title">Create new Postulation</h2>
+            </div>
+
+    {{ include('FrontInterface/postulation/_form.html.twig') }}
+
+    <a href="{{ path('postulation_index_front') }}">back to list</a>
+    </div>
+</div>
+{% endblock %}

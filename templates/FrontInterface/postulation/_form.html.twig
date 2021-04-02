@@ -1,0 +1,40 @@
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+<div class="card-body">
+    <div class="form-group">
+        <div class="container">
+            <div class="col-md-10">
+
+        <label style=" color: #6a737c;">Motivation * :</label>
+        <br>
+        <br>
+
+        {{ form_widget(form.motivation,{'attr':{'class':'form-control' , 'id':'inputMotivation'}}) }}
+        <div style="color :red;" >
+            {{form_errors(form.motivation)}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label style=" color: #6a737c;">Price * :</label>
+        <br>
+        <br>
+
+        {{ form_widget(form.price,{'attr':{'class':'form-control' , 'id':'inputPrice'}}) }}
+        <div style="color :red;" >
+            {{form_errors(form.price)}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label style=" color: #6a737c;">Duration * :</label>
+        <br>
+        <br>
+
+        {{ form_widget(form.duration,{'attr':{'class':'form-control'}})}}
+
+    </div>
+
+
+
+    <button class="btn">{{ button_label|default('Save') }}</button>
+        </div>
+    </div>
+{{ form_end(form) }}

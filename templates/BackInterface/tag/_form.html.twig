@@ -1,0 +1,27 @@
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+
+<div class="card-body">
+    <div class="form-group">
+        <label for="inputName">Title* :</label>
+        {{ form_widget(form.title,{'attr':{'class':'form-control' , 'id':'inputName'}}) }}
+        <div style="color :red;" >
+            {{form_errors(form.title)}}
+        </div>
+
+    </div>
+    <div class="form-group">
+        <label for="inputDescription">Description :</label>
+        {{ form_widget(form.description,{'attr':{'class':'form-control' , 'id':'inputDescription'}}) }}
+        <div style="color :red;" >
+            {{form_errors(form.description)}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputStatus">Posts :</label>
+        {{ form_widget(form.posts,{'attr':{'class':'form-control custom-select' , 'id':'inputStatus'}}) }}
+    </div>
+    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+
+    <a href="{{ path('tag_index') }}">Go Back</a>
+</div>
+{{ form_end(form) }}

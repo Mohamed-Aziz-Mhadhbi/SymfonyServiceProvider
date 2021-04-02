@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Order{% endblock %}
+
+{% block content %}
+    <h1>Edit Order</h1>
+
+    {{ include('FrontInterface/order/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('order_index_front') }}">back to list</a>
+
+    {{ include('FrontInterface/order/_delete_form.html.twig') }}
+{% endblock %}

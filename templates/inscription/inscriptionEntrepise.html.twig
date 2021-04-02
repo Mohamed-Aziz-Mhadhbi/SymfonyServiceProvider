@@ -1,0 +1,74 @@
+{% extends 'baseLogin.html.twig' %}
+
+{% block title %}Service Provider{% endblock %}
+
+{% block content %}
+    <section id="home" class="banner">
+        <div id="banner-bg-effect" class="banner-effect">
+            <div class="container">
+
+
+
+                <div class="wrapper">
+                    <div class="signin-popup">
+                        <div class="signin-pop">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="cmp-info">
+                                        <div class="cm-logo">
+                                            <img src="{{ asset('images/cm-logo.png') }}" alt="">
+                                            <p>Workwise,  is a global freelancing platform and social networking where businesses and independent professionals connect and collaborate remotely</p>
+                                        </div><!--cm-logo end-->
+                                        <img src="{{ asset('images/cm-main-img.png') }}" alt="">
+                                    </div><!--cmp-info end-->
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="login-sec">
+                                        <ul class="sign-control">
+                                            <a href="{{ path('app_login') }}" title="">Sign in</a>
+                                            <li data-tab="tab-2" class="current"><a href="{{ path('register') }}" title="">Sign up</a></li>
+                                        </ul>
+
+
+                                        <a href="{{ path('register') }}" >client</a>
+                                        <a href="{{ path('registerEntreprise') }}" >Company</a>
+                                        <a href="{{ path('registerFreelancer') }}" >Freelancer</a>
+
+
+
+                                                    {{ form_start(form) }}
+                                                    {{ form_row(form) }}
+                                                    <button type="submit">Envoyer</button>
+                                                    {{ form_end(form) }}
+
+                                                {% for message in app.flashes('success') %}
+                                                    {{ message }}
+                                                {% endfor %}
+
+                                    </div>
+                                </div>
+                            </div><!--signin-pop end-->
+                        </div><!--signin-popup end-->
+                        <div class="footy-sec">
+                            <div class="container">
+                                <ul>
+                                    <li><a href="#" title="">Help Center</a></li>
+                                    <li><a href="#" title="">Privacy Policy</a></li>
+                                    <li><a href="#" title="">Community Guidelines</a></li>
+                                    <li><a href="#" title="">Cookies Policy</a></li>
+                                    <li><a href="#" title="">Career</a></li>
+                                    <li><a href="#" title="">Forum</a></li>
+                                    <li><a href="#" title="">Language</a></li>
+                                    <li><a href="#" title="">Copyright Policy</a></li>
+                                </ul>
+                                <p><img src="images/copy-icon.png" alt="">Copyright 2018</p>
+                            </div>
+                        </div><!--footy-sec end-->
+                    </div><!--sign-in-page end-->
+
+
+                </div><!--theme-layout end-->
+            </div>
+        </div>
+    </section>
+{% endblock %}

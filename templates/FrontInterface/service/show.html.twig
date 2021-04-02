@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Service{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Service</h1>
+        <!-- row  -->
+        <div class="row">
+            <div class="col-lg-7 pt-5">
+                <span class="badge badge-primary rounded-pill px-3 py-1 font-weight-light">Service {{ service.id }} </span>
+                <h3 class="my-3">{{ service.title }}</h3>
+                <h6 class="subtitle font-weight-light">{{ service.description }}</h6>
+                <div class="row text-inverse">
+                    <div class="col-md-6 mt-3">
+                        <ul class="list-style-none pl-0">
+                            <li class="my-2"><span class="mr-2"></span> <span></span></li>
+                            <li class="my-2"><span class="mr-2"></span> <span>{{ service.price }} DT</span></li>
+                            <li class="my-2"><span class="mr-2"></span> <span></span></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 mt-0 mt-md-3">
+                        <ul class="list-style-none pl-0">
+                            <li class="mb-2 mt-0 mt-md-2"><span class="mr-2"></span> <span></span></li>
+                            <li class="my-2"><span class="mr-2"></span> <span></span></li>
+                            <li class="my-2"><span class="mr-2"></span> <span>{{ service.creatAt ? service.creatAt|date('Y-m-d') : '' }}</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 my-4">
+                        <a class="btn btn-info-gradiant btn-md border-0 text-white" href="#f19"><span>View Details</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 text-center">
+                <img src="{{ asset('images/' ~ service.image) }}" alt=""style="width: 300px; height: 300px" />
+            </div>
+        </div>
+    </div>
+    <a href="{{ path('service_index_front') }}">back to list</a>
+
+    <a href="{{ path('service_edit_front', {'id': service.id}) }}">edit</a>
+    <a href="{{ path('order_new_front', {'id': service.id}) }}">order</a>
+
+    {{ include('FrontInterface/service/_delete_form.html.twig') }}
+{% endblock %}

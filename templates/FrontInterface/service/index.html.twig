@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Service index{% endblock %}
+
+{% block content %}
+
+    <section class="wrapper">
+        <div class="container-fostrap">
+
+            <div class="sidebar-search">
+
+                <div class="input-group custom-search-form">
+
+                    <input type="text" id="search" class="form-control" placeholder="Search here">
+                </div>
+                <!-- /input-group -->
+            </div>
+            <ul class="nav" id="side-menu">
+                <li>
+                    <a href="search"> Entities<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level" id="entitiesNav">
+                    </ul>
+                </li>
+            </ul><br><br><br><br>
+
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+            <script type="text/javascript">
+                jQuery(document).ready(function() {
+                    var searchRequest = null;
+                    $("#search").keyup(function() {
+                        var minlength = 1;
+                        var that = this;
+                        var value = $(this).val();
+                        var entitySelector = $("#entitiesNav").html('');
+                        if (value.length >= minlength ) {
+                            if (searchRequest != null)
+                                searchRequest.abort();
+                            searchRequest = $.ajax({
+                                type: "GET",
+                                url: "{{ path('search') }}",
+                                data: {
+                                    'q' : value
+                                },
+                                dataType: "text",
+                                success: function(msg){
+                                    //we need to check if the value is the same
+                                    if (value===$(that).val()) {
+                                        var result = JSON.parse(msg);
+                                        $.each(result, function(key, arr) {
+                                            $.each(arr, function(id, value) {
+                                                if (key === 'services') {
+                                                    if (id !== 'error') {
+                                                        console.log(value[1]);
+                                                        entitySelector.append('<li><b>'+value[1]+'</b><a href="service_show_front/'+id+'">'+'<img src="images/'+value[0]+'" style="width: 50px; height: 50px"/>'+'</a></li>');
+                                                    } else {
+                                                        entitySelector.append('<li class="errorLi">'+value+'</li>');
+                                                    }
+                                                }
+                                            });
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    });
+                });
+            </script>
+
+            <div class="content">
+                <div class="container">
+                    <div class="row">
+                        {% for service in services %}
+                            <div class="col-xs-12 col-sm-4">
+
+                                <div class="card">
+                                    <a class="img-card" href="{{ path('service_show_front', {'id': service.id}) }}">
+                                        <img src="{{ asset('images/' ~ service.image) }}" alt="" style="width: 200px; height: 200px" >
+                                    </a>
+                                    <div class="card-content">
+
+                                        <h4 class="card-title">
+                                            <a href="http://www.fostrap.com/2016/03/bootstrap-3-carousel-fade-effect.html">{{ service.title }}
+                                            </a>
+                                        </h4>
+                                        <p class="">
+                                            {{ service.description }}
+                                        </p>
+                                    </div>
+                                    <div class="card-read-more">
+                                        <a href="{{ path('service_show_front', {'id': service.id}) }}" class="btn btn-link btn-block">
+                                            {{ service.price }} DT
+                                        </a>
+                                    </div>
+                                    <div class="card-read-more">
+                                        <a href="{{ path('service_show_front', {'id': service.id}) }}" class="btn btn-link btn-block">
+                                            {{ service.creatAt ? service.creatAt|date('Y-m-d ') : '' }}
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <a href="{{ path('service_new_front') }}">Create new</a>
+    <div class="navigation">
+        {{ knp_pagination_render(services) }}
+    </div>
+{% endblock %}

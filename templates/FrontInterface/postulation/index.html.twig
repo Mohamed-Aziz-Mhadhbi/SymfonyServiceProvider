@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Postulation index{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="col-md-10">
+
+
+    <table class="table">
+        <thead>
+            <tr>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for postulation in postulations %}
+            {% if postulation.offre %}
+            <tr>
+        <div class="post-bar">
+            <div class="post_topbar">
+                <div class="usy-dt">
+                    <div class="usy-name">
+                        <h3>{{ postulation.offre }}</h3>
+                        {# <span><img src="images/clock.png" alt="">3 min ago</span>#}
+                    </div>
+                </div>
+
+                <div class="job_descp">
+                    <h3>{{ postulation.motivation }}</h3>
+                    <ul class="job-dt">
+                        {#  $comment->setCreatAt(new \DateTime('now'));#}
+                        <li><span>{{ postulation.price }}</span> TND</li>
+                    </ul>
+                    <ul class="job-dt">
+
+                        <li><span>{{ postulation.duration }}</span> heure</li>
+                    </ul>
+
+
+                </div>
+                <div class="post-st">
+                    <ul>
+
+                        <li><a class="post_project" href="{{ path('postulation_show_front', {'id': postulation.id}) }}">show</a></li>
+                        <li><a class="post_project" href="{{ path('postulation_edit_front', {'id': postulation.id}) }}">edit</a></li>
+
+                    </ul>
+                </div><!--post-st end-->
+
+
+
+                {% else %}
+                    <tr>
+                        <td colspan="5">no records found</td>
+                    </tr>
+            {% endif %}
+                {% endfor %}
+            </div>
+
+    </table>
+            {#  <tr>
+                <td>{{ postulation.id }}</td>
+                <td>{{ postulation.motivation }}</td>
+                <td>{{ postulation.price }}</td>
+                <td>{{ postulation.duration }}</td>
+                <td>
+                    <a href="{{ path('postulation_show_front', {'id': postulation.id}) }}">show</a>
+                    <a href="{{ path('postulation_edit_front', {'id': postulation.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+     <a href="{{ path('postulation_new_front') }}">Create new</a>#}
+    </div>
+</div>
+{% endblock %}
