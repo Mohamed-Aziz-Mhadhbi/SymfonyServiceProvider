@@ -193,7 +193,7 @@ class ServiceController extends AbstractController
         $services = $paginator->paginate(
             $donnees, // Requête contenant les données à paginer (ici nos articles)
             $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            2// Nombre de résultats par page
+            4// Nombre de résultats par page
         );
         return $this->render('FrontInterface/service/index.html.twig',['services'=>$services,'user' => $user]);
     }

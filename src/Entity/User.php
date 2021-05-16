@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -20,6 +21,7 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
@@ -31,29 +33,34 @@ class User implements UserInterface
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups("post:read")
      */
     private $username;
 
     /**
      * @Assert\Length(min="3",max="25")
      * @ORM\Column(type="string", length=25, nullable=true)
+     * @Groups("post:read")
      */
     private $nom;
 
     /**
      * @Assert\Length(min="3",max="25")
      * @ORM\Column(type="string", length=25, nullable=true)
+     * @Groups("post:read")
      */
     private $prenom;
 
     /**
      * @Assert\Email()
      * @ORM\Column (type="string", length=180, unique=true)
+     * @Groups("post:read")
      */
     private $email;
 
     /**
      * @ORM\Column (type="string", columnDefinition="ENUM('admin', 'client', 'prestataire', 'entreprise')")
+     * @Groups("post:read")
      */
     private $role;
 
@@ -61,44 +68,52 @@ class User implements UserInterface
      * @Assert\NotBlank()
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups("post:read")
      */
     private $password;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("post:read")
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups("post:read")
      */
     private $enabled;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("post:read")
      */
     private $token;
 
     /**
      * @Assert\Length (min="8", max="8")
      * @ORM\Column (type="integer", length=8, unique=true, nullable=true)
+     * @Groups("post:read")
      */
     private $phone;
 
     /**
      * @ORM\Column (type="string", length=255, nullable=true)
+     * @Groups("post:read")
      */
     private $photo;
 
     /**
      * @Assert\Length (min="10", max="300")
      * @ORM\Column (type="string", length=300, nullable=true)
+     * @Groups("post:read")
      */
     private $bio;
 
     /**
      * @Assert\Length(min="3",max="25")
      * @ORM\Column (type="string", length=255, nullable=true)
+     * @Groups("post:read")
      */
     private $nomEntreprise;
 
@@ -123,6 +138,7 @@ class User implements UserInterface
     /**
      * @Assert\Length(min="3",max="50")
      * @ORM\Column (type="string", length=255, nullable=true)
+     * @Groups("post:read")
      */
     private $specialisation;
 
@@ -156,6 +172,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column (type="json")
+     * @Groups("post:read")
      */
     private $roles = [];
 
@@ -219,6 +236,14 @@ class User implements UserInterface
         $this->domains = new ArrayCollection();
         $this->Likes = new ArrayCollection();
 
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt(\DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
     }
 
 

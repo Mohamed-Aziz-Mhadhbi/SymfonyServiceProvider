@@ -25,7 +25,7 @@ class ServiceRepository extends ServiceEntityRepository
      */
     function searchtitle($title){
         return $this->createQueryBuilder('s')
-            ->where('.title LIKE :title')
+            ->where('s.title LIKE :title')
             ->setParameter('title','%' . $title . '%')
             ->getQuery()->getResult();
     }
